@@ -141,43 +141,43 @@ name
   <tr><th colspan="3" align="center">Aug 5 - 27</th></tr>
   <tr>
     <td>Registration & Login</td>
-    <td>2 days</td>
+    <td>~2 days</td>
     <td></td>
   </tr>
   <tr>
     <td>User Item Management</td>
-    <td>3 days</td>
+    <td>~3 days</td>
     <td></td>
   </tr>
   <tr>
     <td>User Profile</td>
-    <td>3 days</td>
+    <td>~3 days</td>
     <td></td>
   </tr>
   <tr>
     <td>Create Borrow Request</td>
-    <td>2 days</td>
+    <td>~2 days</td>
     <td></td>
   </tr>
   <tr>
     <td>Approve/Deny</td>
-    <td>2 days</td>
+    <td>~2 days</td>
     <td></td>
   </tr>
   <tr>
     <td>Improved Styling</td>
-    <td>2 days</td>
+    <td>~2 days</td>
     <td></td>
   </tr>
   <tr><th colspan="3" align="center">Post Graduation</th></tr>
   <tr>
     <td>Location</td>
-    <td>4 days</td>
+    <td>~4 days</td>
     <td></td>
   </tr>
   <tr>
     <td>Rating & Reviews</td>
-    <td>7 days</td>
+    <td>~7 days</td>
     <td></td>
   </tr>
 </table>
