@@ -171,7 +171,7 @@ name
   </tr>
   <tr><th colspan="3" align="center">Post Graduation</th></tr>
   <tr>
-    <td>Location</td>
+    <td>Location-based filtering & Groups</td>
     <td>~4 days</td>
     <td></td>
   </tr>
