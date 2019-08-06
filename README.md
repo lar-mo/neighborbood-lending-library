@@ -121,7 +121,7 @@ name
 - Camping equipment (Tents, Chairs, Coolers, Sleeping bags, Tarps, etc,)
 - Sports equipment (Basketballs, Baseballs bats, Gloves, Water skis, Snow gear, etc.)
 - Beach equipment (Quickshade, straw mats, stuff making sand castles, etc.)
-- Tools (Hand tools - hammers, screwdrivers, etc; Power tools - saws, drill, driver, bit sets, etc.)
+- Tools (Hand tools - hammers, screwdrivers, etc; Power tools - saws, drill, bit sets, etc.)
 - Garden equipment (Rakes, Hoes, Brooms, Hedge clippers, Trimmers, Garden gloves, Trowels, etc.)
 - Luggage (Rolling suitcases, Carryons, Hanging bags, etc.)
 - Event equipment (Tables, Chairs, Umbrellas, etc.)
