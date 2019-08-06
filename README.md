@@ -73,6 +73,8 @@ This page will have (1) additional information (not shown on the homepage or pro
   - Text field - to add any information to the request like when item is needed
   - Contact phone number - prepopulated from ```user.phone_number```
 
+Owners will also see a Checkout History for that item.
+
 ## Data Model
 
 ### User ###
@@ -130,17 +132,52 @@ name
 ```
 
 ## Schedule
-
-1. Registration & Login
-
-2. User Item Management
-
-3. User Profile
-
-4. Create Borrow Request
-
-5. Approve/Deny
-
-6. Location
-
-7. Rating & Reviews
+<table>
+  <tr>
+    <th>Section</th>
+    <th>Duration</th>
+    <th>Done?</th>
+  </tr>
+  <tr><th colspan="3" align="center">Aug 5 - 27</th></tr>
+  <tr>
+    <td>Registration & Login</td>
+    <td>2 days</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>User Item Management</td>
+    <td>3 days</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>User Profile</td>
+    <td>3 days</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Create Borrow Request</td>
+    <td>2 days</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Approve/Deny</td>
+    <td>2 days</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Improved Styling</td>
+    <td>2 days</td>
+    <td></td>
+  </tr>
+  <tr><th colspan="3" align="center">Post Graduation</th></tr>
+  <tr>
+    <td>Location</td>
+    <td>4 days</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Rating & Reviews</td>
+    <td>7 days</td>
+    <td></td>
+  </tr>
+</table>
