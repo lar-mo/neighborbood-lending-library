@@ -3,7 +3,7 @@ Capstone project PDX Code Guild (Summer 2019)
 
 ## Project Overview
 
-This app is inspired by a <a href="https://www.kptv.com/news/scout-troop-asks-for-help-finding-trailer-stolen-day-before/article_a3fb09f2-ae98-11e9-aab6-8fca529363ff.html" target="\_blank">KPTV news story</a> about a Girl Scout troop whose trailer full of camping gear was stolen the day before a big trip to Crater Lake. At the eleventh hour neighbors, friends, and family rallied to ensure the troop had the gear they needed to take the trip as scheduled. People loaned or donated tents, sleeping bags, stoves, tarps, lights, etc.
+This app is inspired by a [KPTV news story](https://www.kptv.com/news/scout-troop-asks-for-help-finding-trailer-stolen-day-before/article_a3fb09f2-ae98-11e9-aab6-8fca529363ff.html) about a Girl Scout troop whose trailer full of camping gear was stolen the day before a big trip to Crater Lake. At the eleventh hour neighbors, friends, and family rallied to ensure the troop had the gear they needed to take the trip as scheduled. People loaned or donated tents, sleeping bags, stoves, tarps, lights, etc.
 
 For anything that was _on loan only_, the scout leader presumably had to keep track of who each item belonged to. Why not make an app that makes it easy for neighbors, friends, family, teams, hobby groups, basically people that know each other IRL (in real life), to share their stuff.
 
@@ -116,23 +116,31 @@ id
 name
 
 - Books (Technical, Fiction, Nonfiction, Kids, Cooking, etc.)
-- Games (Board games, Handhelds, Video game DVDs (PS, Xbox), etc.)
-- DVDs (Movies, TV shows, Instructional, Concert videos, etc.)
-- Camping equipment (Tents, Chairs, Coolers, Sleeping bags, Tarps, etc,)
-- Sports equipment (Basketballs, Baseballs bats, Gloves, Water skis, Snow gear, etc.)
-- Beach equipment (Quickshade, straw mats, stuff making sand castles, etc.)
-- Tools (Hand tools - hammers, screwdrivers, etc; Power tools - saws, drill, bit sets, etc.)
-- Garden equipment (Rakes, Hoes, Brooms, Hedge clippers, Trimmers, Garden gloves, Trowels, etc.)
-- Luggage (Rolling suitcases, Carryons, Hanging bags, etc.)
-- Event equipment (Tables, Chairs, Umbrellas, etc.)
-- Cooking equipment (Pots and pans, Plates, Bowls, Silverware, etc.)
-- Stuff for parents (Stroller, play pens, etc.)
+- Games (Board Games, Handhelds, Video Game DVDs (PS, Xbox), etc.)
+- DVDs (Movies, TV Shows, Instructional, Concert Videos, etc.)
+- Camping Equipment (Tents, Chairs, Coolers, Sleeping Bags, Tarps, etc,)
+- Sports Equipment (Basketballs, Baseballs Bats, Gloves, Water Skis, Snow Gear, etc.)
+- Beach Equipment (Quickshade, Straw Mats, Stuff making sand castles, etc.)
+- Tools (Hand Tools - Hammers, Screwdrivers, etc; Power Tools - Saws, Drills, Bit Sets, etc.)
+- Garden Equipment (Rakes, Hoes, Brooms, Hedge Clippers, Trimmers, Garden Gloves, Trowels, etc.)
+- Luggage (Rolling Suitcases, Carryons, Hanging Bags, etc.)
+- Event Equipment (Tables, Chairs, Umbrellas, etc.)
+- Cooking Equipment (Pots and Pans, Plates, Bowls, Silverware, etc.)
+- Stuff for Parents (Stroller, Play Pens, etc.)
 ```
 
 ## Schedule
 
-Here you'll want to come up with some (very rough) estimates of the timeframe for each section. State specifically which steps you'll take in the implementation. This section should also include work you're planning to do after the capstone is finished.
+1. Registration
 
-```Javascript
-let something = document.querySelector('#something')
-```
+2. User Item Management
+
+3. User Profile
+
+4. Create Borrow Request
+
+5. Approve/Deny
+
+6. Location
+
+7. Rating & Reviews
