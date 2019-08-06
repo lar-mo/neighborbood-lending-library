@@ -7,7 +7,7 @@ The creation of this app was inspired by a [KPTV news story](https://www.kptv.co
 
 For anything that was _on loan only_, the scout leader presumably had to keep track of who each item belonged to. Why not make an app that makes it easy for neighbors, friends, family, teams, hobby groups, basically people that know each other IRL (in real life), to share their stuff?
 
-**Think of a virtual library for more than just books.** Also, DVDs (if anyone uses those anymore), games (board, video), garden tools, camping gear, sport equipment, beach gear, tools, luggage, ... the list goes on; stuff people have in their garages that is probably gathering dust most of the time.
+**Think of it as a virtual library for more than just books.** You might find DVDs (if anyone uses those anymore), games, garden tools, camping gear, sport equipment, beach gear, tools, luggage, ... the list goes on; stuff people have in their garages that is probably gathering dust most of the time.
 
 **This app will include:**
 - a user registration system
