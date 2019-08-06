@@ -3,7 +3,7 @@ Django Capstone project PDX Code Guild (Summer 2019)
 
 ## Project Overview
 
-This app is inspired by a [KPTV news story](https://www.kptv.com/news/scout-troop-asks-for-help-finding-trailer-stolen-day-before/article_a3fb09f2-ae98-11e9-aab6-8fca529363ff.html) about a Girl Scout troop whose trailer full of camping gear was stolen the day before a big trip to Crater Lake. At the eleventh hour neighbors, friends, and family rallied to ensure the troop had the gear they needed to take the trip as scheduled. People loaned or donated tents, sleeping bags, stoves, tarps, lights, etc.
+The creation of this app was inspired by a [KPTV news story](https://www.kptv.com/news/scout-troop-asks-for-help-finding-trailer-stolen-day-before/article_a3fb09f2-ae98-11e9-aab6-8fca529363ff.html) about a Girl Scout troop whose trailer full of camping gear was stolen the day before a big trip to Crater Lake. At the eleventh hour neighbors, friends, and family rallied to ensure the troop had the gear they needed to take the trip as scheduled. People loaned or donated tents, sleeping bags, stoves, tarps, lights, etc.
 
 For anything that was _on loan only_, the scout leader presumably had to keep track of who each item belonged to. Why not make an app that makes it easy for neighbors, friends, family, teams, hobby groups, basically people that know each other IRL (in real life), to share their stuff?
 
