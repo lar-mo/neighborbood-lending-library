@@ -131,7 +131,7 @@ name
 
 ## Schedule
 
-1. Registration
+1. Registration & Login
 
 2. User Item Management
 
