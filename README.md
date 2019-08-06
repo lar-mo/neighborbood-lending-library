@@ -160,7 +160,7 @@ name
     <td></td>
   </tr>
   <tr>
-    <td>Approve/Deny</td>
+    <td>Approve/Deny, Check In Item</td>
     <td>~2 days</td>
     <td></td>
   </tr>
