@@ -66,7 +66,6 @@ This page will have (1) additional information (not shown on the homepage or pro
 - Request form:
   - Name - prepopulated from ```user.username```
   - Text field - to add any information to the request like when item is needed
-  - Contact phone number - prepopulated from ```user.phone_number```
 
 Owners will also see a Checkout History for that item.
 
