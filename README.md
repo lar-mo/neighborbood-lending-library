@@ -79,29 +79,6 @@ username                    (CharField)
 email                       (CharField)  
 phone_number                (CharField)
 ```
-### UserItem ###
-```
-id                          Automatic PK field
-name                        CharField
-description                 TextField
-type (category)             ForeignKey(UserItemCategories)
-availability                BooleanField
-condition                   CharField
-replacement_cost            CharField
-owner                       ForeignKey(User)
-hidden                      BooleanField
-```
-### UserItemCheckout ###
-```
-id                          Automatic PK field
-user_item                   ForeignKey(User_Item)
-status                      ForeignKey(CheckoutStatus)
-request_date                DateTimeField
-checkout_date (nullable)    DateTimeField
-checkin_date (nullable)     DateTimeField
-borrower                    ForeignKey(User)
-due_date                    DateTimeField
-```
 ### CheckoutStatus ###
 ```
 id                          Automatic PK field
@@ -127,6 +104,41 @@ name                       CharField
 - Cooking Equipment (Pots and Pans, Plates, Bowls, Silverware, etc.)
 - Stuff for Parents (Stroller, Play Pens, etc.)
 ```
+### UserItemCondition ###
+```
+id                         Automatic PK field
+name                       CharField
+
+- Like New
+- Very Good
+- Good
+- Acceptable
+```
+### UserItem ###
+```
+id                          Automatic PK field
+name                        CharField
+description                 TextField
+image_url                   TextField
+type (category)             ForeignKey(UserItemCategories)
+condition                   CharField
+replacement_cost            CharField
+owner                       ForeignKey(User)
+checked_out                 BooleanField
+hidden                      BooleanField
+```
+### UserItemCheckout ###
+```
+id                          Automatic PK field
+user_item                   ForeignKey(User_Item)
+status                      ForeignKey(CheckoutStatus)
+request_date                DateTimeField
+checkout_date (nullable)    DateTimeField
+checkin_date (nullable)     DateTimeField
+borrower                    ForeignKey(User)
+due_date                    DateTimeField
+```
+
 
 ## Schedule
 <table>
