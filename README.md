@@ -74,10 +74,10 @@ Owners will also see a Checkout History for that item.
 
 ### User ###
 ```
-id                          (Automatic PK field)
-username                    (CharField)
-email                       (CharField)  
-phone_number                (CharField)
+id                          Automatic PK field
+username                    CharField
+email                       CharField  
+phone_number                CharField
 ```
 ### CheckoutStatus ###
 ```
