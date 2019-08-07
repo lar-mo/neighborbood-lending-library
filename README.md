@@ -73,20 +73,20 @@ Owners will also see a Checkout History for that item.
 ## Data Model
 
 ### User ###
+_Django built-in feature_
 ```
 id                          Automatic PK field
 username                    CharField
 email                       CharField  
-phone_number                CharField
 ```
-### CheckoutStatus ###
+### UserItemStatus ###
 ```
 id                          Automatic PK field
 name                        CharField
 
-name: Requested, Borrowed, Returned, Lost, Denied
+name: Requested, Borrowed, Returned, Lost, Denied, Hidden, Unavailable
 ```
-### UserItemCategories ###
+### UserItemCategory ###
 ```
 id                         Automatic PK field
 name                       CharField
@@ -124,14 +124,13 @@ type (category)             ForeignKey(UserItemCategories)
 condition                   CharField
 replacement_cost            CharField
 owner                       ForeignKey(User)
-checked_out                 BooleanField
-hidden                      BooleanField
+item_status                 ForeignKey(UserItemStatus)
 ```
 ### UserItemCheckout ###
 ```
 id                          Automatic PK field
 user_item                   ForeignKey(User_Item)
-status                      ForeignKey(CheckoutStatus)
+item_status                 ForeignKey(UserItemStatus)
 request_date                DateTimeField
 checkout_date (nullable)    DateTimeField
 checkin_date (nullable)     DateTimeField
