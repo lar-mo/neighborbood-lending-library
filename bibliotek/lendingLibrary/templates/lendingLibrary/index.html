@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Lending Library</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style media="screen" type="text/css">
+      html, body {
+        box-sizing: border-box;
+        height: 100%;
+        margin: 0;
+        min-height: 100%;
+        padding: 0;
+        width: 100%;
+      }
+      #container {
+        background-color: rgba(10, 10, 100, 0.4);
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+      h1 {
+        text-align: center;
+      }
+      table, tr, th, td {
+        border: 1px solid #333;
+      }
+      table {
+        background-color: #FFF;
+      }
+      th, td {
+        padding: 10px;
+      }
+      th {
+        background-color: rgba(10, 10, 100, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="item_list">
+        <h1>Items</h1>
+        {% if items %}
+          <table>
+            <tr align="left">
+              <th>Item</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Owner</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+              <td>{{item.name}}</td>
+              <td>{{item.description}}</td>
+              <td>{{item.type}}</td>
+              {% if item.item_status.name == "Available" %}
+                <td style="background-color:lightgreen">{{item.item_status}}</td>
+              {% else %}
+                <td style="background-color:white">{{item.item_status}}</td>
+              {% endif %}
+              <td>{{item.owner|title}}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        {% else %}
+          <p>No items are available.</p>
+        {% endif %}
+      </div> <!-- end of 'item_list' -->
+    </div> <!-- end of 'container'-->
+  </body>
+</html>
