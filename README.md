@@ -83,7 +83,14 @@ email                       CharField
 id                          Automatic PK field
 name                        CharField
 
-name: Requested, Borrowed, Returned, Lost, Denied, Hidden, Unavailable
+name: Available, Unavailable, Hidden, Lost
+```
+### CheckoutStatus ###
+```
+id                          Automatic PK field
+name                        CharField
+
+name: Pending, CheckedOut, Returned
 ```
 ### UserItemCategory ###
 ```
