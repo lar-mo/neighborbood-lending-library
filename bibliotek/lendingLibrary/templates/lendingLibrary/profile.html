@@ -23,6 +23,16 @@
         flex-direction: column;
         justify-content: flex-start;
       }
+      #login_bar {
+        background-color: lightpink;
+        padding-left: 10px;
+        padding-right: 10px;
+        position: sticky;
+        top: 0;
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
       h1 {
         text-align: center;
       }
@@ -50,6 +60,15 @@
     </style>
   </head>
   <body>
+    <div id="login_bar">
+    {% if not request.user.username or message == 'logout' %}
+      <span>Welcome!</span>
+      <span><a href="{% url 'lendingLibrary:register_login' %}">Register</a> | <a href="{% url 'lendingLibrary:register_login' %}">Login</a></span>
+    {% else %}
+      <span>Welcome, {{user.username|title}}!</span>
+      <span><a href="{% url 'lendingLibrary:logout_user' %}">Logout</a></span>
+    {% endif %}
+    </div>
     <div id="container">
       <div id="item_list">
         <!-- <h1>{{request.user.username|title}}'s Items</h1> -->
@@ -57,16 +76,20 @@
         {% if items %}
           <table>
             <tr align="left">
+              <th>Category</th>
               <th>Item</th>
               <th>Description</th>
-              <th>Category</th>
               <th>Status</th>
             </tr>
             {% for item in items %}
             <tr>
-              <td>{{item.name}}</td>
-              <td><span class="item_description">{{item.description}}</span></td>
               <td>{{item.type}}</td>
+              {% if item.type.name == "Books" %}
+                <td>"{{item.name|title}}"</td>
+              {% else %}
+                <td>{{item.name}}</td>
+              {% endif %}
+              <td><span class="item_description">{{item.description}}</span></td>
               {% if item.item_status.name == 'Available' %}
                 <td style="background-color:lightgreen">{{item.item_status}}</td>
               {% elif item.item_status.name == 'Unavailable' %}
