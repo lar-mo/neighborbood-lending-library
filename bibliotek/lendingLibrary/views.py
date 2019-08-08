@@ -16,8 +16,8 @@ def index(request):
 @login_required
 def owner_profile(request, user_id):
     items = UserItem.objects.filter(owner_id=user_id).order_by('item_status__name', 'type__name')
-    print(items)
-    context = {'items': items}
+    owner_name = User.objects.get(id=user_id)
+    context = {'items': items, 'owner_name': owner_name}
     return render(request, 'lendingLibrary/owner_profile.html', context)
     # return HttpResponse('user_id' + ': ' + str(user_id))
 

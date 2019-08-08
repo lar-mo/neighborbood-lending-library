@@ -23,6 +23,12 @@
         flex-direction: column;
         justify-content: flex-start;
       }
+      #login_bar {
+        background-color: lightpink;
+        padding-left: 10px;
+        position: sticky;
+        top: 0;
+      }
       h1 {
         text-align: center;
       }
@@ -49,9 +55,10 @@
     </style>
   </head>
   <body>
+    <div id="login_bar">Welcome, {{user.username|title}}!</div>
     <div id="container">
       <div id="item_list">
-        <h1>Items</h1>
+        <h1>All Items</h1>
         {% if items %}
           <table>
             <tr align="left">

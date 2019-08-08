@@ -46,14 +46,14 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-
       }
     </style>
   </head>
   <body>
     <div id="container">
       <div id="item_list">
-        <h1>Items</h1>
+        <!-- <h1>{{request.user.username|title}}'s Items</h1> -->
+        <h1>{{owner_name|title}}'s Items</h1>
         {% if items %}
           <table>
             <tr align="left">
@@ -86,5 +86,14 @@
         {% endif %}
       </div> <!-- end of 'item_list' -->
     </div> <!-- end of 'container'-->
+    <script type="text/javascript">
+      item_description = document.querySelectorAll('.item_description')
+      for (let i=0; i<item_description.length; ++i) {
+        item_description[i].onclick = function() {
+          item_description[i].style.whiteSpace = "normal"
+          item_description[i].style.overflow = "visible"
+        }
+      }
+    </script>
   </body>
 </html>
