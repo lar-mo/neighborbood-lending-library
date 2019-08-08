@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage - Community Lending Library</title>
+    <title>Profile page - Community Lending Library</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style media="screen" type="text/css">
       html, body {
@@ -32,6 +32,7 @@
       }
       table {
         background-color: #FFF;
+
       }
       th, td {
         padding: 10px;
@@ -45,6 +46,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
       }
     </style>
   </head>
@@ -59,21 +61,23 @@
               <th>Description</th>
               <th>Category</th>
               <th>Status</th>
-              <th>Owner</th>
             </tr>
             {% for item in items %}
             <tr>
               <td>{{item.name}}</td>
               <td><span class="item_description">{{item.description}}</span></td>
               <td>{{item.type}}</td>
-              {% if item.item_status.name == "Available" %}
+              {% if item.item_status.name == 'Available' %}
                 <td style="background-color:lightgreen">{{item.item_status}}</td>
-                {% elif item.item_status.name == "Unavailable" %}
-                  <td style="background-color:yellow">{{item.item_status}}</td>
+              {% elif item.item_status.name == 'Unavailable' %}
+                <td style="background-color:yellow">{{item.item_status}}</td>
+              {% elif item.item_status.name == 'Hidden' %}
+                <td style="background-color:#777;color:#FFF">{{item.item_status}}</td>
+              {% elif item.item_status.name == 'Lost' %}
+                <td style="background-color:#333;color:#FFF">{{item.item_status}}</td>
               {% else %}
                 <td style="background-color:white">{{item.item_status}}</td>
               {% endif %}
-              <td>{{item.owner|title}}</td>
             </tr>
             {% endfor %}
           </table>
@@ -82,14 +86,5 @@
         {% endif %}
       </div> <!-- end of 'item_list' -->
     </div> <!-- end of 'container'-->
-    <script type="text/javascript">
-      item_description = document.querySelectorAll('.item_description')
-      for (let i=0; i<item_description.length; ++i) {
-        item_description[i].onclick = function() {
-          item_description[i].style.whiteSpace = "normal"
-          item_description[i].style.overflow = "visible"
-        }
-      }
-    </script>
   </body>
 </html>
