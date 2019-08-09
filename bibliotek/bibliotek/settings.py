@@ -120,4 +120,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL = '/lendingLibrary/login/'
+LOGIN_URL = '/register_login/'

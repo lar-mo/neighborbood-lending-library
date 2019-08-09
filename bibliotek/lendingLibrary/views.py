@@ -15,16 +15,21 @@ def index(request):
     context = {'items': items, 'message': message,'next': next}
     return render(request, 'lendingLibrary/index.html', context)
 
-# @login_required
 def profile(request, user_id):
-    items = UserItem.objects.filter(owner_id=user_id).order_by('item_status__name', 'type__name')
-    owner_name = User.objects.get(id=user_id)
-    context = {'items': items, 'owner_name': owner_name}
+    owner = User.objects.get(id=user_id)
+    items = owner.items.order_by('item_status__name', 'type__name').exclude(item_status__in=[6, 4])
+    context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/profile.html', context)
-    # return HttpResponse('user_id' + ': ' + str(user_id))
+
+@login_required
+def owner_profile(request):
+    owner = request.user
+    items = owner.items.order_by('item_status__name', 'type__name')
+    context = {'items': items, 'owner': owner}
+    return render(request, 'lendingLibrary/owner_profile.html', context)
 
 def user(request):
-    # return HttpResponse('nothing to see. move along')
+    # nothing to see. move along
     return HttpResponseRedirect(reverse('lendingLibrary:index'))
 
 def register_login(request):

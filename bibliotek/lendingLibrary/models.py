@@ -32,14 +32,14 @@ class UserItem(models.Model):
     type            = models.ForeignKey(UserItemCategory, on_delete=models.PROTECT)
     condition       = models.ForeignKey(UserItemCondition, on_delete=models.PROTECT)
     replacement_cost = models.FloatField()
-    owner           = models.ForeignKey(User, on_delete=models.PROTECT)
+    owner           = models.ForeignKey(User, on_delete=models.PROTECT, related_name='items')
     item_status     = models.ForeignKey(UserItemStatus, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.type.name + ': ' + self.name
 
 class UserItemCheckout(models.Model):
-    user_item       = models.ForeignKey(UserItem, on_delete=models.PROTECT, related_name="items")
+    user_item       = models.ForeignKey(UserItem, on_delete=models.PROTECT, related_name="checkouts")
     item_status     = models.ForeignKey(CheckoutStatus, on_delete=models.PROTECT)
     request_date    = models.DateTimeField()
     checkout_date   = models.DateTimeField(default=None, blank=True, null=True)
