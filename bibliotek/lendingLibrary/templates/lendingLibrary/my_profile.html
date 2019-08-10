@@ -1,13 +1,13 @@
 {% extends 'lendingLibrary/base.html' %}
 
 {% block title %}
-<title>My Profile - Community Lending Library</title>
+<title>Borrower Requests - Community Lending Library</title>
 {% endblock %}
 
 {% block content %}
-  <div><h1>{{owner.username|title}}'s Profile</h1></div>
-  <div id="pending_requests">
-    <h3>Pending Item Requests</h3>
+  <!-- <div><h1>{{owner.username|title}}'s Profile</h1></div> -->
+  <div id="pending_requests"> <!-- start of 'pending_requests'-->
+    <h2>Pending Item Requests</h2>
     {% if checkouts %}
     <table>
       <tr>
@@ -18,7 +18,6 @@
         <th>Action</th>
       </tr>
       {% for item_request in item_requests %}
-      <!-- {% if item_request.user_item.owner.username == request.user.username %} -->
       <tr align="center">
         <td>{{item_request.user_item.name}}</td>
         <td>{{item_request.borrower.username|title}}</td>
@@ -26,93 +25,10 @@
         <td><input type="date" id="input_duedate" name="due_date" value="{{item_request.due_date|date:'Y-m-d'}}"/></td>
         <td><button id="bt_approve">Approve</button>&nbsp;<button id="bt_deny">Deny</button></td>
       </tr>
-      <!-- {% endif %} -->
       {% endfor %}
     </table>
     {% else %}
       <p><i>You don't have any requests or checkouts</i></p>
     {% endif %}
   </div> <!-- end of 'pending_requests'-->
-  <div class="spacer">&nbsp;</div>
-  <div id="requests_checkouts">
-    <h3>Requested Items & Checkouts</h3>
-    {% if checkouts %}
-    <table>
-      <tr>
-        <th>Item</th>
-        <th>Owner</th>
-        <th>Request Date</th>
-        <th>Status</th>
-        <th>Checkout Date</th>
-        <th>Due Date</th>
-      </tr>
-      {% for checkout in checkouts %}
-      <tr align="center">
-        <td>{{checkout.user_item.name}}</td>
-        <td>{{checkout.user_item.owner.username|title}}</td>
-        <td>{{checkout.request_date|date:'Y-m-d'}}</td>
-        {% if checkout.checkout_status.name == 'Pending' %}
-          <td style="background-color:#FFFF66">{{checkout.checkout_status.name}}</td>
-        {% elif checkout.checkout_status.name == 'Active' %}
-          <td style="background-color:lightgreen">{{checkout.checkout_status.name}}</td>
-        {% elif checkout.checkout_status.name == 'Inactive' %}
-          <td style="background-color:pink">{{checkout.checkout_status.name}}</td>
-        {% endif %}
-        {% if checkout.checkout_date == None %}
-          <td><i>N/A</i></td>
-        {% else %}
-          <td>{{checkout.checkout_date|date:'Y-m-d'}}</td>
-        {% endif %}
-        {% if checkout.due_date == None %}
-          <td><i>N/A</i></td>
-        {% else %}
-          <td>{{checkout.due_date|date:'Y-m-d'}}</td>
-        {% endif %}
-      </tr>
-      {% endfor %}
-    </table>
-    {% else %}
-      <p><i>You don't have any requests</i></p>
-    {% endif %}
-  </div> <!-- end of 'requests_checkouts'-->
-  <div class="spacer">&nbsp;</div>
-  <div id="item_list">
-    <h3>Your Items</h3>
-    {% if items %}
-      <table>
-        <tr>
-          <th>Category</th>
-          <th align="left">Item</th>
-          <th align="left">Description</th>
-          <th>Status</th>
-        </tr>
-        {% for item in items %}
-        <tr>
-          <td align="center">{{item.type}}</td>
-          {% if item.type.name == "Books" %}
-            <td><span class="item_title">"{{item.name}}"</span></td>
-          {% else %}
-            <td><span class="item_title">{{item.name}}</span></td>
-          {% endif %}
-          <td><span class="item_description">{{item.description}}</span></td>
-          {% if item.item_status.name == 'Available' %}
-            <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Requested' %}
-            <td style="background-color:blue;color:#FFF" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Checked Out' %}
-            <td style="background-color:white" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Unavailable' %}
-            <td style="background-color:yellow" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Hidden' %}
-            <td style="background-color:#777;color:#FFF" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Lost' %}
-            <td style="background-color:#333;color:#FFF" align="center">{{item.item_status}}</td>
-          {% endif %}
-        </tr>
-        {% endfor %}
-      </table>
-    {% else %}
-      <p><i>You don't have any items to lend</i></p>
-    {% endif %}
-  </div> <!-- end of 'item_list' -->
 {% endblock %}

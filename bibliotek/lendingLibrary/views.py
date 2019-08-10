@@ -39,6 +39,39 @@ def my_profile(request):
     context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'checkouts': checkouts}
     return render(request, 'lendingLibrary/my_profile.html', context)
 
+@login_required
+def my_checkouts(request):
+    owner = request.user
+    items = owner.items.order_by('item_status__name', 'type__name')
+    item_requests = UserItemCheckout.objects.order_by('user_item').exclude(checkout_status_id__in=[2, 3])
+    # checkouts = UserItemCheckout.objects.filter(borrower=owner).order_by('user_item') # method 1
+    # checkouts = owner.useritemcheckout_set.order_by('user_item')                      # method 2
+    checkouts = owner.checkouts.order_by('user_item')                                   # method 3
+    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'checkouts': checkouts}
+    return render(request, 'lendingLibrary/my_checkouts.html', context)
+
+@login_required
+def my_items(request):
+    owner = request.user
+    items = owner.items.order_by('item_status__name', 'type__name')
+    item_requests = UserItemCheckout.objects.order_by('user_item').exclude(checkout_status_id__in=[2, 3])
+    # checkouts = UserItemCheckout.objects.filter(borrower=owner).order_by('user_item') # method 1
+    # checkouts = owner.useritemcheckout_set.order_by('user_item')                      # method 2
+    checkouts = owner.checkouts.order_by('user_item')                                   # method 3
+    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'checkouts': checkouts}
+    return render(request, 'lendingLibrary/my_items.html', context)
+
+@login_required
+def manage_items(request):
+    owner = request.user
+    items = owner.items.order_by('item_status__name', 'type__name')
+    item_requests = UserItemCheckout.objects.order_by('user_item').exclude(checkout_status_id__in=[2, 3])
+    # checkouts = UserItemCheckout.objects.filter(borrower=owner).order_by('user_item') # method 1
+    # checkouts = owner.useritemcheckout_set.order_by('user_item')                      # method 2
+    checkouts = owner.checkouts.order_by('user_item')                                   # method 3
+    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'checkouts': checkouts}
+    return render(request, 'lendingLibrary/manage_items.html', context)
+
 def user(request):
     # nothing to see. move along
     return HttpResponseRedirect(reverse('lendingLibrary:index'))

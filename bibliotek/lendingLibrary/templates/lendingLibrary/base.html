@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}{% endblock %}
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto,Montserrat&display=swap" rel="stylesheet">
     <style media="screen" type="text/css">
       html, body {
         background-color: rgba(10, 10, 100, 0.225);
@@ -14,6 +15,9 @@
         /* min-height: 100%; */
         padding: 0;
         width: 100%;
+        font-size: 0.95em;
+        /* font-family: 'Roboto', sans-serif; */
+        font-family: 'Montserrat', sans-serif;
       }
       header {
         background-color: lightpink;
@@ -24,15 +28,57 @@
         display:flex;
         flex-direction: row;
         justify-content: space-between;
+        font-size: 1.2em;
+        /* z-index: 9; */
+        /* box-shadow:         3px 3px 5px 0 #888; */
+        /* -moz-box-shadow:    3px 3px 5px 0 #888; */
+        /* -webkit-box-shadow: 3px 3px 5px 0 #888; */
+      }
+      .wrapper {
+        display: flex;
+        justify-content: center;
+        /* align-items: flex-start; */
+        /* width: 100%; */
+        /* border: 1px solid black; */
+      }
+      aside {
+        border: 1px solid #777;
+        background-color: #9c9;
+        height: 100%;
+        /* width: 25%; */
+        /* padding: 20px; */
+        margin: 10px;
+        top: 55px;
+        position: relative;
+        /* text-align: left; */
+      }
+      aside > div > span {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+      aside > div {
+        padding: 10px;
       }
       main {
+        /* border: 1px solid black; */
         /* background-color: rgba(10, 10, 100, 0.4); */
-        height: 100%;
-        width: 100%;
+        /* height: 100%; */
+        /* margin: 0;
+        padding: 0; */
+        width: auto;
         display: flex;
         align-items: center;
         flex-direction: column;
         justify-content: flex-start;
+      }
+      footer {
+        margin: 25px auto 0;
+        padding: 1px;
+        text-align: center;
+        background-color: rgba(10, 10, 100, 0.2);
+        position: relative;
+        top: 94%;
+        width: 100%;
       }
       h1, h2, h3, h4, h5 {
         text-align: center;
@@ -43,7 +89,8 @@
       }
       table {
         background-color: #FFF;
-        width: 1000px;
+        /* width: 100%; */
+        min-width: 1024px;
       }
       th, td {
         padding: 10px;
@@ -53,8 +100,8 @@
       }
       .item_description {
         display: block;
-        min-width: 500px;
-        max-width: 500px;
+        min-width: 620px;
+        max-width: 620px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -66,9 +113,6 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-      }
-      .spacer {
-        margin: 15px;
       }
     </style>
   </head>
@@ -82,18 +126,40 @@
       <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> | <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a></span>
     {% endif %}
   </header>
+  <div class="wrapper"> <!-- start of 'wrapper'-->
+    <aside>
+      <div style="background-color:#FFF">
+        <span><a href="{% url 'lendingLibrary:my_profile' %}">Pending Requests</a></span>
+        <li>New requests for your items</li>
+      </div>
+      <div>
+        <span><a href="{% url 'lendingLibrary:my_checkouts' %}">Requested Items & Checkouts</a></span>
+        <li>Items you're borrowing</li>
+      </div>
+      <div>
+        <span><a href="{% url 'lendingLibrary:my_items' %}">Your Items</a></span>
+        <li>Items you're offering to share</li>
+      </div>
+      <div>
+        <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
+        <li>Add / Edit / Delete your items</li>
+      </div>
+    </aside>
     <main>
       {% block content %}{% endblock %}
-      <div class="spacer">&nbsp;</div>
     </main>
-    <script type="text/javascript">
-      item_description = document.querySelectorAll('.item_description')
-      for (let i=0; i<item_description.length; ++i) {
-        item_description[i].onclick = function() {
-          item_description[i].style.whiteSpace = "normal"
-          item_description[i].style.overflow = "visible"
-        }
+  </div><!-- end of 'wrapper'-->
+  <footer>
+    <div>&copy; 2019 Community Lending Library - TOS - FAQs - About</div>
+  </footer>
+  <script type="text/javascript">
+    item_description = document.querySelectorAll('.item_description')
+    for (let i=0; i<item_description.length; ++i) {
+      item_description[i].onclick = function() {
+        item_description[i].style.whiteSpace = "normal"
+        item_description[i].style.overflow = "visible"
       }
-    </script>
+    }
+  </script>
   </body>
 </html>

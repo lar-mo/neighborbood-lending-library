@@ -1,0 +1,50 @@
+{% extends 'lendingLibrary/base.html' %}
+
+{% block title %}
+<title>My Checkouts - Community Lending Library</title>
+{% endblock %}
+
+{% block content %}
+  <!-- <div><h1>{{owner.username|title}}'s Profile</h1></div> -->
+  <div id="requests_checkouts"> <!-- start of 'requests_checkouts'-->
+    <h2>Requested Items & Checkouts</h2>
+    {% if checkouts %}
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Owner</th>
+        <th>Request Date</th>
+        <th>Status</th>
+        <th>Checkout Date</th>
+        <th>Due Date</th>
+      </tr>
+      {% for checkout in checkouts %}
+      <tr align="center">
+        <td>{{checkout.user_item.name}}</td>
+        <td>{{checkout.user_item.owner.username|title}}</td>
+        <td>{{checkout.request_date|date:'Y-m-d'}}</td>
+        {% if checkout.checkout_status.name == 'Pending' %}
+          <td style="background-color:#FFFF66">{{checkout.checkout_status.name}}</td>
+        {% elif checkout.checkout_status.name == 'Active' %}
+          <td style="background-color:lightgreen">{{checkout.checkout_status.name}}</td>
+        {% elif checkout.checkout_status.name == 'Inactive' %}
+          <td style="background-color:pink">{{checkout.checkout_status.name}}</td>
+        {% endif %}
+        {% if checkout.checkout_date == None %}
+          <td><i>N/A</i></td>
+        {% else %}
+          <td>{{checkout.checkout_date|date:'Y-m-d'}}</td>
+        {% endif %}
+        {% if checkout.due_date == None %}
+          <td><i>N/A</i></td>
+        {% else %}
+          <td>{{checkout.due_date|date:'Y-m-d'}}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <p><i>You don't have any requests</i></p>
+    {% endif %}
+  </div> <!-- end of 'requests_checkouts'-->
+{% endblock %}
