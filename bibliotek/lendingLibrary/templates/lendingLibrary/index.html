@@ -9,42 +9,44 @@
 {% endblock %}
 
 {% block content %}
-      <div id="item_list">
-        {% if items %}
-          <table>
-            <tr>
-              <th>Category</th>
-              <th align="left">Item</th>
-              <th align="left">Description</th>
-              <th>Status</th>
-              <th>Owner</th>
-            </tr>
-            {% for item in items %}
-            <tr>
-              <td align="center"><a href="/category/{{item.type}}/">{{item.type|title}}</a></td>
-              {% if item.type.name == "Books" %}
-                <td><span class="item_title">"{{item.name}}"</span></td>
-              {% else %}
-                <td><span class="item_title">{{item.name}}</span></td>
-              {% endif %}
-              <td><span class="item_description">{{item.description}}</span></td>
-              {% if item.item_status.name == "Available" %}
-                <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
-                {% elif item.item_status.name == "Unavailable" %}
-                  <td style="background-color:yellow" align="center">{{item.item_status}}</td>
-              {% else %}
-                <td style="background-color:white" align="center">{{item.item_status}}</td>
-              {% endif %}
-              {% if item.owner.username == request.user.username %}
-                <td align="center"><a href="{% url 'lendingLibrary:my_profile' %}">{{item.owner.username|title}}</a></td>
-              {% else %}
-                <td align="center"><a href="user/{{item.owner.id}}/">{{item.owner.username|title}}</a></td>
-              {% endif %}
-            </tr>
-            {% endfor %}
-          </table>
-        {% else %}
-          <p>No items are available.</p>
-        {% endif %}
-      </div> <!-- end of 'item_list' -->
+  <div id="item_list">
+    {% if items %}
+      <table>
+        <tr>
+          <th>Category</th>
+          <th align="left">Item</th>
+          <th align="left">Description</th>
+          <th>Status</th>
+          <th>Owner</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+          <td align="center"><a href="/category/{{item.type}}/">{{item.type|title}}</a></td>
+          {% if item.type.name == "Books" %}
+            <td><span class="item_title">"{{item.name}}"</span></td>
+          {% else %}
+            <td><span class="item_title">{{item.name}}</span></td>
+          {% endif %}
+          <td><span class="item_description" style="width: 585px">{{item.description}}</span></td>
+          {% if item.item_status.name == "Available" %}
+            <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
+          {% elif item.item_status.name == "Unavailable" %}
+            <td style="background-color:yellow" align="center">{{item.item_status}}</td>
+          {% elif item.item_status.name == "Requested" %}
+            <td style="background-color:blue;color:#FFF" align="center">{{item.item_status}}</td>
+          {% else %}
+            <td style="background-color:white" align="center">{{item.item_status}}</td>
+          {% endif %}
+          {% if item.owner.username == request.user.username %}
+            <td align="center"><a href="{% url 'lendingLibrary:my_profile' %}">{{item.owner.username|title}}</a></td>
+          {% else %}
+            <td align="center"><a href="user/{{item.owner.id}}/">{{item.owner.username|title}}</a></td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No items are available.</p>
+    {% endif %}
+  </div> <!-- end of 'item_list' -->
 {% endblock %}

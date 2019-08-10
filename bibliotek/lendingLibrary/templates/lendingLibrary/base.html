@@ -102,8 +102,8 @@
       }
       .item_description {
         display: block;
-        min-width: 620px;
-        max-width: 620px;
+        min-width: 585px;
+        max-width: 585px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -134,19 +134,19 @@
     <aside>
       <div {% if request.path == '/my_profile/' %}style="background-color:#FFF"{% endif %}>
         <span><a href="{% url 'lendingLibrary:my_profile' %}">Pending Requests</a></span>
-        <li>New requests for your items</li>
+        <div>&#8227; (2) new requests for your items</div>
       </div>
       <div {% if request.path == '/my_checkouts/' %}style="background-color:#FFF"{% endif %}>
         <span><a href="{% url 'lendingLibrary:my_checkouts' %}">Requested Items & Checkouts</a></span>
-        <li>Items you're borrowing</li>
+        <div>&#8227; (3) items requested or checked out</div>
       </div>
       <div {% if request.path == '/my_items/' %}style="background-color:#FFF"{% endif %}>
         <span><a href="{% url 'lendingLibrary:my_items' %}">Your Items</a></span>
-        <li>Items you're offering to share</li>
+        <div>&#8227; (9 of 17) items available to share</div>
       </div>
       <div {% if request.path == '/manage_items/' %}style="background-color:#FFF"{% endif %}>
         <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
-        <li>Add / Edit / Delete your items</li>
+        <div>&#8227; Add / Edit / Delete your items</div>
       </div>
     </aside>
     {% endif %}
@@ -156,7 +156,7 @@
   </div><!-- end of 'wrapper'-->
   <div><p>&nbsp;</p></div>
   <footer>
-    <div>&copy; 2019 Community Lending Library - TOS - FAQs - About</div>
+    <div>&copy; 2019 Neighborhood Lending Library - TOS - FAQs - About</div>
   </footer>
   <script type="text/javascript">
     item_description = document.querySelectorAll('.item_description')

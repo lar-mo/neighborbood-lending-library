@@ -12,31 +12,39 @@
   <div id="item_list">
     {% if items %}
       <table>
-        <tr align="left">
+        <tr>
           <th>Category</th>
-          <th>Item</th>
-          <th>Description</th>
+          <th align="left">Item</th>
+          <th align="left">Description</th>
           <th>Status</th>
+          <th>Owner</th>
         </tr>
         {% for item in items %}
         <tr>
-          <td>{{item.type|title}}</td>
+          <td align="center">{{item.type|title}}</td>
           {% if item.type.name == "books" %}
-            <td><span class="item_title">"{{item.name|title}}"</span></td>
+            <td><span class="item_title">"{{item.name}}"</span></td>
           {% else %}
             <td><span class="item_title">{{item.name}}</span></td>
           {% endif %}
-          <td><span class="item_description">{{item.description}}</span></td>
+          <td><span class="item_description" style="width: 580px">{{item.description}}</span></td>
           {% if item.item_status.name == 'Available' %}
-            <td style="background-color:lightgreen">{{item.item_status}}</td>
+            <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Unavailable' %}
-            <td style="background-color:yellow">{{item.item_status}}</td>
+            <td style="background-color:yellow" align="center">{{item.item_status}}</td>
+          {% elif item.item_status.name == "Requested" %}
+            <td style="background-color:blue;color:#FFF" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Hidden' %}
-            <td style="background-color:#777;color:#FFF">{{item.item_status}}</td>
+            <td style="background-color:#777;color:#FFF" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Lost' %}
-            <td style="background-color:#333;color:#FFF">{{item.item_status}}</td>
+            <td style="background-color:#333;color:#FFF" align="center">{{item.item_status}}</td>
           {% else %}
             <td style="background-color:white">{{item.item_status}}</td>
+          {% endif %}
+          {% if item.owner.username == request.user.username %}
+            <td align="center"><a href="{% url 'lendingLibrary:my_profile' %}">{{item.owner.username|title}}</a></td>
+          {% else %}
+            <td align="center"><a href="/user/{{item.owner.id}}/">{{item.owner.username|title}}</a></td>
           {% endif %}
         </tr>
         {% endfor %}
