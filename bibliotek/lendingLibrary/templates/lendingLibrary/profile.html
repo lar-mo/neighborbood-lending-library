@@ -18,11 +18,11 @@
             </tr>
             {% for item in items %}
             <tr>
-              <td>{{item.type}}</td>
+              <td>{{item.type|title}}</td>
               {% if item.type.name == "Books" %}
-                <td>"{{item.name|title}}"</td>
+                <td><span class="item_title">"{{item.name|title}}"</span></td>
               {% else %}
-                <td>{{item.name}}</td>
+                <td><span class="item_title">{{item.name}}</span></td>
               {% endif %}
               <td><span class="item_description">{{item.description}}</span></td>
               {% if item.item_status.name == 'Available' %}

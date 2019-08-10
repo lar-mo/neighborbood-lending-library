@@ -43,6 +43,7 @@
       }
       table {
         background-color: #FFF;
+        width: 1000px;
       }
       th, td {
         padding: 10px;
@@ -52,7 +53,16 @@
       }
       .item_description {
         display: block;
+        min-width: 500px;
         max-width: 500px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .item_title {
+        display: block;
+        min-width: 150px;
+        max-width: 150px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

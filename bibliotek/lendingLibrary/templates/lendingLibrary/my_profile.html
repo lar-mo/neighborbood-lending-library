@@ -7,7 +7,7 @@
 {% block content %}
   <div><h1>{{owner.username|title}}'s Profile</h1></div>
   <div id="pending_requests">
-    <h3>Pending Requests for Your Items</h3>
+    <h3>Pending Item Requests</h3>
     {% if checkouts %}
     <table>
       <tr>
@@ -19,7 +19,7 @@
       </tr>
       {% for item_request in item_requests %}
       <!-- {% if item_request.user_item.owner.username == request.user.username %} -->
-      <tr>
+      <tr align="center">
         <td>{{item_request.user_item.name}}</td>
         <td>{{item_request.borrower.username|title}}</td>
         <td>{{item_request.request_date|date:'Y-m-d'}}</td>
@@ -47,15 +47,15 @@
         <th>Due Date</th>
       </tr>
       {% for checkout in checkouts %}
-      <tr>
+      <tr align="center">
         <td>{{checkout.user_item.name}}</td>
         <td>{{checkout.user_item.owner.username|title}}</td>
         <td>{{checkout.request_date|date:'Y-m-d'}}</td>
         {% if checkout.checkout_status.name == 'Pending' %}
           <td style="background-color:#FFFF66">{{checkout.checkout_status.name}}</td>
-        {% elif checkout.checkout_status.name == 'Approved' %}
+        {% elif checkout.checkout_status.name == 'Active' %}
           <td style="background-color:lightgreen">{{checkout.checkout_status.name}}</td>
-        {% elif checkout.checkout_status.name == 'Denied' %}
+        {% elif checkout.checkout_status.name == 'Inactive' %}
           <td style="background-color:pink">{{checkout.checkout_status.name}}</td>
         {% endif %}
         {% if checkout.checkout_date == None %}
@@ -80,31 +80,33 @@
     <h3>Your Items</h3>
     {% if items %}
       <table>
-        <tr align="left">
+        <tr>
           <th>Category</th>
-          <th>Item</th>
-          <th>Description</th>
+          <th align="left">Item</th>
+          <th align="left">Description</th>
           <th>Status</th>
         </tr>
         {% for item in items %}
         <tr>
-          <td>{{item.type}}</td>
+          <td align="center">{{item.type}}</td>
           {% if item.type.name == "Books" %}
-            <td>"{{item.name|title}}"</td>
+            <td><span class="item_title">"{{item.name}}"</span></td>
           {% else %}
-            <td>{{item.name}}</td>
+            <td><span class="item_title">{{item.name}}</span></td>
           {% endif %}
           <td><span class="item_description">{{item.description}}</span></td>
           {% if item.item_status.name == 'Available' %}
-            <td style="background-color:lightgreen">{{item.item_status}}</td>
+            <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
+          {% elif item.item_status.name == 'Requested' %}
+            <td style="background-color:blue;color:#FFF" align="center">{{item.item_status}}</td>
+          {% elif item.item_status.name == 'Checked Out' %}
+            <td style="background-color:white" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Unavailable' %}
-            <td style="background-color:yellow">{{item.item_status}}</td>
+            <td style="background-color:yellow" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Hidden' %}
-            <td style="background-color:#777;color:#FFF">{{item.item_status}}</td>
+            <td style="background-color:#777;color:#FFF" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Lost' %}
-            <td style="background-color:#333;color:#FFF">{{item.item_status}}</td>
-          {% else %}
-            <td style="background-color:white">{{item.item_status}}</td>
+            <td style="background-color:#333;color:#FFF" align="center">{{item.item_status}}</td>
           {% endif %}
         </tr>
         {% endfor %}

@@ -10,8 +10,8 @@ urlpatterns = [
     # /lendingLibrary/user/1/
     path('user/<int:user_id>/', views.profile, name='profile'),
 
-    # # /lendingLibrary/user/1/
-    # path('owner/<int:user_id>/', views.owner_profile, name='owner_profile'),
+    # # /lendingLibrary/category/books/
+    path('category/<str:category_name>/', views.category, name='category'),
 
     # /lendingLibrary/user/ - error handling, redirect to index if trying to go to /user/
     path('user/', views.user, name='user'),

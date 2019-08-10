@@ -9,33 +9,33 @@
         <h1>All Items</h1>
         {% if items %}
           <table>
-            <tr align="left">
+            <tr>
               <th>Category</th>
-              <th>Item</th>
-              <th>Description</th>
+              <th align="left">Item</th>
+              <th align="left">Description</th>
               <th>Status</th>
               <th>Owner</th>
             </tr>
             {% for item in items %}
             <tr>
-              <td>{{item.type}}</td>
+              <td align="center"><a href="/category/{{item.type}}/">{{item.type|title}}</a></td>
               {% if item.type.name == "Books" %}
-                <td>"{{item.name|title}}"</td>
+                <td><span class="item_title">"{{item.name}}"</span></td>
               {% else %}
-                <td>{{item.name}}</td>
+                <td><span class="item_title">{{item.name}}</span></td>
               {% endif %}
               <td><span class="item_description">{{item.description}}</span></td>
               {% if item.item_status.name == "Available" %}
-                <td style="background-color:lightgreen">{{item.item_status}}</td>
+                <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
                 {% elif item.item_status.name == "Unavailable" %}
-                  <td style="background-color:yellow">{{item.item_status}}</td>
+                  <td style="background-color:yellow" align="center">{{item.item_status}}</td>
               {% else %}
-                <td style="background-color:white">{{item.item_status}}</td>
+                <td style="background-color:white" align="center">{{item.item_status}}</td>
               {% endif %}
               {% if item.owner.username == request.user.username %}
-                <td><a href="{% url 'lendingLibrary:my_profile' %}">{{item.owner.username|title}}</a></td>
+                <td align="center"><a href="{% url 'lendingLibrary:my_profile' %}">{{item.owner.username|title}}</a></td>
               {% else %}
-                <td><a href="user/{{item.owner.id}}/">{{item.owner.username|title}}</a></td>
+                <td align="center"><a href="user/{{item.owner.id}}/">{{item.owner.username|title}}</a></td>
               {% endif %}
             </tr>
             {% endfor %}

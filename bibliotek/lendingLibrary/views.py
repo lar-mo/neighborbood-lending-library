@@ -10,9 +10,10 @@ from .models import UserItemStatus, UserItemCategory, UserItemCondition, UserIte
 
 def index(request):
     items = UserItem.objects.order_by('type__name').exclude(item_status__in=[6, 4])
-    message = request.GET.get('message', '')
-    next = request.GET.get('next', '')
-    context = {'items': items, 'message': message,'next': next}
+    # message = request.GET.get('message', '')
+    # next = request.GET.get('next', '')
+    # context = {'items': items, 'message': message,'next': next}
+    context = {'items': items}
     return render(request, 'lendingLibrary/index.html', context)
 
 def profile(request, user_id):
@@ -21,13 +22,17 @@ def profile(request, user_id):
     context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/profile.html', context)
 
+def category(request, category_name):
+    items = UserItem.objects.filter(type__name=category_name).exclude(item_status__in=[6, 4])
+    print(items)
+    context = {'items': items, 'category_name': category_name}
+    return render(request, 'lendingLibrary/category.html', context)
+
 @login_required
 def my_profile(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'type__name')
     item_requests = UserItemCheckout.objects.order_by('user_item').exclude(checkout_status_id__in=[2, 3])
-    print("!!!")
-    print(item_requests)
     # checkouts = UserItemCheckout.objects.filter(borrower=owner).order_by('user_item') # method 1
     # checkouts = owner.useritemcheckout_set.order_by('user_item')                      # method 2
     checkouts = owner.checkouts.order_by('user_item')                                   # method 3
