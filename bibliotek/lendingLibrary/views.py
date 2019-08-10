@@ -10,9 +10,6 @@ from .models import UserItemStatus, UserItemCategory, UserItemCondition, UserIte
 
 def index(request):
     items = UserItem.objects.order_by('type__name').exclude(item_status__in=[6, 4])
-    # message = request.GET.get('message', '')
-    # next = request.GET.get('next', '')
-    # context = {'items': items, 'message': message,'next': next}
     context = {'items': items}
     return render(request, 'lendingLibrary/index.html', context)
 
@@ -31,45 +28,30 @@ def category(request, category_name):
 @login_required
 def my_profile(request):
     owner = request.user
-    items = owner.items.order_by('item_status__name', 'type__name')
-    item_requests = UserItemCheckout.objects.order_by('user_item').exclude(checkout_status_id__in=[2, 3])
-    # checkouts = UserItemCheckout.objects.filter(borrower=owner).order_by('user_item') # method 1
-    # checkouts = owner.useritemcheckout_set.order_by('user_item')                      # method 2
-    checkouts = owner.checkouts.order_by('user_item')                                   # method 3
-    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'checkouts': checkouts}
+    item_requests = UserItemCheckout.objects.filter(checkout_status_id=1).exclude(borrower_id=owner.id)
+    context = {'owner': owner, 'item_requests': item_requests}
     return render(request, 'lendingLibrary/my_profile.html', context)
 
 @login_required
 def my_checkouts(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'type__name')
-    item_requests = UserItemCheckout.objects.order_by('user_item').exclude(checkout_status_id__in=[2, 3])
-    # checkouts = UserItemCheckout.objects.filter(borrower=owner).order_by('user_item') # method 1
-    # checkouts = owner.useritemcheckout_set.order_by('user_item')                      # method 2
-    checkouts = owner.checkouts.order_by('user_item')                                   # method 3
-    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'checkouts': checkouts}
+    checkouts = owner.checkouts.order_by('user_item')
+    context = {'owner': owner, 'checkouts': checkouts}
     return render(request, 'lendingLibrary/my_checkouts.html', context)
 
 @login_required
 def my_items(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'type__name')
-    item_requests = UserItemCheckout.objects.order_by('user_item').exclude(checkout_status_id__in=[2, 3])
-    # checkouts = UserItemCheckout.objects.filter(borrower=owner).order_by('user_item') # method 1
-    # checkouts = owner.useritemcheckout_set.order_by('user_item')                      # method 2
-    checkouts = owner.checkouts.order_by('user_item')                                   # method 3
-    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'checkouts': checkouts}
+    context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/my_items.html', context)
 
 @login_required
 def manage_items(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'type__name')
-    item_requests = UserItemCheckout.objects.order_by('user_item').exclude(checkout_status_id__in=[2, 3])
-    # checkouts = UserItemCheckout.objects.filter(borrower=owner).order_by('user_item') # method 1
-    # checkouts = owner.useritemcheckout_set.order_by('user_item')                      # method 2
-    checkouts = owner.checkouts.order_by('user_item')                                   # method 3
-    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'checkouts': checkouts}
+    context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/manage_items.html', context)
 
 def user(request):

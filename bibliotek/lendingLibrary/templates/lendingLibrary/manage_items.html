@@ -4,10 +4,12 @@
 <title>Manage Items - Community Lending Library</title>
 {% endblock %}
 
+{% block heading %}
+<h2>Manage Your Items</h2>
+{% endblock %}
+
 {% block content %}
-  <!-- <div><h1>{{owner.username|title}}'s Profile</h1></div> -->
   <div id="item_list"> <!-- start of 'item_list' -->
-    <h2>Manage Your Items</h2>
     {% if items %}
       <table>
         <tr>

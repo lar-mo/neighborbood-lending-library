@@ -4,10 +4,12 @@
 <title>My Checkouts - Community Lending Library</title>
 {% endblock %}
 
+{% block heading %}
+<h2>Requested Items & Checkouts</h2>
+{% endblock %}
+
 {% block content %}
-  <!-- <div><h1>{{owner.username|title}}'s Profile</h1></div> -->
   <div id="requests_checkouts"> <!-- start of 'requests_checkouts'-->
-    <h2>Requested Items & Checkouts</h2>
     {% if checkouts %}
     <table>
       <tr>

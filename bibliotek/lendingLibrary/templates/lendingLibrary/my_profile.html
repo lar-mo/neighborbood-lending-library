@@ -4,11 +4,13 @@
 <title>Borrower Requests - Community Lending Library</title>
 {% endblock %}
 
+{% block heading %}
+<h2>Pending Item Requests</h2>
+{% endblock %}
+
 {% block content %}
-  <!-- <div><h1>{{owner.username|title}}'s Profile</h1></div> -->
   <div id="pending_requests"> <!-- start of 'pending_requests'-->
-    <h2>Pending Item Requests</h2>
-    {% if checkouts %}
+    {% if item_requests %}
     <table>
       <tr>
         <th>Item</th>

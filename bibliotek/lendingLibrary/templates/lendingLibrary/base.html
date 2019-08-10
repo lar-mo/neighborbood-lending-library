@@ -28,8 +28,8 @@
         display:flex;
         flex-direction: row;
         justify-content: space-between;
-        font-size: 1.2em;
-        /* z-index: 9; */
+        font-size: 1.1em;
+        z-index: 999;
         /* box-shadow:         3px 3px 5px 0 #888; */
         /* -moz-box-shadow:    3px 3px 5px 0 #888; */
         /* -webkit-box-shadow: 3px 3px 5px 0 #888; */
@@ -40,6 +40,7 @@
         /* align-items: flex-start; */
         /* width: 100%; */
         /* border: 1px solid black; */
+        flex-direction: row;
       }
       aside {
         border: 1px solid #777;
@@ -47,8 +48,9 @@
         height: 100%;
         /* width: 25%; */
         /* padding: 20px; */
-        margin: 10px;
-        top: 55px;
+        margin: 0;
+        margin-right: 10px;
+        /* top: 5px; */
         position: relative;
         /* text-align: left; */
       }
@@ -72,12 +74,12 @@
         justify-content: flex-start;
       }
       footer {
-        margin: 25px auto 0;
+        /* margin: 25px auto 0; */
         padding: 1px;
         text-align: center;
         background-color: rgba(10, 10, 100, 0.2);
-        position: relative;
-        top: 94%;
+        position: static;
+        /* top: 94%; */
         width: 100%;
       }
       h1, h2, h3, h4, h5 {
@@ -126,29 +128,33 @@
       <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> | <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a></span>
     {% endif %}
   </header>
+  {% block heading %}{% endblock %}
   <div class="wrapper"> <!-- start of 'wrapper'-->
+    {% if request.user.is_authenticated %}
     <aside>
-      <div style="background-color:#FFF">
+      <div {% if request.path == '/my_profile/' %}style="background-color:#FFF"{% endif %}>
         <span><a href="{% url 'lendingLibrary:my_profile' %}">Pending Requests</a></span>
         <li>New requests for your items</li>
       </div>
-      <div>
+      <div {% if request.path == '/my_checkouts/' %}style="background-color:#FFF"{% endif %}>
         <span><a href="{% url 'lendingLibrary:my_checkouts' %}">Requested Items & Checkouts</a></span>
         <li>Items you're borrowing</li>
       </div>
-      <div>
+      <div {% if request.path == '/my_items/' %}style="background-color:#FFF"{% endif %}>
         <span><a href="{% url 'lendingLibrary:my_items' %}">Your Items</a></span>
         <li>Items you're offering to share</li>
       </div>
-      <div>
+      <div {% if request.path == '/manage_items/' %}style="background-color:#FFF"{% endif %}>
         <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
         <li>Add / Edit / Delete your items</li>
       </div>
     </aside>
+    {% endif %}
     <main>
       {% block content %}{% endblock %}
     </main>
   </div><!-- end of 'wrapper'-->
+  <div><p>&nbsp;</p></div>
   <footer>
     <div>&copy; 2019 Community Lending Library - TOS - FAQs - About</div>
   </footer>

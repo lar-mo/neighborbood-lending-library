@@ -4,9 +4,12 @@
 <title>Category - Community Lending Library</title>
 {% endblock %}
 
+{% block heading %}
+<h2>Items in "{{category_name|title}}"</h2>
+{% endblock %}
+
 {% block content %}
   <div id="item_list">
-    <h1>Items in Category:<i>{{category_name|title}}</i></h1>
     {% if items %}
       <table>
         <tr align="left">
