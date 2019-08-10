@@ -33,7 +33,7 @@
                 <td style="background-color:white">{{item.item_status}}</td>
               {% endif %}
               {% if item.owner.username == request.user.username %}
-                <td><a href="{% url 'lendingLibrary:owner_profile' %}">{{item.owner.username|title}}</a></td>
+                <td><a href="{% url 'lendingLibrary:my_profile' %}">{{item.owner.username|title}}</a></td>
               {% else %}
                 <td><a href="user/{{item.owner.id}}/">{{item.owner.username|title}}</a></td>
               {% endif %}

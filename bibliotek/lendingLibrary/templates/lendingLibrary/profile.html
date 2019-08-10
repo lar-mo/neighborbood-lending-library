@@ -14,6 +14,7 @@
               <th>Item</th>
               <th>Description</th>
               <th>Status</th>
+              <th>Action</th>
             </tr>
             {% for item in items %}
             <tr>
@@ -28,13 +29,14 @@
                 <td style="background-color:lightgreen">{{item.item_status}}</td>
               {% elif item.item_status.name == 'Unavailable' %}
                 <td style="background-color:yellow">{{item.item_status}}</td>
-              {% elif item.item_status.name == 'Hidden' %}
-                <td style="background-color:#777;color:#FFF">{{item.item_status}}</td>
-              {% elif item.item_status.name == 'Lost' %}
-                <td style="background-color:#333;color:#FFF">{{item.item_status}}</td>
               {% else %}
                 <td style="background-color:white">{{item.item_status}}</td>
               {% endif %}
+              <td>
+                {% if not item.item_status.name == 'Unavailable' %}
+                  <button onclick="console.log('Request for {{item.name}} button clicked')">Request</button>
+                {% endif %}
+              </td>
             </tr>
             {% endfor %}
           </table>

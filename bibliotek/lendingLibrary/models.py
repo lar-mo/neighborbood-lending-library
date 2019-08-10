@@ -39,12 +39,12 @@ class UserItem(models.Model):
         return self.type.name + ': ' + self.name
 
 class UserItemCheckout(models.Model):
-    user_item       = models.ForeignKey(UserItem, on_delete=models.PROTECT, related_name="checkouts")
-    item_status     = models.ForeignKey(CheckoutStatus, on_delete=models.PROTECT)
+    user_item       = models.ForeignKey(UserItem, on_delete=models.PROTECT, related_name='item_history')
+    checkout_status = models.ForeignKey(CheckoutStatus, on_delete=models.PROTECT)
     request_date    = models.DateTimeField()
     checkout_date   = models.DateTimeField(default=None, blank=True, null=True)
     checkin_date    = models.DateTimeField(default=None, blank=True, null=True)
-    borrower        = models.ForeignKey(User, on_delete=models.PROTECT)
+    borrower        = models.ForeignKey(User, on_delete=models.PROTECT, related_name='checkouts')
     due_date        = models.DateTimeField(default=None, blank=True, null=True)
 
     def __str__(self):

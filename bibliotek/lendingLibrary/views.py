@@ -22,11 +22,17 @@ def profile(request, user_id):
     return render(request, 'lendingLibrary/profile.html', context)
 
 @login_required
-def owner_profile(request):
+def my_profile(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'type__name')
-    context = {'items': items, 'owner': owner}
-    return render(request, 'lendingLibrary/owner_profile.html', context)
+    item_requests = UserItemCheckout.objects.order_by('user_item').exclude(checkout_status_id__in=[2, 3])
+    print("!!!")
+    print(item_requests)
+    # checkouts = UserItemCheckout.objects.filter(borrower=owner).order_by('user_item') # method 1
+    # checkouts = owner.useritemcheckout_set.order_by('user_item')                      # method 2
+    checkouts = owner.checkouts.order_by('user_item')                                   # method 3
+    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'checkouts': checkouts}
+    return render(request, 'lendingLibrary/my_profile.html', context)
 
 def user(request):
     # nothing to see. move along
@@ -64,7 +70,7 @@ def login_user(request):
         login(request, user)
         if next != '':
             return HttpResponseRedirect(next)
-        return HttpResponseRedirect(reverse('lendingLibrary:index'))
+        return HttpResponseRedirect(reverse('lendingLibrary:owner_profile'))
 
     if next != '':
         return HttpResponseRedirect(reverse('lendingLibrary:register_login')+'?message=fail&next='+next)

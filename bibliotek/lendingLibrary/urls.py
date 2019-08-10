@@ -16,8 +16,8 @@ urlpatterns = [
     # /lendingLibrary/user/ - error handling, redirect to index if trying to go to /user/
     path('user/', views.user, name='user'),
 
-    # /lendingLibrary/user/ - error handling, redirect to index if trying to go to /user/
-    path('owner/', views.owner_profile, name='owner_profile'),
+    # /lendingLibrary/my_profile/ - logged in user's profile
+    path('my_profile/', views.my_profile, name='my_profile'),
 
     # /lendingLibrary/register_login/ - login or register a user
     path('register_login/', views.register_login, name='register_login'),
