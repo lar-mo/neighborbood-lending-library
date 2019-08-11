@@ -17,6 +17,7 @@
           <th align="left">Item</th>
           <th align="left">Description</th>
           <th>Status</th>
+          <th>Borrower</th>
         </tr>
         {% for item in items %}
         <tr>
@@ -32,13 +33,21 @@
           {% elif item.item_status.name == 'Requested' %}
             <td style="background-color:blue;color:#FFF" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Checked Out' %}
-            <td style="background-color:white" align="center">{{item.item_status}}</td>
+            <td style="background-color:pink" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Unavailable' %}
             <td style="background-color:yellow" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Hidden' %}
             <td style="background-color:#777;color:#FFF" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Lost' %}
             <td style="background-color:#333;color:#FFF" align="center">{{item.item_status}}</td>
+          {% endif %}
+          {% for request in item_requests %}
+            {% if request.user_item.name == item.name %}
+              <td align="center">{{request.borrower.username}}</td>
+            {% endif %}
+          {% endfor %}
+          {% if item.item_status.name in filter %}
+            <td>&nbsp;</td>
           {% endif %}
         </tr>
         {% endfor %}

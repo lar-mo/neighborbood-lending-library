@@ -128,7 +128,9 @@ def my_checkouts(request):
 def my_items(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'type__name')
-    context = {'items': items, 'owner': owner}
+    item_requests = UserItemCheckout.objects.filter(user_item__in=items)
+    filter = ['Available', 'Unavailable', 'Lost', 'Hidden']
+    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'filter': filter}
     return render(request, 'lendingLibrary/my_items.html', context)
 
 @login_required

@@ -32,15 +32,21 @@
             <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == "Unavailable" %}
             <td style="background-color:yellow" align="center">{{item.item_status}}</td>
+          {% elif item.item_status.name == 'Checked Out' %}
+            <td style="background-color:pink" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == "Requested" %}
             <td style="background-color:blue;color:#FFF" align="center">{{item.item_status}}</td>
           {% else %}
             <td style="background-color:white" align="center">{{item.item_status}}</td>
           {% endif %}
           {% if item.owner.username == request.user.username %}
-            <td align="center"><a href="{% url 'lendingLibrary:my_profile' %}">{{item.owner.username|title}}</a></td>
+            <td align="center">
+              <a href="{% url 'lendingLibrary:my_items' %}">{{item.owner.username|title}}</a>
+            </td>
           {% else %}
-            <td align="center"><a href="user/{{item.owner.id}}/">{{item.owner.username|title}}</a></td>
+            <td align="center">
+              <a href="user/{{item.owner.id}}/">{{item.owner.username|title}}</a>
+            </td>
           {% endif %}
         </tr>
         {% endfor %}

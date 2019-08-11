@@ -32,21 +32,27 @@
                 <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
               {% elif item.item_status.name == 'Unavailable' %}
                 <td style="background-color:yellow" align="center">{{item.item_status}}</td>
+              {% elif item.item_status.name == 'Checked Out' %}
+                <td style="background-color:pink" align="center">{{item.item_status}}</td>
               {% elif item.item_status.name == 'Requested' %}
                 <td style="background-color:blue;color:white" align="center">{{item.item_status}}</td>
               {% else %}
                 <td style="background-color:white" align="center">{{item.item_status}}</td>
               {% endif %}
-              <td align="center">
-                {% if item.item_status.name != 'Unavailable' and item.item_status.name != 'Requested' %}
-                <form action="{% url 'lendingLibrary:request_item' %}" method="post">
-                  {% csrf_token %}
-                  <input type="hidden" name="user_item" value="{{item.id}}"/>
-                  <input type="hidden" name="borrower" value="{{request.user.id}}"/>
-                  <button type="submit">Request</button>
-                </form>
-                {% endif %}
-              </td>
+              {% if request.user.username %}
+                <td align="center">
+                  {% if item.item_status.name != 'Unavailable' and item.item_status.name != 'Requested' and item.item_status.name != 'Checked Out' %}
+                  <form action="{% url 'lendingLibrary:request_item' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_item" value="{{item.id}}"/>
+                    <input type="hidden" name="borrower" value="{{request.user.id}}"/>
+                    <button type="submit">Request</button>
+                  </form>
+                  {% endif %}
+                </td>
+              {% else %}
+                <td style="font-size:0.7em">You have to be logged in.</td>
+              {% endif %}
             </tr>
             {% endfor %}
           </table>

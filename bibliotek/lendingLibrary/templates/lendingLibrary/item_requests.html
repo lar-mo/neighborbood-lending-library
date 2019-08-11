@@ -16,36 +16,46 @@
         <th>Item</th>
         <th>Requestor</th>
         <th>Request Date</th>
-        <th>Due Date</th>
-        <th>Action</th>
+        <th>Actions</th>
       </tr>
       {% for item_request in item_requests %}
       <tr align="center">
         <td>{{item_request.user_item.name}}</td>
         <td>{{item_request.borrower.username|title}}</td>
         <td>{{item_request.request_date|date:'Y-m-d'}}</td>
-        <td>
+        <td><u>Due Date</u>:
           <form id="approve_form" action="{% url 'lendingLibrary:approve_request' %}" method="post">
             {% csrf_token %}
             <input type="date" name="due_date" value="{{item_request.due_date|date:'Y-m-d'}}" required/>
             <input type="hidden" name="item_request_id" value="{{item_request.id}}">
             <button type="submit">Approve</button>
           </form>
+          <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="item_request_id" value="{{item_request.id}}">
+            <button type="submit">Deny</button>
+          </form>
         </td>
-        <td>
-          <div class="btn-group">
-              <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="item_request_id" value="{{item_request.id}}">
-              <button type="submit">Deny</button>
-            </form>
-          </div>
-        </td>
+        <!-- <td>
+          <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="item_request_id" value="{{item_request.id}}">
+            <button type="submit">Deny</button>
+          </form>
+        </td> -->
       </tr>
       {% endfor %}
     </table>
     {% else %}
-      <p><i>You don't have any requests or checkouts</i></p>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Requestor</th>
+        <th>Request Date</th>
+        <th>Actions</th>
+      </tr>
+    </table>
+      <h3><i>You don't have any requests.</i></h3>
     {% endif %}
   </div> <!-- end of 'pending_requests'-->
 {% endblock %}
