@@ -22,6 +22,12 @@ urlpatterns = [
     # /lendingLibrary/save_info/ - form handling
     path('save_info/', views.save_info, name='save_info'),
 
+    # /lendingLibrary/save_password/ - form handling
+    path('save_password/', views.save_password, name='save_password'),
+
+    # /lendingLibrary/check_password/ - TEST - check password
+    path('check_password/', views.check_pwd, name='check_pwd'),
+
     # /lendingLibrary/item_requests/ - logged in user's profile - borrower requests
     path('pending_requests/', views.item_requests, name='item_requests'),
 

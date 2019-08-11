@@ -94,12 +94,16 @@
         /* width: 100%; */
         min-width: 1024px;
       }
-      #profile_form {
+      #profile_form, #password_form, #check_password {
         min-width: auto;
         width: 500px;
       }
-      input[type=text] {
+      input[type=text],
+      input[type=password] {
         width: 350px;
+      }
+      input[type=submit] {
+        font-weight: bold;
       }
       th, td {
         padding: 10px;
@@ -123,56 +127,69 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
+      .spacer {
+        margin: 10px;
+      }
+      .form_msg {
+        /* padding:0 56px; */
+        background-color:blue;
+        color:white;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
-  <header>
-    {% if not request.user.username or message == 'logout' %}
-      <span>Welcome!</span>
-      <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Register</a> | <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Login</a></span>
-    {% else %}
-      <span>Welcome, {{user.username|title}}!</span>
-      <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> | <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a></span>
-    {% endif %}
-  </header>
-  {% block heading %}{% endblock %}
-  <div class="wrapper"> <!-- start of 'wrapper'-->
-    {% if request.user.is_authenticated %}
-    <aside>
-      <div {% if request.path == '/pending_requests/' %}style="background-color:#FFF"{% endif %}>
-        <span><a href="{% url 'lendingLibrary:item_requests' %}">Pending Requests</a></span>
-        <div>&#8227; (2) new requests for your items</div>
-      </div>
-      <div {% if request.path == '/my_checkouts/' %}style="background-color:#FFF"{% endif %}>
-        <span><a href="{% url 'lendingLibrary:my_checkouts' %}">Requested Items & Checkouts</a></span>
-        <div>&#8227; (3) items requested or checked out</div>
-      </div>
-      <div {% if request.path == '/my_items/' %}style="background-color:#FFF"{% endif %}>
-        <span><a href="{% url 'lendingLibrary:my_items' %}">Your Items</a></span>
-        <div>&#8227; (9 of 17) items available to share</div>
-      </div>
-      <div {% if request.path == '/manage_items/' %}style="background-color:#FFF"{% endif %}>
-        <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
-        <div>&#8227; Add / Edit / Delete your items</div>
-      </div>
-    </aside>
-    {% endif %}
-    <main>
-      {% block content %}{% endblock %}
-    </main>
-  </div><!-- end of 'wrapper'-->
-  <div><p>&nbsp;</p></div>
-  <footer>
-    <div>&copy; 2019 Neighborhood Lending Library - TOS - FAQs - About</div>
-  </footer>
-  <script type="text/javascript">
-    item_description = document.querySelectorAll('.item_description')
-    for (let i=0; i<item_description.length; ++i) {
-      item_description[i].onclick = function() {
-        item_description[i].style.whiteSpace = "normal"
-        item_description[i].style.overflow = "visible"
+    <header>
+      {% if not request.user.username or message == 'logout' %}
+        <span>Welcome!</span>
+        <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Register</a> | <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Login</a></span>
+      {% else %}
+        {% if request.user.first_name %}
+          <span>Welcome, {{user.first_name|title}}!</span>
+        {% else %}
+          <span>Welcome, {{user.username|title}}!</span>
+        {% endif %}
+        <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> | <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a></span>
+      {% endif %}
+    </header>
+    {% block heading %}{% endblock %}
+    <div class="wrapper"> <!-- start of 'wrapper'-->
+      {% if request.user.is_authenticated %}
+      <aside>
+        <div {% if request.path == '/pending_requests/' %}style="background-color:#FFF"{% endif %}>
+          <span><a href="{% url 'lendingLibrary:item_requests' %}">Pending Requests</a></span>
+          <div>&#8227; (2) new requests for your items</div>
+        </div>
+        <div {% if request.path == '/my_checkouts/' %}style="background-color:#FFF"{% endif %}>
+          <span><a href="{% url 'lendingLibrary:my_checkouts' %}">Requested Items & Checkouts</a></span>
+          <div>&#8227; (3) items requested or checked out</div>
+        </div>
+        <div {% if request.path == '/my_items/' %}style="background-color:#FFF"{% endif %}>
+          <span><a href="{% url 'lendingLibrary:my_items' %}">Your Items</a></span>
+          <div>&#8227; (9 of 17) items available to share</div>
+        </div>
+        <div {% if request.path == '/manage_items/' %}style="background-color:#FFF"{% endif %}>
+          <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
+          <div>&#8227; Add / Edit / Delete your items</div>
+        </div>
+      </aside>
+      {% endif %}
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+    </div><!-- end of 'wrapper'-->
+    <div><p>&nbsp;</p></div>
+    <footer>
+      <div>&copy; 2019 Neighborhood Lending Library - TOS - FAQs - About</div>
+    </footer>
+    <script type="text/javascript">
+      item_description = document.querySelectorAll('.item_description')
+      for (let i=0; i<item_description.length; ++i) {
+        item_description[i].onclick = function() {
+          item_description[i].style.whiteSpace = "normal"
+          item_description[i].style.overflow = "visible"
+        }
       }
-    }
-  </script>
+    </script>
   </body>
 </html>

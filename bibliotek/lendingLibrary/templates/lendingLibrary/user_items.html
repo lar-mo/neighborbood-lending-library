@@ -32,6 +32,8 @@
                 <td style="background-color:lightgreen">{{item.item_status}}</td>
               {% elif item.item_status.name == 'Unavailable' %}
                 <td style="background-color:yellow">{{item.item_status}}</td>
+              {% elif item.item_status.name == 'Requested' %}
+                <td style="background-color:blue;color:white">{{item.item_status}}</td>
               {% else %}
                 <td style="background-color:white">{{item.item_status}}</td>
               {% endif %}

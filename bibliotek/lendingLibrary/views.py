@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
 
 from .models import UserItemStatus, UserItemCategory, UserItemCondition, UserItem, UserItemCheckout
 
@@ -28,17 +29,42 @@ def category(request, category_name):
 @login_required
 def my_profile(request):
     user_info = request.user
-    context = {'user_info': user_info}
+    message = request.GET.get('message', '').strip()
+    context = {'user_info': user_info, 'message': message}
     return render(request, 'lendingLibrary/my_profile.html', context)
 
-@login_required
 def save_info(request):
     user_info = User.objects.get(id=request.user.id)
-    user_info.first_name = request.POST['first_name']
-    user_info.last_name = request.POST['last_name']
-    user_info.email = request.POST['email']
+    user_info.first_name = request.POST['first_name'].strip()
+    user_info.last_name = request.POST['last_name'].strip()
+    user_info.email = request.POST['email'].strip()
     user_info.save()
-    return HttpResponseRedirect(reverse('lendingLibrary:my_profile'))
+    return HttpResponseRedirect(reverse('lendingLibrary:my_profile')+'?message=info_saved')
+
+def save_password(request):
+    # authenticate that old password is correct
+    old_password = request.POST['old_password'].strip()
+    current_password = request.user.password
+    success = check_password(old_password, current_password)
+    if not success:
+        return HttpResponseRedirect(reverse('lendingLibrary:my_profile')+'?message=bad_password')
+    else:
+        # if True,
+        new_password = request.POST['new_password'].strip()
+        user = User.objects.get(id=request.user.id)
+        user.set_password(new_password)
+        user.save()
+        login(request, user)
+        return HttpResponseRedirect(reverse('lendingLibrary:my_profile')+'?message=password_saved')
+
+def check_pwd(request):
+    current_password = request.user.password
+    typed_password = request.POST['typed_password'].strip()
+    success = check_password(typed_password, current_password)
+    if success:
+        return HttpResponseRedirect(reverse('lendingLibrary:my_profile')+'?message=good_password')
+    else:
+        return HttpResponseRedirect(reverse('lendingLibrary:my_profile')+'?message=bad_password2')
 
 @login_required
 def item_requests(request):

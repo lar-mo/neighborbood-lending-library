@@ -9,28 +9,77 @@
 {% endblock %}
 
 {% block content %}
-  <div id="my_profile"> <!-- start of 'my_profile'-->
+  <div id="my_info"> <!-- start of 'my_info'-->
     <form action="{% url 'lendingLibrary:save_info' %}" method="post">
       {% csrf_token %}
+      {% if message == 'info_saved' %}
+      <div class="form_msg">Your information was saved.</div>
+      {% endif %}
       <table id="profile_form">
-      <tr>
-        <th>Username</th>
-        <td><input disabled value="{{user_info.username}}"/></td>
-      </tr>
-      <tr>
-        <th>First Name</th>
-        <td><input type="text" name="first_name" value="{{user_info.first_name}}"></td>
-      </tr>
-      <tr>
-        <th>Last Name</th>
-        <td><input type="text" name="last_name" value="{{user_info.last_name}}"></td>
-      </tr>
-      <tr>
-        <th>Email</th>
-        <td><input type="text" name="email" value="{{user_info.email}}"></td>
-      </tr>
+        <tr>
+          <th>Username</th>
+          <td><input disabled value="{{user_info.username}}"/></td>
+        </tr>
+        <tr>
+          <th>First Name</th>
+          <td><input type="text" name="first_name" value="{{user_info.first_name}}"></td>
+        </tr>
+        <tr>
+          <th>Last Name</th>
+          <td><input type="text" name="last_name" value="{{user_info.last_name}}"></td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td><input type="text" name="email" value="{{user_info.email}}"></td>
+        </tr>
       </table>
-      <center><input type="submit" name="submit" value="Save" style="padding: 10px 20px"/></center>
+      <center><input type="submit" name="save_new_info" value="Save Info" style="padding: 10px 20px"/></center>
     </form>
-  </div> <!-- end of 'my_profile'-->
+  </div> <!-- end of 'my_info'-->
+  <div class="spacer">&nbsp;</div>
+  <div id="change_password"> <!-- start of 'change_password'-->
+    <h3>Change Password</h3>
+    <form action="{% url 'lendingLibrary:save_password' %}" method="post">
+      {% csrf_token %}
+      {% if message == 'password_saved' %}
+        <div class="form_msg">Your password was saved.</div>
+      {% elif message == 'bad_password' %}
+        <div class="form_msg">Your old password was incorrect.</div>
+      {% endif %}
+      <table id="password_form">
+        <tr>
+          <th>Old Password</th>
+          <td><input type="password" name="old_password" value=""/></td>
+        </tr>
+        <tr>
+          <th>New Password</th>
+          <td><input type="password" name="new_password" value=""/></td>
+        </tr>
+        <tr>
+          <th>Confirm New Password</th>
+          <td><input type="password" name="confirm_new_password" value=""></td>
+        </tr>
+      </table>
+      <center><input type="submit" name="save_new_password" value="Save Password" style="padding: 10px 20px"/></center>
+    </form>
+  </div> <!-- end of 'change_password'-->
+  <div class="spacer">&nbsp;</div>
+  <div id="check_password"> <!-- start of 'check_password'-->
+    <h3>Check Password</h3>
+    <form action="{% url 'lendingLibrary:check_pwd' %}" method="post">
+      {% csrf_token %}
+      {% if message == 'good_password' %}
+        <div class="form_msg">You entered a correct password.</div>
+      {% elif message == 'bad_password2' %}
+        <div class="form_msg">You entered an incorrect password.</div>
+      {% endif %}
+      <table id="check_password">
+        <tr>
+          <th>Confirm Existing Password</th>
+          <td><input type="password" name="typed_password" value=""></td>
+        </tr>
+      </table>
+      <center><input type="submit" value="Check Password" style="padding: 10px 20px"/></center>
+    </form>
+  </div> <!-- end of 'change_password'-->
 {% endblock %}
