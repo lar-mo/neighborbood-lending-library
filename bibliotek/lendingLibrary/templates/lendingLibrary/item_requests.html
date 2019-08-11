@@ -24,8 +24,23 @@
         <td>{{item_request.user_item.name}}</td>
         <td>{{item_request.borrower.username|title}}</td>
         <td>{{item_request.request_date|date:'Y-m-d'}}</td>
-        <td><input type="date" id="input_duedate" name="due_date" value="{{item_request.due_date|date:'Y-m-d'}}"/></td>
-        <td><div><button>Approve</button>&nbsp;<form action="{% url 'lendingLibrary:deny_request' %}" method="post">{% csrf_token %}<input type="hidden" name="item_request_id" value="{{item_request.id}}"><input type="submit" value="Deny"></form></div></td>
+        <td>
+          <form id="approve_form" action="{% url 'lendingLibrary:approve_request' %}" method="post">
+            {% csrf_token %}
+            <input type="date" name="due_date" value="{{item_request.due_date|date:'Y-m-d'}}" required/>
+            <input type="hidden" name="item_request_id" value="{{item_request.id}}">
+            <button type="submit">Approve</button>
+          </form>
+        </td>
+        <td>
+          <div class="btn-group">
+              <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="item_request_id" value="{{item_request.id}}">
+              <button type="submit">Deny</button>
+            </form>
+          </div>
+        </td>
       </tr>
       {% endfor %}
     </table>
