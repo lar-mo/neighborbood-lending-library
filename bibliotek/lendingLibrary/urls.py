@@ -19,6 +19,9 @@ urlpatterns = [
     # /lendingLibrary/request_item/ - form handling
     path('request_item/', views.request_item, name='request_item'),
 
+    # /lendingLibrary/deny_request/ - form handling
+    path('deny_request/', views.deny_request, name='deny_request'),
+
     # /lendingLibrary/my_profile/ - logged in user's profile - view & edit profile (name, email, password)
     path('my_profile/', views.my_profile, name='my_profile'),
 

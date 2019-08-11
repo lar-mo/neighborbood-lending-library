@@ -41,6 +41,19 @@ def request_item(request):
     return HttpResponseRedirect(reverse('lendingLibrary:user_items', args=('3',)))
 
 @login_required
+def deny_request(request):
+    checkout_status = CheckoutStatus.objects.get(id=2) # 2=Inactive
+    item_request_id = request.POST['item_request_id']
+    item_request = UserItemCheckout.objects.get(id=item_request_id)
+    item_status = UserItemStatus.objects.get(id=8) # 8=Available
+    item_request.checkout_status = checkout_status
+    item_request.save()
+    user_item = UserItem.objects.get(id=item_request.user_item_id)
+    user_item.item_status = item_status
+    user_item.save()
+    return HttpResponseRedirect(reverse('lendingLibrary:item_requests'))
+
+@login_required
 def my_profile(request):
     user_info = request.user
     message = request.GET.get('message', '').strip()
