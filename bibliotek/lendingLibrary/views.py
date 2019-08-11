@@ -43,9 +43,9 @@ def request_item(request):
 @login_required
 def deny_request(request):
     checkout_status = CheckoutStatus.objects.get(id=2) # 2=Inactive
+    item_status = UserItemStatus.objects.get(id=8) # 8=Available
     item_request_id = request.POST['item_request_id']
     item_request = UserItemCheckout.objects.get(id=item_request_id)
-    item_status = UserItemStatus.objects.get(id=8) # 8=Available
     item_request.checkout_status = checkout_status
     item_request.save()
     user_item = UserItem.objects.get(id=item_request.user_item_id)
@@ -56,10 +56,10 @@ def deny_request(request):
 @login_required
 def approve_request(request):
     checkout_status = CheckoutStatus.objects.get(id=3) # 3=Active
-    item_request_id = request.POST['item_request_id']
-    due_date = request.POST['due_date']
-    item_request = UserItemCheckout.objects.get(id=item_request_id)
     item_status = UserItemStatus.objects.get(id=10) # 10=Checked Out
+    due_date = request.POST['due_date']
+    item_request_id = request.POST['item_request_id']
+    item_request = UserItemCheckout.objects.get(id=item_request_id)
     item_request.checkout_status = checkout_status
     item_request.checkout_date = timezone.now()
     item_request.due_date = due_date
