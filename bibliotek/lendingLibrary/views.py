@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 
-from .models import UserItemStatus, UserItemCategory, UserItemCondition, UserItem, UserItemCheckout
+from .models import UserItemStatus, CheckoutStatus, UserItemCategory, UserItemCondition, UserItem, UserItemCheckout
 
 def index(request):
     items = UserItem.objects.order_by('type__name').exclude(item_status__in=[6, 4])
@@ -25,6 +25,20 @@ def category(request, category_name):
     print(items)
     context = {'items': items, 'category_name': category_name}
     return render(request, 'lendingLibrary/category.html', context)
+
+@login_required
+def request_item(request):
+    user_item_id = request.POST['user_item']
+    borrower_id = request.POST['borrower']
+    checkout_status = CheckoutStatus.objects.get(id=1) # 1=Pending
+    item_status = UserItemStatus.objects.get(id=9) # 9=Requested
+    user_item = UserItem.objects.get(id=user_item_id)
+    borrower = User.objects.get(id=borrower_id)
+    checkout_request_details = UserItemCheckout(user_item=user_item, borrower=borrower, checkout_status=checkout_status, request_date=timezone.now())
+    checkout_request_details.save()
+    user_item.item_status = item_status
+    user_item.save()
+    return HttpResponseRedirect(reverse('lendingLibrary:user_items', args=('3',)))
 
 @login_required
 def my_profile(request):

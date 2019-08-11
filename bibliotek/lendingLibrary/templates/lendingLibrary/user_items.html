@@ -12,16 +12,16 @@
       <div id="item_list">
         {% if items %}
           <table>
-            <tr align="left">
+            <tr>
               <th>Category</th>
-              <th>Item</th>
-              <th>Description</th>
+              <th align="left">Item</th>
+              <th align="left">Description</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
             {% for item in items %}
             <tr>
-              <td>{{item.type|title}}</td>
+              <td align="center">{{item.type|title}}</td>
               {% if item.type.name == "Books" %}
                 <td><span class="item_title">"{{item.name|title}}"</span></td>
               {% else %}
@@ -29,17 +29,22 @@
               {% endif %}
               <td><span class="item_description">{{item.description}}</span></td>
               {% if item.item_status.name == 'Available' %}
-                <td style="background-color:lightgreen">{{item.item_status}}</td>
+                <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
               {% elif item.item_status.name == 'Unavailable' %}
-                <td style="background-color:yellow">{{item.item_status}}</td>
+                <td style="background-color:yellow" align="center">{{item.item_status}}</td>
               {% elif item.item_status.name == 'Requested' %}
-                <td style="background-color:blue;color:white">{{item.item_status}}</td>
+                <td style="background-color:blue;color:white" align="center">{{item.item_status}}</td>
               {% else %}
-                <td style="background-color:white">{{item.item_status}}</td>
+                <td style="background-color:white" align="center">{{item.item_status}}</td>
               {% endif %}
-              <td>
-                {% if not item.item_status.name == 'Unavailable' %}
-                  <button onclick="console.log('Request for {{item.name}} button clicked')">Request</button>
+              <td align="center">
+                {% if item.item_status.name != 'Unavailable' and item.item_status.name != 'Requested' %}
+                <form action="{% url 'lendingLibrary:request_item' %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="user_item" value="{{item.id}}"/>
+                  <input type="hidden" name="borrower" value="{{request.user.id}}"/>
+                  <button type="submit">Request</button>
+                </form>
                 {% endif %}
               </td>
             </tr>
