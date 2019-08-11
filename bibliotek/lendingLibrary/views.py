@@ -13,11 +13,11 @@ def index(request):
     context = {'items': items}
     return render(request, 'lendingLibrary/index.html', context)
 
-def profile(request, user_id):
+def user_items(request, user_id):
     owner = User.objects.get(id=user_id)
     items = owner.items.order_by('item_status__name', 'type__name').exclude(item_status__in=[6, 4])
     context = {'items': items, 'owner': owner}
-    return render(request, 'lendingLibrary/profile.html', context)
+    return render(request, 'lendingLibrary/user_items.html', context)
 
 def category(request, category_name):
     items = UserItem.objects.filter(type__name=category_name).exclude(item_status__in=[6, 4])
@@ -27,10 +27,25 @@ def category(request, category_name):
 
 @login_required
 def my_profile(request):
+    user_info = request.user
+    context = {'user_info': user_info}
+    return render(request, 'lendingLibrary/my_profile.html', context)
+
+@login_required
+def save_info(request):
+    user_info = User.objects.get(id=request.user.id)
+    user_info.first_name = request.POST['first_name']
+    user_info.last_name = request.POST['last_name']
+    user_info.email = request.POST['email']
+    user_info.save()
+    return HttpResponseRedirect(reverse('lendingLibrary:my_profile'))
+
+@login_required
+def item_requests(request):
     owner = request.user
     item_requests = UserItemCheckout.objects.filter(checkout_status_id=1).exclude(borrower_id=owner.id)
     context = {'owner': owner, 'item_requests': item_requests}
-    return render(request, 'lendingLibrary/my_profile.html', context)
+    return render(request, 'lendingLibrary/item_requests.html', context)
 
 @login_required
 def my_checkouts(request):

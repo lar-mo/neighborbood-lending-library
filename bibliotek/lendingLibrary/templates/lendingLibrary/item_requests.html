@@ -1,0 +1,36 @@
+{% extends 'lendingLibrary/base.html' %}
+
+{% block title %}
+<title>Pending Requests - Neighborhood Lending Library</title>
+{% endblock %}
+
+{% block heading %}
+<h2>Pending Item Requests</h2>
+{% endblock %}
+
+{% block content %}
+  <div id="pending_requests"> <!-- start of 'pending_requests'-->
+    {% if item_requests %}
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Requestor</th>
+        <th>Request Date</th>
+        <th>Due Date</th>
+        <th>Action</th>
+      </tr>
+      {% for item_request in item_requests %}
+      <tr align="center">
+        <td>{{item_request.user_item.name}}</td>
+        <td>{{item_request.borrower.username|title}}</td>
+        <td>{{item_request.request_date|date:'Y-m-d'}}</td>
+        <td><input type="date" id="input_duedate" name="due_date" value="{{item_request.due_date|date:'Y-m-d'}}"/></td>
+        <td><button id="bt_approve">Approve</button>&nbsp;<button id="bt_deny">Deny</button></td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <p><i>You don't have any requests or checkouts</i></p>
+    {% endif %}
+  </div> <!-- end of 'pending_requests'-->
+{% endblock %}

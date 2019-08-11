@@ -8,7 +8,7 @@ urlpatterns = [
     path('', views.index, name='index'),
 
     # /lendingLibrary/user/1/
-    path('user/<int:user_id>/', views.profile, name='profile'),
+    path('user/<int:user_id>/', views.user_items, name='user_items'),
 
     # # /lendingLibrary/category/books/
     path('category/<str:category_name>/', views.category, name='category'),
@@ -16,8 +16,14 @@ urlpatterns = [
     # /lendingLibrary/user/ - error handling, redirect to index if trying to go to /user/
     path('user/', views.user, name='user'),
 
-    # /lendingLibrary/my_profile/ - logged in user's profile - borrower requests
+    # /lendingLibrary/my_profile/ - logged in user's profile - view & edit profile (name, email, password)
     path('my_profile/', views.my_profile, name='my_profile'),
+
+    # /lendingLibrary/save_info/ - form handling
+    path('save_info/', views.save_info, name='save_info'),
+
+    # /lendingLibrary/item_requests/ - logged in user's profile - borrower requests
+    path('pending_requests/', views.item_requests, name='item_requests'),
 
     # /lendingLibrary/my_checkouts/ - logged in user's profile - my requests & checkouts
     path('my_checkouts/', views.my_checkouts, name='my_checkouts'),

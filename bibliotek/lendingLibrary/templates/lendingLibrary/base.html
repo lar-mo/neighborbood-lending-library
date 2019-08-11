@@ -94,6 +94,13 @@
         /* width: 100%; */
         min-width: 1024px;
       }
+      #profile_form {
+        min-width: auto;
+        width: 500px;
+      }
+      input[type=text] {
+        width: 350px;
+      }
       th, td {
         padding: 10px;
       }
@@ -132,8 +139,8 @@
   <div class="wrapper"> <!-- start of 'wrapper'-->
     {% if request.user.is_authenticated %}
     <aside>
-      <div {% if request.path == '/my_profile/' %}style="background-color:#FFF"{% endif %}>
-        <span><a href="{% url 'lendingLibrary:my_profile' %}">Pending Requests</a></span>
+      <div {% if request.path == '/pending_requests/' %}style="background-color:#FFF"{% endif %}>
+        <span><a href="{% url 'lendingLibrary:item_requests' %}">Pending Requests</a></span>
         <div>&#8227; (2) new requests for your items</div>
       </div>
       <div {% if request.path == '/my_checkouts/' %}style="background-color:#FFF"{% endif %}>
