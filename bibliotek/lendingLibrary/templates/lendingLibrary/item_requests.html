@@ -30,19 +30,13 @@
             <input type="hidden" name="item_request_id" value="{{item_request.id}}">
             <button type="submit">Approve</button>
           </form>
+          &nbsp;or&nbsp;
           <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="item_request_id" value="{{item_request.id}}">
             <button type="submit">Deny</button>
           </form>
         </td>
-        <!-- <td>
-          <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="item_request_id" value="{{item_request.id}}">
-            <button type="submit">Deny</button>
-          </form>
-        </td> -->
       </tr>
       {% endfor %}
     </table>
