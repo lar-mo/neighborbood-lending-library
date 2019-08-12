@@ -29,7 +29,7 @@
           <td style="background-color:#FFFF66">{{checkout.checkout_status.name}}</td>
         {% elif checkout.checkout_status.name == 'Active' %}
           <td style="background-color:lightgreen">{{checkout.checkout_status.name}}</td>
-        {% elif checkout.checkout_status.name == 'Inactive' %}
+        {% elif checkout.checkout_status.name == 'Denied' %}
           <td style="background-color:pink">{{checkout.checkout_status.name}}</td>
         {% endif %}
         {% if checkout.checkout_date == None %}

@@ -42,7 +42,7 @@ def request_item(request):
 
 @login_required
 def deny_request(request):
-    checkout_status = CheckoutStatus.objects.get(id=2) # 2=Inactive
+    checkout_status = CheckoutStatus.objects.get(id=2) # 2=Denied
     item_status = UserItemStatus.objects.get(id=8) # 8=Available
     item_request_id = request.POST['item_request_id']
     item_request = UserItemCheckout.objects.get(id=item_request_id)
@@ -128,7 +128,7 @@ def my_checkouts(request):
 def my_items(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'type__name')
-    item_requests = UserItemCheckout.objects.filter(user_item__in=items)
+    item_requests = UserItemCheckout.objects.filter(user_item__in=items).exclude(checkout_status=2)
     filter = ['Available', 'Unavailable', 'Lost', 'Hidden']
     context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'filter': filter}
     return render(request, 'lendingLibrary/my_items.html', context)

@@ -13,6 +13,12 @@ class CheckoutStatus(models.Model):
     def __str__(self):
         return self.name
 
+class CheckoutStatusReason(models.Model):
+    name            = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
 class UserItemCategory(models.Model):
     name            = models.CharField(max_length=200)
 
