@@ -36,7 +36,7 @@ class UserItem(models.Model):
     item_status     = models.ForeignKey(UserItemStatus, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.type.name + ': ' + self.name
+        return self.category.name + ': ' + self.name
 
 class UserItemCheckout(models.Model):
     user_item       = models.ForeignKey(UserItem, on_delete=models.PROTECT, related_name='item_history')
