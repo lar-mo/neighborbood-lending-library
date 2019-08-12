@@ -46,8 +46,11 @@ urlpatterns = [
     # /lendingLibrary/my_items/ - logged in user's profile - see my items
     path('my_items/', views.my_items, name='my_items'),
 
-    # /lendingLibrary/my_items/ - logged in user's profile - manage items
+    # /lendingLibrary/manage_items/ - logged in user's profile - manage items
     path('manage_items/', views.manage_items, name='manage_items'),
+
+    # /lendingLibrary/delete_item/ - form handling
+    path('delete_item/', views.delete_item, name='delete_item'),
 
     # /lendingLibrary/register_login/ - login or register a user
     path('register_login/', views.register_login, name='register_login'),

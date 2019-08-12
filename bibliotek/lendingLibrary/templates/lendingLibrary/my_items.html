@@ -14,14 +14,14 @@
       <table>
         <tr>
           <th>Category</th>
-          <th align="left">Item</th>
-          <th align="left">Description</th>
+          <th style="text-align:left">Item</th>
+          <th style="text-align:left">Description</th>
           <th>Status</th>
           <th>Borrower</th>
         </tr>
         {% for item in items %}
         <tr>
-          <td align="center">{{item.type}}</td>
+          <td style="text-align:center">{{item.type}}</td>
           {% if item.type.name == "Books" %}
             <td><span class="item_title">"{{item.name}}"</span></td>
           {% else %}
@@ -43,7 +43,7 @@
           {% endif %}
           {% for request in item_requests %}
             {% if request.user_item.name == item.name %}
-              <td align="center">{{request.borrower.username}}</td>
+              <td align="center">{{request.borrower.username|title}}</td>
             {% endif %}
           {% endfor %}
           {% if item.item_status.name in filter %}

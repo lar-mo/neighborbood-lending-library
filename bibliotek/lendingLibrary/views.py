@@ -140,6 +140,13 @@ def manage_items(request):
     context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/manage_items.html', context)
 
+def delete_item(request):
+    # return HttpResponse('ok')
+    user_item_id = request.POST['user_items']
+    user_item = UserItem.objects.get(id=user_item_id)
+    user_item.delete()
+    return HttpResponseRedirect(reverse('lendingLibrary:manage_items'))
+
 def user(request):
     # nothing to see. move along
     return HttpResponseRedirect(reverse('lendingLibrary:index'))
