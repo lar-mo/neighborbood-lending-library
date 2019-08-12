@@ -167,7 +167,7 @@ def edit_item(request):
     item = owner.items.get(id=user_item_id)
     categories = UserItemCategory.objects.order_by('name')
     conditions = UserItemCondition.objects.order_by('id')
-    item_statuses = UserItemStatus.objects.order_by('id')
+    item_statuses = UserItemStatus.objects.order_by('name')
     context = {'item': item, 'categories': categories, 'conditions': conditions, 'item_statuses': item_statuses}
     return render(request, 'lendingLibrary/edit_item.html', context)
 

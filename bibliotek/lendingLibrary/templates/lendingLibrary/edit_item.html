@@ -34,9 +34,10 @@
               <div>Category</div>
               <div>
                 <select name="category" value="" style="width: 300px" required>
-                  <option value="{{item.category.id}}" selected>{{item.category.name}}</option>
                   {% for category in categories %}
-                    {% if item.category.id != category.id %}
+                    {% if item.category.id == category.id %}
+                      <option value="{{category.id}}" selected>{{category.name}}</option>
+                    {% else %}
                       <option value="{{category.id}}">{{category.name}}</option>
                     {% endif %}
                   {% endfor %}
@@ -45,9 +46,10 @@
               <div>Condition</div>
               <div>
                 <select name="condition" value="" style="width: 300px" required>
-                  <option value="{{item.condition.id}}" selected>{{item.condition.name}}</option>
                   {% for condition in conditions %}
-                    {% if item.condition.id != condition.id %}
+                    {% if item.condition.id == condition.id %}
+                      <option value="{{condition.id}}" selected>{{condition.name}}</option>
+                    {% else %}
                       <option value="{{condition.id}}">{{condition.name}}</option>
                     {% endif %}
                   {% endfor %}
@@ -60,9 +62,10 @@
               <div>Item Status</div>
               <div>
                 <select name="item_status" value="" style="width: 300px" required>
-                  <option value="{{item.item_status.id}}" selected>{{item.item_status.name}}</option>
                   {% for item_status in item_statuses %}
-                    {% if item.item_status.id != item_status.id %}
+                    {% if item.item_status.id == item_status.id %}
+                      <option value="{{item_status.id}}" selected>{{item_status.name}}</option>
+                    {% else %}
                       <option value="{{item_status.id}}">{{item_status.name}}</option>
                     {% endif %}
                   {% endfor %}
