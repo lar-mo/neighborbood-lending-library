@@ -140,8 +140,8 @@ def manage_items(request):
     context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/manage_items.html', context)
 
+@login_required
 def new_item(request):
-    # return HttpResponse('ok')
     categories = UserItemCategory.objects.order_by('name')
     conditions = UserItemCondition.objects.order_by('id')
     context = {'categories': categories, 'conditions': conditions}
@@ -160,8 +160,21 @@ def create_new_item(request):
     new_user_item.save()
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
+@login_required
+def edit_item(request):
+    user_item_id = request.POST['user_item']
+    owner = request.user
+    item = owner.items.get(id=user_item_id)
+    categories = UserItemCategory.objects.order_by('name')
+    conditions = UserItemCondition.objects.order_by('id')
+    item_statuses = UserItemStatus.objects.order_by('id')
+    context = {'item': item, 'categories': categories, 'conditions': conditions, 'item_statuses': item_statuses}
+    return render(request, 'lendingLibrary/edit_item.html', context)
+
+def save_edited_item(request):
+    return HttpResponse('ok')
+
 def delete_item(request):
-    # return HttpResponse('ok')
     user_item_id = request.POST['user_items']
     user_item = UserItem.objects.get(id=user_item_id)
     user_item.delete()

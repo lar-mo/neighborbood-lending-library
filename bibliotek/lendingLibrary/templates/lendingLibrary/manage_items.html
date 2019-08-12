@@ -22,10 +22,10 @@
           </td>
           <td style="text-align:center">
             <div>
-              <form action="#" method="post">
+              <form action="{% url 'lendingLibrary:edit_item' %}" method="post">
                 {% csrf_token %}
                 Select one of your items:<br/>
-                <select name="user_items" required>
+                <select name="user_item" required>
                   <option disabled selected value="">-----</option>
                 {% for item in items %}
                   <option value="{{item.id}}">{{item.name}}</option>

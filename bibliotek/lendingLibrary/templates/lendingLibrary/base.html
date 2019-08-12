@@ -139,10 +139,10 @@
       form {
         display: inline;
       }
-      #new_item_form > div:nth-child(odd) {
+      #new_item_form > div:nth-child(odd), #edit_item > div:nth-child(odd){
         margin: auto 40px 25px;
       }
-      #new_item_form > div:nth-child(even) {
+      #new_item_form > div:nth-child(even), #edit_item > div:nth-child(even) {
         font-weight: bold;
         font-size: 1.1em;
       }
@@ -178,7 +178,7 @@
           <span><a href="{% url 'lendingLibrary:my_items' %}">Your Items</a></span>
           <div>&#8227; (9 of 17) items available to share</div>
         </div>
-        <div {% if request.path == '/manage_items/' or  request.path == '/new_item/' %}style="background-color:#FFF"{% endif %}>
+        <div {% if request.path == '/manage_items/' or  request.path == '/new_item/' or  request.path == '/edit_item/' %}style="background-color:#FFF"{% endif %}>
           <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
           <div>&#8227; Add / Edit / Delete your items</div>
         </div>

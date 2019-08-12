@@ -55,6 +55,12 @@ urlpatterns = [
     # /lendingLibrary/create_new_item/ - form handling
     path('create_new_item/', views.create_new_item, name='create_new_item'),
 
+    # /lendingLibrary/edit_item/ - edit item form
+    path('edit_item/', views.edit_item, name='edit_item'),
+
+    # /lendingLibrary/save_edited_item/ - form handling
+    path('save_edited_item/', views.save_edited_item, name='save_edited_item'),
+
     # /lendingLibrary/delete_item/ - form handling
     path('delete_item/', views.delete_item, name='delete_item'),
 
