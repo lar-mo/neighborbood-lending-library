@@ -28,7 +28,7 @@ class UserItemCondition(models.Model):
 class UserItem(models.Model):
     name            = models.CharField(max_length=200)
     description     = models.TextField()
-    image_url       = models.CharField(default="https://lar-mo.com/images/lazy_placeholder.gif", max_length=200)
+    image_url       = models.CharField(max_length=200)
     category        = models.ForeignKey(UserItemCategory, on_delete=models.PROTECT)
     condition       = models.ForeignKey(UserItemCondition, on_delete=models.PROTECT)
     replacement_cost = models.FloatField()

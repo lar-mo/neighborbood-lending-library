@@ -21,13 +21,17 @@
         </tr>
         {% for item in items %}
         <tr>
-          <td align="center"><a href="/category/{{item.type}}/">{{item.type|title}}</a></td>
-          {% if item.type.name == "Books" %}
+          <td align="center"><a href="/category/{{item.category}}/">{{item.category|title}}</a></td>
+          {% if item.category.name == "Books" %}
             <td><span class="item_title">"{{item.name}}"</span></td>
           {% else %}
             <td><span class="item_title">{{item.name}}</span></td>
           {% endif %}
-          <td><span class="item_description" style="width: 585px">{{item.description}}</span></td>
+          {% if item.description != '' %}
+            <td><span class="item_description" style="width: 585px">{{item.description}}</span></td>
+          {% else %}
+            <td><span class="item_description" style="width: 585px"><i>no description</i></span></td>
+          {% endif %}
           {% if item.item_status.name == "Available" %}
             <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == "Unavailable" %}

@@ -10,19 +10,19 @@ from django.contrib.auth.hashers import check_password
 from .models import UserItemStatus, CheckoutStatus, UserItemCategory, UserItemCondition, UserItem, UserItemCheckout
 
 def index(request):
-    items = UserItem.objects.order_by('type__name').exclude(item_status__in=[6, 4])
+    items = UserItem.objects.order_by('category__name').exclude(item_status__in=[6, 4])
     context = {'items': items}
     return render(request, 'lendingLibrary/index.html', context)
 
 def user_items(request, user_id):
     owner = User.objects.get(id=user_id)
-    items = owner.items.order_by('item_status__name', 'type__name').exclude(item_status__in=[6, 4])
+    items = owner.items.order_by('item_status__name', 'category__name').exclude(item_status__in=[6, 4])
     context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/user_items.html', context)
 
 def category(request, category_name):
-    items = UserItem.objects.filter(type__name=category_name).exclude(item_status__in=[6, 4])
-    print(items)
+    items = UserItem.objects.filter(category__name=category_name).exclude(item_status__in=[6, 4])
+    # print(items)
     context = {'items': items, 'category_name': category_name}
     return render(request, 'lendingLibrary/category.html', context)
 
@@ -119,7 +119,7 @@ def item_requests(request):
 @login_required
 def my_checkouts(request):
     owner = request.user
-    items = owner.items.order_by('item_status__name', 'type__name')
+    items = owner.items.order_by('item_status__name', 'category__name')
     checkouts = owner.checkouts.order_by('user_item')
     context = {'owner': owner, 'checkouts': checkouts}
     return render(request, 'lendingLibrary/my_checkouts.html', context)
@@ -127,7 +127,7 @@ def my_checkouts(request):
 @login_required
 def my_items(request):
     owner = request.user
-    items = owner.items.order_by('item_status__name', 'type__name')
+    items = owner.items.order_by('item_status__name', 'category__name')
     item_requests = UserItemCheckout.objects.filter(user_item__in=items).exclude(checkout_status=2)
     filter = ['Available', 'Unavailable', 'Lost', 'Hidden']
     context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'filter': filter}
@@ -136,7 +136,7 @@ def my_items(request):
 @login_required
 def manage_items(request):
     owner = request.user
-    items = owner.items.order_by('item_status__name', 'type__name')
+    items = owner.items.order_by('item_status__name', 'category__name')
     context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/manage_items.html', context)
 
@@ -152,14 +152,11 @@ def create_new_item(request):
     description = request.POST['description'].strip()
     image_url = request.POST['image_url'].strip()
     category_id = request.POST['category']
-    # category = UserItemCategory.objects.get(id=category_id)
     condition_id = request.POST['condition']
-    # condition = UserItemCondition.objects.get(id=condition_id)
     replacement_cost = request.POST['replacement_cost']
     item_status_id = request.POST['item_status']
-    # item_status = UserItemStatus.objects.get(id=item_status_id)
     owner = request.user
-    new_user_item = UserItem(name=name, description=description, image_url=image_url, type_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
+    new_user_item = UserItem(name=name, description=description, image_url=image_url, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
     new_user_item.save()
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 

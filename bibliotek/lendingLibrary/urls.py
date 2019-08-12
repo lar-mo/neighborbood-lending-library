@@ -13,7 +13,7 @@ urlpatterns = [
     # /lendingLibrary/user/ - error handling, redirect to index if trying to go to /user/
     path('user/', views.user, name='user'),
 
-    # /lendingLibrary/category/books/
+    # /lendingLibrary/category/Books/
     path('category/<str:category_name>/', views.category, name='category'),
 
     # /lendingLibrary/request_item/ - form handling

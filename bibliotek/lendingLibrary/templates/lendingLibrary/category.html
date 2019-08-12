@@ -21,17 +21,24 @@
         </tr>
         {% for item in items %}
         <tr>
-          <td align="center">{{item.type|title}}</td>
-          {% if item.type.name == "books" %}
+          <td align="center">{{item.category|title}}</td>
+          {% if item.category.name == "books" %}
             <td><span class="item_title">"{{item.name}}"</span></td>
           {% else %}
             <td><span class="item_title">{{item.name}}</span></td>
           {% endif %}
-          <td><span class="item_description" style="width: 580px">{{item.description}}</span></td>
+          <!-- <td><span class="item_description" style="width: 580px">{{item.description}}</span></td> -->
+          {% if item.description != '' %}
+            <td><span class="item_description" style="width: 580px">{{item.description}}</span></td>
+          {% else %}
+            <td><span class="item_description" style="width: 580px"><i>no description</i></span></td>
+          {% endif %}
           {% if item.item_status.name == 'Available' %}
             <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Unavailable' %}
             <td style="background-color:yellow" align="center">{{item.item_status}}</td>
+          {% elif item.item_status.name == 'Checked Out' %}
+            <td style="background-color:pink" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == "Requested" %}
             <td style="background-color:blue;color:#FFF" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Hidden' %}
