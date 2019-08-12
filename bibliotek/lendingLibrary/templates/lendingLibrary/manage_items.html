@@ -18,7 +18,7 @@
         </tr>
         <tr>
           <td style="text-align:center">
-            <button style="margin:0 50px">Add an Item</button>
+            <button style="margin:0 50px" id="btn_add_item">Add an Item</button>
           </td>
           <td style="text-align:center">
             <div>
@@ -53,4 +53,11 @@
         </tr>
       </table>
   </div> <!-- end of 'item_list' -->
+{% endblock %}
+
+{% block script %}
+      btn_add_item = document.querySelector('#btn_add_item')
+      btn_add_item.onclick = function() {
+        window.location={% url 'lendingLibrary:new_item' %}
+      }
 {% endblock %}

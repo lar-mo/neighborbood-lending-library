@@ -27,7 +27,7 @@
           {% else %}
             <td><span class="item_title">{{item.name}}</span></td>
           {% endif %}
-          <td><span class="item_description">{{item.description}}</span></td>
+          <td><span class="item_description">{{item.description }}</span></td>
           {% if item.item_status.name == 'Available' %}
             <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
           {% elif item.item_status.name == 'Requested' %}

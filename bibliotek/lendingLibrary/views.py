@@ -140,6 +140,29 @@ def manage_items(request):
     context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/manage_items.html', context)
 
+def new_item(request):
+    # return HttpResponse('ok')
+    categories = UserItemCategory.objects.order_by('name')
+    conditions = UserItemCondition.objects.order_by('id')
+    context = {'categories': categories, 'conditions': conditions}
+    return render(request, 'lendingLibrary/new_item.html', context)
+
+def create_new_item(request):
+    name = request.POST['name'].strip()
+    description = request.POST['description'].strip()
+    image_url = request.POST['image_url'].strip()
+    category_id = request.POST['category']
+    # category = UserItemCategory.objects.get(id=category_id)
+    condition_id = request.POST['condition']
+    # condition = UserItemCondition.objects.get(id=condition_id)
+    replacement_cost = request.POST['replacement_cost']
+    item_status_id = request.POST['item_status']
+    # item_status = UserItemStatus.objects.get(id=item_status_id)
+    owner = request.user
+    new_user_item = UserItem(name=name, description=description, image_url=image_url, type_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
+    new_user_item.save()
+    return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
+
 def delete_item(request):
     # return HttpResponse('ok')
     user_item_id = request.POST['user_items']
