@@ -4,6 +4,28 @@
 <title>Homepage - Neighborhood Lending Library</title>
 {% endblock %}
 
+{% block hero %}
+<div id="hero">
+  <div id="feature_item">
+    <table id="hero_table">
+      <tr>
+        <th colspan="2">Featured Item: {{newest_item.name}}</th>
+      </tr>
+      <tr>
+        <td class="hero_image">
+          <img src="{% if newest_item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{newest_item.image_url}}{% endif %}" width="100">
+        </td>
+        <td>
+          <div class="item_details">Category: <a href="{% url 'lendingLibrary:category' newest_item.category %}">{{newest_item.category}}</a></div>
+          <div class="item_details">Owner: <a href="{% url 'lendingLibrary:user_items' newest_item.owner.id %}">{{newest_item.owner|title}}</a></div>
+          <div class="item_details">Condition: {{newest_item.condition}}</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
 {% block heading %}
 <h2>All Items</h2>
 {% endblock %}

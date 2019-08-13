@@ -84,6 +84,10 @@
       h1, h2, h3, h4, h5 {
         text-align: center;
       }
+      #hero_table {
+        width: 200px !important;
+        margin: 5px;
+      }
       table, tr, th, td {
         border: 1px solid #777;
         border-collapse: collapse;
@@ -166,6 +170,19 @@
         display: flex;
         justify-content: center
       }
+      #hero {
+        background-color: blue;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+      .hero_image {
+        text-align: right;
+      }
+      .item_details {
+        font-size: 0.8em;
+      }
     </style>
   </head>
   <body>
@@ -182,6 +199,7 @@
         <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> | <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a></span>
       {% endif %}
     </header>
+    {% block hero %}{% endblock %}
     {% block heading %}{% endblock %}
     <div class="wrapper"> <!-- start of 'wrapper'-->
       {% if request.user.is_authenticated %}
