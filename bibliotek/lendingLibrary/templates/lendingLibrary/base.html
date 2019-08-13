@@ -178,7 +178,7 @@
           <span><a href="{% url 'lendingLibrary:my_items' %}">Your Items</a></span>
           <div>&#8227; (9 of 17) items available to share</div>
         </div>
-        <div {% if request.path == '/manage_items/' or  request.path == '/new_item/' or  request.path == '/edit_item/' %}style="background-color:#FFF"{% endif %}>
+        <div {% if request.path == '/manage_items/' or  request.path == '/new_item/' or '/edit_item/' in request.path %}style="background-color:#FFF"{% endif %}>
           <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
           <div>&#8227; Add / Edit / Delete your items</div>
         </div>

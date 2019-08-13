@@ -55,8 +55,8 @@ urlpatterns = [
     # /lendingLibrary/create_new_item/ - form handling
     path('create_new_item/', views.create_new_item, name='create_new_item'),
 
-    # /lendingLibrary/edit_item/ - edit item form
-    path('edit_item/', views.edit_item, name='edit_item'),
+    # /lendingLibrary/edit_item/10/ - edit item form
+    path('edit_item/<int:item_id>/', views.edit_item, name='edit_item'),
 
     # /lendingLibrary/save_edited_item/ - form handling
     path('save_edited_item/', views.save_edited_item, name='save_edited_item'),

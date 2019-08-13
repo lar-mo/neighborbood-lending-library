@@ -142,9 +142,11 @@ def manage_items(request):
 
 @login_required
 def new_item(request):
+    owner = request.user
+    items = owner.items.order_by('item_status__name', 'category__name')
     categories = UserItemCategory.objects.order_by('name')
     conditions = UserItemCondition.objects.order_by('id')
-    context = {'categories': categories, 'conditions': conditions}
+    context = {'categories': categories, 'conditions': conditions, 'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/new_item.html', context)
 
 def create_new_item(request):
@@ -161,14 +163,14 @@ def create_new_item(request):
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
 @login_required
-def edit_item(request):
-    user_item_id = request.POST['user_item']
+def edit_item(request, item_id):
     owner = request.user
-    item = owner.items.get(id=user_item_id)
+    item = owner.items.get(id=item_id)
+    items = owner.items.order_by('item_status__name', 'category__name')
     categories = UserItemCategory.objects.order_by('name')
     conditions = UserItemCondition.objects.order_by('id')
     item_statuses = UserItemStatus.objects.order_by('name').exclude(id__in=[9, 10])
-    context = {'item': item, 'categories': categories, 'conditions': conditions, 'item_statuses': item_statuses}
+    context = {'item': item, 'items': items, 'categories': categories, 'conditions': conditions, 'item_statuses': item_statuses}
     return render(request, 'lendingLibrary/edit_item.html', context)
 
 @login_required

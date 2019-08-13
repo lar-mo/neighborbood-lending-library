@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-  <div id="item_list"> <!-- start of 'item_list' -->
+  <div id="crud_options"> <!-- start of 'crud_options' -->
       <table>
         <tr>
           <th>ADD</th>
@@ -21,19 +21,14 @@
             <button style="margin:0 50px" id="btn_add_item">Add an Item</button>
           </td>
           <td style="text-align:center">
-            <div>
-              <form action="{% url 'lendingLibrary:edit_item' %}" method="post">
-                {% csrf_token %}
-                Select one of your items:<br/>
-                <select name="user_item" required>
-                  <option disabled selected value="">-----</option>
-                {% for item in items %}
-                  <option value="{{item.id}}">{{item.name}}</option>
-                {% endfor %}
-                </select>
-                <button>Load Data</button>
-              </form>
-            </div>
+            Select one of your items:<br/>
+            <select id="sel_user_items" required>
+              <option disabled selected value="">-----</option>
+            {% for item in items %}
+              <option value="{{item.id}}">{{item.name}}</option>
+            {% endfor %}
+            </select>
+            <button id="btn_load_data">Load Data</button>
           </td>
           <td style="text-align:center">
             <div>
@@ -52,11 +47,11 @@
           </td>
         </tr>
       </table>
-  </div> <!-- end of 'item_list' -->
+  </div> <!-- end of 'crud_options' -->
 {% endblock %}
 
 {% block script %}
-      btn_add_item = document.querySelector('#btn_add_item')
+      let btn_add_item = document.querySelector('#btn_add_item')
       btn_add_item.onclick = function() {
         window.location={% url 'lendingLibrary:new_item' %}
       }
@@ -72,6 +67,18 @@
           if (!answer) {
             event.preventDefault()
           } // end of inner 'if statement'
+        } // end of outer 'if statement'
+      } // end of 'onclick'
+
+      let btn_load_data = document.querySelector('#btn_load_data')
+      let sel_user_items = document.querySelector('#sel_user_items')
+      btn_load_data.onclick = function(event) {
+        if (sel_user_items.value == '') {
+          alert('You have to select an item first.')
+        } else {
+          let sel_item_id = sel_user_items.options[sel_user_items.selectedIndex].value
+          url = '/edit_item/' + sel_item_id + '/'
+          window.location = url
         } // end of outer 'if statement'
       } // end of 'onclick'
 {% endblock %}

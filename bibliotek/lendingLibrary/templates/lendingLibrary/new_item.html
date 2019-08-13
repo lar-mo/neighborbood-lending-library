@@ -9,56 +9,129 @@
 {% endblock %}
 
 {% block content %}
-  <div id="item_list"> <!-- start of 'item_list' -->
+
+<div id="crud_options"> <!-- start of 'crud_options' -->
     <table>
       <tr>
-        <th>Add a new item</th>
+        <th>ADD</th>
+        <th>EDIT</th>
+        <th>DELETE</th>
       </tr>
       <tr>
-        <td style="!text-align:center; padding: 20px">
+        <td style="text-align:center">
+          <button style="margin:0 50px" id="btn_add_item">Add an Item</button>
+        </td>
+        <td style="text-align:center">
+          Select one of your items:<br/>
+          <select id="sel_user_items" required>
+            <option disabled selected value="">-----</option>
+          {% for item in items %}
+            <option value="{{item.id}}">{{item.name}}</option>
+          {% endfor %}
+          </select>
+          <button id="btn_load_data">Load Data</button>
+        </td>
+        <td style="text-align:center">
           <div>
-            <form action="{% url 'lendingLibrary:create_new_item' %}" method="post" name="new_item_form" id="new_item_form">
+            <form action="{% url 'lendingLibrary:delete_item' %}" method="post">
               {% csrf_token %}
-              <div>Name</div>
-              <div>
-                <input name="name" type="text" value="" style="width: 300px" required>
-              </div>
-              <div>Description</div>
-              <div>
-                <textarea name="description" value="" style="width: 300px"></textarea>
-              </div>
-              <div>Image URL</div>
-              <div>
-                <input name="image_url" type="text" value="" style="width: 300px">
-              </div>
-              <div>Category</div>
-              <div>
-                <select name="category" value="" style="width: 300px" required>
-                  <option value="" selected disabled>-----</option>
-                  {% for category in categories %}
-                    <option value="{{category.id}}">{{category.name}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div>Condition</div>
-              <div>
-                <select name="condition" value="" style="width: 300px" required>
-                  <option value="" selected disabled>-----</option>
-                  {% for condition in conditions %}
-                    <option value="{{condition.id}}">{{condition.name}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div>Replacement Cost</div>
-              <div>
-                <input name="replacement_cost" type="number" value="" style="width: 300px" required>
-              </div>
-              <input type="hidden" name="item_status" value="8"/>
-              <div><input type="submit" value="Create item" style="background-color:#9c9;width: 150px;padding:10px"/></div>
+              Select one of your items:<br/>
+              <select name="user_items" id="select_user_items" required>
+                <option disabled selected value="">-----</option>
+              {% for item in items %}
+                <option value="{{item.id}}">{{item.name}}</option>
+              {% endfor %}
+              </select>
+              <button type="submit" id="btn_delete">Delete</button>
             </form>
           </div>
         </td>
       </tr>
     </table>
-  </div> <!-- end of 'item_list' -->
+</div> <!-- end of 'crud_options' -->
+<div id="new_item_form"> <!-- start of 'new_item_form' -->
+  <table>
+    <tr>
+      <th>Add a new item</th>
+    </tr>
+    <tr>
+      <td style="!text-align:center; padding: 20px">
+        <div>
+          <form action="{% url 'lendingLibrary:create_new_item' %}" method="post" name="new_item_form" id="new_item_form">
+            {% csrf_token %}
+            <div>Name</div>
+            <div>
+              <input name="name" type="text" value="" style="width: 300px" required>
+            </div>
+            <div>Description</div>
+            <div>
+              <textarea name="description" value="" style="width: 300px"></textarea>
+            </div>
+            <div>Image URL</div>
+            <div>
+              <input name="image_url" type="text" value="" style="width: 300px">
+            </div>
+            <div>Category</div>
+            <div>
+              <select name="category" value="" style="width: 300px" required>
+                <option value="" selected disabled>-----</option>
+                {% for category in categories %}
+                  <option value="{{category.id}}">{{category.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>Condition</div>
+            <div>
+              <select name="condition" value="" style="width: 300px" required>
+                <option value="" selected disabled>-----</option>
+                {% for condition in conditions %}
+                  <option value="{{condition.id}}">{{condition.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>Replacement Cost</div>
+            <div>
+              <input name="replacement_cost" type="number" value="" style="width: 300px" required>
+            </div>
+            <input type="hidden" name="item_status" value="8"/>
+            <div><input type="submit" value="Create item" style="background-color:#9c9;width: 150px;padding:10px"/></div>
+          </form>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div> <!-- end of 'new_item_form' -->
+{% endblock %}
+
+{% block script %}
+      let btn_add_item = document.querySelector('#btn_add_item')
+      btn_add_item.onclick = function() {
+        window.location={% url 'lendingLibrary:new_item' %}
+      }
+
+      let btn_delete = document.querySelector('#btn_delete')
+      let select_item_delete = document.querySelector('#select_user_items')
+      btn_delete.onclick = function(event) {
+        if (select_item_delete.value == '') {
+          alert("You have to select an item first.")
+          event.preventDefault()
+        } else {
+          let answer = confirm("Are you sure you want to delete \"" + select_item_delete.options[select_item_delete.selectedIndex].text + "\"?\n\nThis action cannot be undo.")
+          if (!answer) {
+            event.preventDefault()
+          } // end of inner 'if statement'
+        } // end of outer 'if statement'
+      } // end of 'onclick'
+
+      let btn_load_data = document.querySelector('#btn_load_data')
+      let sel_user_items = document.querySelector('#sel_user_items')
+      btn_load_data.onclick = function(event) {
+        if (sel_user_items.value == '') {
+          alert('You have to select an item first.')
+        } else {
+          let sel_item_id = sel_user_items.options[sel_user_items.selectedIndex].value
+          url = '/edit_item/' + sel_item_id + '/'
+          window.location = url
+        } // end of outer 'if statement'
+      } // end of 'onclick'
 {% endblock %}
