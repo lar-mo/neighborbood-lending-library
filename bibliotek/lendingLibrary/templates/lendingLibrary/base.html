@@ -188,15 +188,15 @@
       <aside>
         <div {% if request.path == '/pending_requests/' %}style="background-color:#FFF"{% endif %}>
           <span><a href="{% url 'lendingLibrary:item_requests' %}">Pending Requests</a></span>
-          <div>&#8227; (2) new requests for your items</div>
+          <div>&#8227; ({{user.pending_requests_count}}) new requests for your items</div>
         </div>
         <div {% if request.path == '/my_checkouts/' %}style="background-color:#FFF"{% endif %}>
           <span><a href="{% url 'lendingLibrary:my_checkouts' %}">Requested Items & Checkouts</a></span>
-          <div>&#8227; (3) items requested or checked out</div>
+          <div>&#8227; ({{user.my_checkouts_count}}) items requested or checked out</div>
         </div>
         <div {% if request.path == '/my_items/' %}style="background-color:#FFF"{% endif %}>
-          <span><a href="{% url 'lendingLibrary:my_items' %}">Your Items</a></span>
-          <div>&#8227; (9 of 17) items available to share</div>
+          <span><a href="{% url 'lendingLibrary:my_items' %}">My Items</a></span>
+          <div>&#8227; ({{user.my_items_available_count}} of {{user.my_items_total_count}}) items available to share</div>
         </div>
         <div {% if request.path == '/manage_items/' or  request.path == '/new_item/' or '/edit_item/' in request.path %}style="background-color:#FFF"{% endif %}>
           <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
@@ -220,8 +220,6 @@
           item_description[i].style.overflow = "visible"
         }
       }
-
     </script>
-    {% block script %}{% endblock %}
   </body>
 </html>

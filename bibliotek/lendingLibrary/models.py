@@ -1,6 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
+def pending_requests_count(user):
+    number_of_pending_requests = user.items.filter(item_status=9).count()
+    return number_of_pending_requests
+User.add_to_class('pending_requests_count', pending_requests_count)
+
+def my_checkouts_count(user):
+    number_of_my_checkouts= user.checkouts.count()
+    return number_of_my_checkouts
+User.add_to_class('my_checkouts_count', my_checkouts_count)
+
+def my_items_available_count(user):
+    number_of_available_items = user.items.filter(item_status=8).count()
+    return number_of_available_items
+User.add_to_class('my_items_available_count', my_items_available_count)
+
+def my_items_total_count(user):
+    return user.items.count()
+User.add_to_class('my_items_total_count', my_items_total_count)
+
 class UserItemStatus(models.Model):
     name            = models.CharField(max_length=200)
 
