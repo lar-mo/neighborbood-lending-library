@@ -199,6 +199,10 @@ def user(request):
     # nothing to see. move along
     return HttpResponseRedirect(reverse('lendingLibrary:index'))
 
+def edititem(request):
+    # nothing to see. move along
+    return HttpResponseRedirect(reverse('lendingLibrary:manage_items'))
+
 def register_login(request):
     message = request.GET.get('message', '')
     next = request.GET.get('next', '')
