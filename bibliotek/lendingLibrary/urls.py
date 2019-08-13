@@ -13,9 +13,6 @@ urlpatterns = [
     # /lendingLibrary/user/ - error handling, redirect to index if trying to go to /user/
     path('user/', views.user, name='user'),
 
-    # /lendingLibrary/edit_item/ - error handling, redirect to manage_items if trying to go to /edit_item/
-    path('edit_item/', views.edititem, name='edititem'),
-
     # /lendingLibrary/category/Books/
     path('category/<str:category_name>/', views.category, name='category'),
 
@@ -60,6 +57,9 @@ urlpatterns = [
 
     # /lendingLibrary/edit_item/10/ - edit item form
     path('edit_item/<int:item_id>/', views.edit_item, name='edit_item'),
+
+    # /lendingLibrary/edit_item/ - error handling, redirect to manage_items if trying to go to /edit_item/
+    path('edit_item/', views.edititem, name='edititem'),
 
     # /lendingLibrary/save_edited_item/ - form handling
     path('save_edited_item/', views.save_edited_item, name='save_edited_item'),
