@@ -79,7 +79,6 @@
         text-align: center;
         background-color: rgba(10, 10, 100, 0.2);
         position: static;
-        /* top: 94%; */
         width: 100%;
       }
       h1, h2, h3, h4, h5 {
@@ -91,7 +90,6 @@
       }
       table {
         background-color: #FFF;
-        /* width: 100%; */
         min-width: 1024px;
       }
       #profile_form, #password_form, #check_password {
@@ -128,7 +126,7 @@
         text-overflow: ellipsis;
       }
       .spacer {
-        margin: 10px;
+        margin: 5px;
       }
       .form_msg {
         /* padding:0 56px; */
@@ -139,12 +137,34 @@
       form {
         display: inline;
       }
-      #new_item_form > div:nth-child(odd), #edit_item > div:nth-child(odd){
+      #new_item_form > div:nth-child(odd), #edit_item_form > div:nth-child(odd){
         margin: auto 40px 25px;
+        padding: 5px;
       }
-      #new_item_form > div:nth-child(even), #edit_item > div:nth-child(even) {
+      #new_item_form > div:nth-child(even), #edit_item_form > div:nth-child(even) {
         font-weight: bold;
         font-size: 1.1em;
+        padding: 5px;
+      }
+      .field_label {
+        background-color: #ccc;
+      }
+      .form_submit_div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .form_submit_button {
+        background-color: #9c9;
+        width: 150px;
+        padding:10px;
+        width: 200px;
+        align-content: center;
+      }
+      .add_edit_form_div {
+        padding: 20px;
+        display: flex;
+        justify-content: center
       }
     </style>
   </head>
