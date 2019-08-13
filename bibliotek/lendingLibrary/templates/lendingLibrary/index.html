@@ -13,12 +13,25 @@
       </tr>
       <tr>
         <td class="hero_image">
-          <img src="{% if newest_item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{newest_item.image_url}}{% endif %}" width="100">
+          <img src="{% if newest_item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{newest_item.image_url}}{% endif %}">
         </td>
         <td>
-          <div class="item_details">Category: <a href="{% url 'lendingLibrary:category' newest_item.category %}">{{newest_item.category}}</a></div>
-          <div class="item_details">Owner: <a href="{% url 'lendingLibrary:user_items' newest_item.owner.id %}">{{newest_item.owner|title}}</a></div>
-          <div class="item_details">Condition: {{newest_item.condition}}</div>
+          <div class="item_details">
+            <span>Category: </span>
+            <span><a href="{% url 'lendingLibrary:category' newest_item.category %}">{{newest_item.category}}</a></span>
+          </div>
+          <div class="item_details">
+            <span>Owner: </span>
+            <span><a href="{% url 'lendingLibrary:user_items' newest_item.owner.id %}">{{newest_item.owner|title}}</a></span>
+          </div>
+          <div class="item_details">
+            <span>Condition: </span>
+            <span>{{newest_item.condition}}</span>
+          </div>
+          <div class="item_details">
+            <span></span>
+            <span>[ <a href="#">Request this item</a> ]</span>
+          </div>
         </td>
       </tr>
     </table>
