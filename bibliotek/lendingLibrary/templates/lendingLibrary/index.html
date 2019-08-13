@@ -21,7 +21,7 @@
         </tr>
         {% for item in items %}
         <tr>
-          <td align="center"><a href="/category/{{item.category}}/">{{item.category|title}}</a></td>
+          <td align="center"><a href="/category/{{item.category}}/">{{item.category}}</a></td>
           {% if item.category.name == "Books" %}
             <td><span class="item_title">"{{item.name}}"</span></td>
           {% else %}
