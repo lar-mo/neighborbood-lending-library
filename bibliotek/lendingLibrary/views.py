@@ -51,7 +51,7 @@ def deny_request(request):
     user_item = UserItem.objects.get(id=item_request.user_item_id)
     user_item.item_status = item_status
     user_item.save()
-    return HttpResponseRedirect(reverse('lendingLibrary:item_requests'))
+    return HttpResponseRedirect(reverse('lendingLibrary:pending_requests'))
 
 @login_required
 def approve_request(request):
@@ -67,7 +67,7 @@ def approve_request(request):
     user_item = UserItem.objects.get(id=item_request.user_item_id)
     user_item.item_status = item_status
     user_item.save()
-    return HttpResponseRedirect(reverse('lendingLibrary:item_requests'))
+    return HttpResponseRedirect(reverse('lendingLibrary:pending_requests'))
 
 @login_required
 def my_profile(request):
@@ -110,11 +110,11 @@ def check_pwd(request):
         return HttpResponseRedirect(reverse('lendingLibrary:my_profile')+'?message=bad_password2')
 
 @login_required
-def item_requests(request):
+def pending_requests(request):
     owner = request.user
-    item_requests = UserItemCheckout.objects.filter(checkout_status_id=1).exclude(borrower_id=owner.id)
-    context = {'owner': owner, 'item_requests': item_requests}
-    return render(request, 'lendingLibrary/item_requests.html', context)
+    pending_requests = UserItemCheckout.objects.filter(checkout_status_id=1).exclude(borrower_id=owner.id)
+    context = {'owner': owner, 'pending_requests': pending_requests}
+    return render(request, 'lendingLibrary/pending_requests.html', context)
 
 @login_required
 def my_checkouts(request):

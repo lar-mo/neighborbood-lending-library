@@ -187,7 +187,7 @@
       {% if request.user.is_authenticated %}
       <aside>
         <div {% if request.path == '/pending_requests/' %}style="background-color:#FFF"{% endif %}>
-          <span><a href="{% url 'lendingLibrary:item_requests' %}">Pending Requests</a></span>
+          <span><a href="{% url 'lendingLibrary:pending_requests' %}">Pending Requests</a></span>
           <div>&#8227; ({{user.pending_requests_count}}) new {% if user.pending_requests_count == 1 %} request {% else %} requests {% endif %} for your items</div>
         </div>
         <div {% if request.path == '/my_checkouts/' %}style="background-color:#FFF"{% endif %}>

@@ -38,7 +38,7 @@ urlpatterns = [
     path('check_password/', views.check_pwd, name='check_pwd'),
 
     # /lendingLibrary/pending_requests/ - logged in user's profile - borrower requests
-    path('pending_requests/', views.item_requests, name='item_requests'),
+    path('pending_requests/', views.pending_requests, name='pending_requests'),
 
     # /lendingLibrary/my_checkouts/ - logged in user's profile - my requests & checkouts
     path('my_checkouts/', views.my_checkouts, name='my_checkouts'),

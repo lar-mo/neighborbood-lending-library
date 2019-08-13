@@ -10,7 +10,7 @@
 
 {% block content %}
   <div id="pending_requests"> <!-- start of 'pending_requests'-->
-    {% if item_requests %}
+    {% if pending_requests %}
     <table>
       <tr>
         <th>Item</th>
@@ -18,7 +18,7 @@
         <th>Request Date</th>
         <th>Actions</th>
       </tr>
-      {% for item_request in item_requests %}
+      {% for item_request in pending_requests %}
       <tr align="center">
         <td>{{item_request.user_item.name}}</td>
         <td>{{item_request.borrower.username|title}}</td>
