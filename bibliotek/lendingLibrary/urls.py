@@ -19,6 +19,9 @@ urlpatterns = [
     # /lendingLibrary/item/ratchet-and-socket-set/
     path('item/<str:name_slug>/', views.item_details, name='item_details'),
 
+    # /lendingLibrary/item/ - error handling, redirect to index if trying to go to / (index)
+    path('item/', views.item, name='item'),
+
     # /lendingLibrary/request_item/ - form handling
     path('request_item/', views.request_item, name='request_item'),
 

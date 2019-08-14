@@ -184,14 +184,46 @@
       .hero_image > img {
         width: 90px;
       }
-      .item_details {
+      .hero_item_details {
         font-size: 0.8em;
         /* width: 200px; */
       }
-      .item_details > span:first-child {
+      .hero_item_details > span:first-child {
         float: left;
         width: 60px;
         /* background-color: #CCC; */
+      }
+      .item_details {
+        max-width: 1024px;
+        min-width: 1024px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+      .detail_image {
+        width: 300px;
+        border: 1px solid #777;
+      }
+      .item_details_text {
+        padding: 0 15px;
+      }
+      h3 {
+        margin-top: 0;
+      }
+      .item_fields {
+        padding: 20px;
+      }
+      .field {
+        font-size: 0.8em;
+      }
+      .field > span:first-child {
+        float: left;
+        width: 105px;
+        /* background-color: #ccc; */
+      }
+      .description {
+        max-width: 500px;
       }
     </style>
   </head>

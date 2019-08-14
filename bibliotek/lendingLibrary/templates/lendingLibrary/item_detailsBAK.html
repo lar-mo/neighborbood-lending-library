@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block heading %}
-<h2>Items in "{{category_name|title}}"</h2>
+<h2>{{item.name|title}}</h2>
 {% endblock %}
 
 {% block content %}
   <div id="item_list">
-    {% if items %}
+    {% if item %}
       <table>
         <tr>
           <th>Category</th>
@@ -19,13 +19,12 @@
           <th>Status</th>
           <th>Owner</th>
         </tr>
-        {% for item in items %}
         <tr>
           <td align="center">{{item.category|title}}</td>
           {% if item.category.name == "books" %}
-            <td><span class="item_title">"<a href="{% url 'lendingLibrary:item_details' item.name_slug %}">{{item.name}}</a>"</span></td>
+            <td><span class="item_title">"{{item.name}}"</span></td>
           {% else %}
-            <td><span class="item_title"><a href="{% url 'lendingLibrary:item_details' item.name_slug %}">{{item.name}}</a></span></td>
+            <td><span class="item_title">{{item.name}}</span></td>
           {% endif %}
           <!-- <td><span class="item_description" style="width: 580px">{{item.description}}</span></td> -->
           {% if item.description != '' %}
@@ -54,7 +53,6 @@
             <td align="center"><a href="/user/{{item.owner.id}}/">{{item.owner.username|title}}</a></td>
           {% endif %}
         </tr>
-        {% endfor %}
       </table>
     {% else %}
       <p><i>You don't have any items to lend</i></p>

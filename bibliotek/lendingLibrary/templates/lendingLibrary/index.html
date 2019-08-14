@@ -16,19 +16,19 @@
           <img src="{% if newest_item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{newest_item.image_url}}{% endif %}">
         </td>
         <td>
-          <div class="item_details">
+          <div class="hero_item_details">
             <span>Category: </span>
             <span><a href="{% url 'lendingLibrary:category' newest_item.category %}">{{newest_item.category}}</a></span>
           </div>
-          <div class="item_details">
+          <div class="hero_item_details">
             <span>Owner: </span>
             <span><a href="{% url 'lendingLibrary:user_items' newest_item.owner.id %}">{{newest_item.owner|title}}</a></span>
           </div>
-          <div class="item_details">
+          <div class="hero_item_details">
             <span>Condition: </span>
             <span>{{newest_item.condition}}</span>
           </div>
-          <div class="item_details">
+          <div class="hero_item_details">
             <span></span>
             <span>[ <a href="#">Request this item</a> ]</span>
           </div>
@@ -56,7 +56,7 @@
         </tr>
         {% for item in items %}
         <tr>
-          <td align="center"><a href="/category/{{item.category}}/">{{item.category}}</a></td>
+          <td align="center"><a href="{% url 'lendingLibrary:category' item.category %}">{{item.category}}</a></td>
           {% if item.category.name == "Books" %}
             <td><span class="item_title">"<a href="{% url 'lendingLibrary:item_details' item.name_slug %}">{{item.name}}</a>"</span></td>
           {% else %}

@@ -1,61 +1,41 @@
 {% extends 'lendingLibrary/base.html' %}
 
 {% block title %}
-<title>Category - Neighborhood Lending Library</title>
+<title>Item Details - Neighborhood Lending Library</title>
 {% endblock %}
 
 {% block heading %}
-<h2>{{item.name|title}}</h2>
+<h2>Item Details</h2>
 {% endblock %}
 
 {% block content %}
-  <div id="item_list">
-    {% if item %}
-      <table>
-        <tr>
-          <th>Category</th>
-          <th align="left">Item</th>
-          <th align="left">Description</th>
-          <th>Status</th>
-          <th>Owner</th>
-        </tr>
-        <tr>
-          <td align="center">{{item.category|title}}</td>
-          {% if item.category.name == "books" %}
-            <td><span class="item_title">"{{item.name}}"</span></td>
-          {% else %}
-            <td><span class="item_title">{{item.name}}</span></td>
-          {% endif %}
-          <!-- <td><span class="item_description" style="width: 580px">{{item.description}}</span></td> -->
-          {% if item.description != '' %}
-            <td><span class="item_description" style="width: 580px">{{item.description}}</span></td>
-          {% else %}
-            <td><span class="item_description" style="width: 580px"><i>no description</i></span></td>
-          {% endif %}
-          {% if item.item_status.name == 'Available' %}
-            <td style="background-color:lightgreen" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Unavailable' %}
-            <td style="background-color:yellow" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Checked Out' %}
-            <td style="background-color:pink" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == "Requested" %}
-            <td style="background-color:blue;color:#FFF" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Hidden' %}
-            <td style="background-color:#777;color:#FFF" align="center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Lost' %}
-            <td style="background-color:#333;color:#FFF" align="center">{{item.item_status}}</td>
-          {% else %}
-            <td style="background-color:white">{{item.item_status}}</td>
-          {% endif %}
-          {% if item.owner.username == request.user.username %}
-            <td align="center"><a href="{% url 'lendingLibrary:my_items' %}">{{item.owner.username|title}}</a></td>
-          {% else %}
-            <td align="center"><a href="/user/{{item.owner.id}}/">{{item.owner.username|title}}</a></td>
-          {% endif %}
-        </tr>
-      </table>
-    {% else %}
-      <p><i>You don't have any items to lend</i></p>
-    {% endif %}
-  </div> <!-- end of 'item_list' -->
+  <div class="item_details">
+    <div><img src="{{item.image_url}}" class="detail_image"/></div>
+    <div class="item_details_text">
+      <h3 style="text-align: left">{{item.name}}</h3>
+      <span class="description">{{item.description}}</span>
+      <div class="item_fields">
+        <div class="field">
+          <span>Category: </span>
+          <span><a href="{% url 'lendingLibrary:category' item.category.name %}">{{item.category.name}}</a></span>
+        </div>
+        <div class="field">
+          <span>Owner: </span>
+          <span><a href="{% url 'lendingLibrary:user_items' item.owner.id %}">{{item.owner.username|title}}</a></span>
+        </div>
+        <div class="field">
+          <span>Condition: </span>
+          <span>{{item.condition.name}}</span>
+        </div>
+        <div class="field">
+          <span>Replacement Cost: </span>
+          <span>${{item.replacement_cost|floatformat:2}}</span>
+        </div>
+        <div class="field">
+          <span>{{item.item_status.name}}</span>
+          <span>[ <a href="#">Request this item</a> ]</span>
+        </div>
+      </div>
+    </div>
+  </div> <!-- end of 'item_details' -->
 {% endblock %}

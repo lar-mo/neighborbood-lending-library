@@ -21,11 +21,11 @@
             </tr>
             {% for item in items %}
             <tr>
-              <td align="center">{{item.category|title}}</td>
+              <td align="center"><a href="{% url 'lendingLibrary:category' item.category %}">{{item.category}}</a></td>
               {% if item.category.name == "Books" %}
-                <td><span class="item_title">"{{item.name|title}}"</span></td>
+                <td><span class="item_title">"<a href="{% url 'lendingLibrary:item_details' item.name_slug %}">{{item.name}}</a>"</span></td>
               {% else %}
-                <td><span class="item_title">{{item.name}}</span></td>
+                <td><span class="item_title"><a href="{% url 'lendingLibrary:item_details' item.name_slug %}">{{item.name}}</a></span></td>
               {% endif %}
               {% if item.description != '' %}
                 <td><span class="item_description">{{item.description}}</span></td>
