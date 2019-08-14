@@ -158,8 +158,9 @@ def create_new_item(request):
     condition_id = request.POST['condition']
     replacement_cost = request.POST['replacement_cost']
     item_status_id = request.POST['item_status']
+    name_slug = request.POST['name_slug']
     owner = request.user
-    new_user_item = UserItem(name=name, description=description, image_url=image_url, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
+    new_user_item = UserItem(name=name, description=description, image_url=image_url, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, name_slug=name_slug, owner=owner)
     new_user_item.save()
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
