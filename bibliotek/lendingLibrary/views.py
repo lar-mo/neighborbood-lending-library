@@ -54,9 +54,11 @@ def request_item(request):
 def deny_request(request):
     checkout_status = CheckoutStatus.objects.get(id=2) # 2=Denied
     item_status = UserItemStatus.objects.get(id=8) # 8=Available
+    deny_reason = request.POST['deny_reason']
     item_request_id = request.POST['item_request_id']
     item_request = UserItemCheckout.objects.get(id=item_request_id)
     item_request.checkout_status = checkout_status
+    item_request.reason = deny_reason
     item_request.save()
     user_item = UserItem.objects.get(id=item_request.user_item_id)
     user_item.item_status = item_status

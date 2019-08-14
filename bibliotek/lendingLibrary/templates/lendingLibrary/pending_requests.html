@@ -33,6 +33,13 @@
           &nbsp;or&nbsp;
           <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
             {% csrf_token %}
+            <select name="deny_reason" required>
+              <option selected disabled value="">-----</option>
+              <option>Items Overdue</option>
+              <option>Items Lost</option>
+              <option>Reserved for owner's use</option>
+              <option>Other</option>
+            </select>
             <input type="hidden" name="item_request_id" value="{{item_request.id}}">
             <button type="submit">Deny</button>
           </form>
