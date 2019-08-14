@@ -16,6 +16,9 @@ urlpatterns = [
     # /lendingLibrary/category/Books/
     path('category/<str:category_name>/', views.category, name='category'),
 
+    # /lendingLibrary/item/ratchet-and-socket-set/
+    path('item/<str:name_slug>/', views.item_details, name='item_details'),
+
     # /lendingLibrary/request_item/ - form handling
     path('request_item/', views.request_item, name='request_item'),
 

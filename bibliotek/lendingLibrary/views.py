@@ -23,9 +23,13 @@ def user_items(request, user_id):
 
 def category(request, category_name):
     items = UserItem.objects.filter(category__name=category_name).exclude(item_status__in=[6, 4])
-    # print(items)
     context = {'items': items, 'category_name': category_name}
     return render(request, 'lendingLibrary/category.html', context)
+
+def item_details(request, name_slug):
+    item = UserItem.objects.get(name_slug=name_slug)
+    context = {'item': item}
+    return render(request, 'lendingLibrary/item_details.html', context)
 
 @login_required
 def request_item(request):
