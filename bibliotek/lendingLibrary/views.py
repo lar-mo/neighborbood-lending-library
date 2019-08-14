@@ -26,8 +26,13 @@ def category(request, category_name):
     context = {'items': items, 'category_name': category_name}
     return render(request, 'lendingLibrary/category.html', context)
 
-def item_details(request, name_slug):
-    item = UserItem.objects.get(name_slug=name_slug)
+def item_details(request, item_id, name_slug):
+    item = UserItem.objects.get(id=item_id)
+    context = {'item': item}
+    return render(request, 'lendingLibrary/item_details.html', context)
+
+def item_details_no_slug(request, item_id):
+    item = UserItem.objects.get(id=item_id)
     context = {'item': item}
     return render(request, 'lendingLibrary/item_details.html', context)
 
@@ -162,9 +167,8 @@ def create_new_item(request):
     condition_id = request.POST['condition']
     replacement_cost = request.POST['replacement_cost']
     item_status_id = request.POST['item_status']
-    name_slug = request.POST['name_slug']
     owner = request.user
-    new_user_item = UserItem(name=name, description=description, image_url=image_url, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, name_slug=name_slug, owner=owner)
+    new_user_item = UserItem(name=name, description=description, image_url=image_url, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
     new_user_item.save()
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 

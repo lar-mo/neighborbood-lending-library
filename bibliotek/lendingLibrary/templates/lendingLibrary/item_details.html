@@ -16,23 +16,23 @@
       <span class="description">{{item.description}}</span>
       <div class="item_fields">
         <div class="field">
-          <span>Category: </span>
+          <span>&nbsp;Category: </span>
           <span><a href="{% url 'lendingLibrary:category' item.category.name %}">{{item.category.name}}</a></span>
         </div>
         <div class="field">
-          <span>Owner: </span>
+          <span>&nbsp;Owner: </span>
           <span><a href="{% url 'lendingLibrary:user_items' item.owner.id %}">{{item.owner.username|title}}</a></span>
         </div>
         <div class="field">
-          <span>Condition: </span>
+          <span>&nbsp;Condition: </span>
           <span>{{item.condition.name}}</span>
         </div>
         <div class="field">
-          <span>Replacement Cost: </span>
+          <span>&nbsp;Replacement Cost: </span>
           <span>${{item.replacement_cost|floatformat:2}}</span>
         </div>
         <div class="field">
-          <span>{{item.item_status.name}}</span>
+          <span>&nbsp;{{item.item_status.name}}</span>
           <span>[ <a href="#">Request this item</a> ]</span>
         </div>
       </div>

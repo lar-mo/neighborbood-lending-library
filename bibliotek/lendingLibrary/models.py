@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 def pending_requests_count(user):
@@ -47,7 +48,7 @@ class UserItemCondition(models.Model):
 
 class UserItem(models.Model):
     name            = models.CharField(max_length=200)
-    name_slug       = models.CharField(max_length=200)
+    slug            = models.SlugField()
     description     = models.TextField()
     image_url       = models.CharField(max_length=200)
     category        = models.ForeignKey(UserItemCategory, on_delete=models.PROTECT)
@@ -58,6 +59,10 @@ class UserItem(models.Model):
 
     def __str__(self):
         return self.category.name + ': ' + self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(UserItem, self).save(*args, **kwargs)
 
 class UserItemCheckout(models.Model):
     user_item       = models.ForeignKey(UserItem, on_delete=models.PROTECT, related_name='item_history')

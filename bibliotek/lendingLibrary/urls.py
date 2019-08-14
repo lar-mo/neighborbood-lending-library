@@ -16,8 +16,11 @@ urlpatterns = [
     # /lendingLibrary/category/Books/
     path('category/<str:category_name>/', views.category, name='category'),
 
-    # /lendingLibrary/item/ratchet-and-socket-set/
-    path('item/<str:name_slug>/', views.item_details, name='item_details'),
+    # /lendingLibrary/item/18/ratchet-and-socket-set/
+    path('item/<int:item_id>/<str:name_slug>/', views.item_details, name='item_details'),
+
+    # /lendingLibrary/item/ - error handling, show item detail page anyway
+    path('item/<int:item_id>/', views.item_details_no_slug, name='item_details_no_slug'),
 
     # /lendingLibrary/item/ - error handling, redirect to index if trying to go to / (index)
     path('item/', views.item, name='item'),
