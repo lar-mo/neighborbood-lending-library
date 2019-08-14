@@ -80,6 +80,20 @@ def approve_request(request):
     return HttpResponseRedirect(reverse('lendingLibrary:pending_requests'))
 
 @login_required
+def item_check_in(request):
+    checkout_status = CheckoutStatus.objects.get(id=4) # 4=Completed
+    item_status = UserItemStatus.objects.get(id=8) # 8=Available
+    item_request_id = request.POST['item_request_id']
+    item_request = UserItemCheckout.objects.get(id=item_request_id)
+    item_request.checkout_status = checkout_status
+    item_request.checkin_date = timezone.now()
+    item_request.save()
+    user_item = UserItem.objects.get(id=item_request.user_item_id)
+    user_item.item_status = item_status
+    user_item.save()
+    return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
+
+@login_required
 def my_profile(request):
     user_info = request.user
     message = request.GET.get('message', '').strip()

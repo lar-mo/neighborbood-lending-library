@@ -34,6 +34,9 @@ urlpatterns = [
     # /lendingLibrary/approve_request/ - form handling
     path('approve_request/', views.approve_request, name='approve_request'),
 
+    # /lendingLibrary/item_check_in/ - form handling
+    path('item_check_in/', views.item_check_in, name='item_check_in'),
+
     # /lendingLibrary/my_profile/ - logged in user's profile - view & edit profile (name, email, password)
     path('my_profile/', views.my_profile, name='my_profile'),
 
