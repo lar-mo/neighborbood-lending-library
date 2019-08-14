@@ -240,6 +240,7 @@
     <footer>
       <div>&copy; 2019 Neighborhood Lending Library - TOS - FAQs - About</div>
     </footer>
+    <a href="#" onclick="javascript:alert(slugify('Ratchet & Socket set'))">click me</a>
     <script type="text/javascript">
       item_description = document.querySelectorAll('.item_description')
       for (let i=0; i<item_description.length; ++i) {
@@ -247,6 +248,22 @@
           item_description[i].style.whiteSpace = "normal"
           item_description[i].style.overflow = "visible"
         }
+      }
+    </script>
+    <script type="text/javascript">
+    function slugify(string) {
+      const a = 'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;'
+      const b = 'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------'
+      const p = new RegExp(a.split('').join('|'), 'g')
+
+      return string.toString().toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+        .replace(/&/g, '-and-') // Replace & with 'and'
+        .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+        .replace(/\-\-+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, '') // Trim - from end of text
       }
     </script>
   </body>

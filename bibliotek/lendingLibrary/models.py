@@ -47,6 +47,7 @@ class UserItemCondition(models.Model):
 
 class UserItem(models.Model):
     name            = models.CharField(max_length=200)
+    # name_slug       = models.CharField(max_length=200)
     description     = models.TextField()
     image_url       = models.CharField(max_length=200)
     category        = models.ForeignKey(UserItemCategory, on_delete=models.PROTECT)

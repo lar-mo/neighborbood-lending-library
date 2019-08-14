@@ -23,21 +23,21 @@
         <div class="add_edit_form_div">
           <form action="{% url 'lendingLibrary:create_new_item' %}" method="post" name="new_item_form" id="new_item_form">
             {% csrf_token %}
-            <div class="field_label">Name</div>
+            <div class="field_label">Item Name</div>
             <div>
-              <input name="name" type="text" value="" style="width: 300px" required>
+              <input name="name" type="text" style="width: 300px" required>
             </div>
             <div class="field_label">Description</div>
             <div>
-              <textarea name="description" value="" style="width: 300px"></textarea>
+              <textarea name="description" style="width: 300px"></textarea>
             </div>
             <div class="field_label">Image URL</div>
             <div>
-              <input name="image_url" type="text" value="" style="width: 300px">
+              <input name="image_url" type="text" style="width: 300px">
             </div>
             <div class="field_label">Category</div>
             <div>
-              <select name="category" value="" style="width: 300px" required>
+              <select name="category" style="width: 300px" required>
                 <option value="" selected disabled>-----</option>
                 {% for category in categories %}
                   <option value="{{category.id}}">{{category.name}}</option>
@@ -46,7 +46,7 @@
             </div>
             <div class="field_label">Condition</div>
             <div>
-              <select name="condition" value="" style="width: 300px" required>
+              <select name="condition" style="width: 300px" required>
                 <option value="" selected disabled>-----</option>
                 {% for condition in conditions %}
                   <option value="{{condition.id}}">{{condition.name}}</option>
@@ -55,7 +55,7 @@
             </div>
             <div class="field_label">Replacement Cost</div>
             <div>
-              &#36;&nbsp;<input name="replacement_cost" type="number" step="0.01" value="" style="width: 300px" required>
+              &#36;&nbsp;<input name="replacement_cost" type="number" step="0.01" style="width: 300px" required>
             </div>
             <input type="hidden" name="item_status" value="8"/>
             <div class="form_submit_div">

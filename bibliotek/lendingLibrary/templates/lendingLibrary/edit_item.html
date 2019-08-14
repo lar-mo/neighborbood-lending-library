@@ -23,7 +23,7 @@
         <div class="add_edit_form_div">
           <form action="{% url 'lendingLibrary:save_edited_item' %}" method="post" name="edit_item" id="edit_item_form">
             {% csrf_token %}
-            <div class="field_label">Name</div>
+            <div class="field_label">Item Name</div>
             <div>
               <input name="name" type="text" value="{{item.name}}" style="width: 300px" required>
             </div>
