@@ -9,7 +9,7 @@ def pending_requests_count(user):
 User.add_to_class('pending_requests_count', pending_requests_count)
 
 def my_checkouts_count(user):
-    number_of_my_checkouts= user.checkouts.count()
+    number_of_my_checkouts= user.checkouts.exclude(checkout_status__in=[2,4]).count()
     return number_of_my_checkouts
 User.add_to_class('my_checkouts_count', my_checkouts_count)
 

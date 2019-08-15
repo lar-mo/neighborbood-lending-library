@@ -34,7 +34,7 @@
           <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
             {% csrf_token %}
             <select name="deny_reason" required>
-              <option selected disabled value="">-----</option>
+              <option selected disabled value="">select a reason</option>
               <option>Items Overdue</option>
               <option>Items Lost</option>
               <option>Reserved for owner's use</option>
