@@ -48,7 +48,7 @@ def request_item(request):
     checkout_request_details.save()
     user_item.item_status = item_status
     user_item.save()
-    return HttpResponseRedirect(reverse('lendingLibrary:user_items', args=('3',)))
+    return HttpResponseRedirect(reverse('lendingLibrary:my_checkouts'))
 
 @login_required
 def deny_request(request):
@@ -138,7 +138,7 @@ def check_pwd(request):
 @login_required
 def pending_requests(request):
     owner = request.user
-    pending_requests = UserItemCheckout.objects.filter(checkout_status_id=1).exclude(borrower_id=owner.id)
+    pending_requests = UserItemCheckout.objects.filter(checkout_status_id=1, user_item__owner=owner.id).exclude(borrower_id=owner.id)
     context = {'owner': owner, 'pending_requests': pending_requests}
     return render(request, 'lendingLibrary/pending_requests.html', context)
 
@@ -146,7 +146,7 @@ def pending_requests(request):
 def my_checkouts(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'category__name')
-    checkouts = owner.checkouts.order_by('user_item')
+    checkouts = owner.checkouts.order_by('-request_date')
     context = {'owner': owner, 'checkouts': checkouts}
     return render(request, 'lendingLibrary/my_checkouts.html', context)
 
