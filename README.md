@@ -124,6 +124,7 @@ name                       CharField
 ```
 id                          Automatic PK field
 name                        CharField
+slug                        SlugField
 description                 TextField
 image_url                   TextField
 type (category)             ForeignKey(UserItemCategories)
@@ -137,6 +138,7 @@ item_status                 ForeignKey(UserItemStatus)
 id                          Automatic PK field
 user_item                   ForeignKey(User_Item)
 item_status                 ForeignKey(UserItemStatus)
+reason                      CharField
 request_date                DateTimeField
 checkout_date (nullable)    DateTimeField
 checkin_date (nullable)     DateTimeField
@@ -156,27 +158,27 @@ due_date                    DateTimeField
   <tr>
     <td>Registration & Login</td>
     <td>~2 days</td>
-    <td></td>
+    <td>Yes</td>
   </tr>
   <tr>
     <td>User Item Management</td>
     <td>~3 days</td>
-    <td></td>
+    <td>Yes</td>
   </tr>
   <tr>
     <td>User Profile</td>
     <td>~3 days</td>
-    <td></td>
+    <td>Yes</td>
   </tr>
   <tr>
     <td>Create Borrow Request</td>
     <td>~2 days</td>
-    <td></td>
+    <td>Yes</td>
   </tr>
   <tr>
     <td>Approve/Deny, Check In Item</td>
     <td>~2 days</td>
-    <td></td>
+    <td>Yes</td>
   </tr>
   <tr>
     <td>Improved Styling</td>
