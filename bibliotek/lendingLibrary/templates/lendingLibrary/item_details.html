@@ -33,7 +33,7 @@
         <div class="field">
           {% if item.item_status.name == 'Available'%}
           <span class="availability-true">&nbsp;{{item.item_status.name}}</span>
-          <span>{% if request.user.is_authenticated %}[ <a href="#">Request this item</a> ]{% endif %}</span>
+          <span>{% if request.user.is_authenticated %}[ <form name="request_item" action="{% url 'lendingLibrary:request_item' %}" method="post">{% csrf_token %}<input type="hidden" name="user_item" value="{{item.id}}"><input type="hidden" name="borrower" value="{{request.user.id}}"><a href="#" onclick="request_item.submit()">Request this item</a> ]</form>{% endif %}</span>
           {% else %}
           <span class="availability-false">&nbsp;{{item.item_status.name}}</span>
           <span></span>

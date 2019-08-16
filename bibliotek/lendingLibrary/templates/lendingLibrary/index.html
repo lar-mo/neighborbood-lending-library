@@ -32,7 +32,7 @@
             <span>Condition: </span>
             <span>{{newest_item.condition}}</span>
           </div>
-          {% if request.user.is_authenticated %}
+          {% if request.user.is_authenticated and newest_item.item_status.name == "Available" %}
           <div class="hero_item_details">
             <span></span>
             <span>[ <a href="#">Request this item</a> ]</span>
