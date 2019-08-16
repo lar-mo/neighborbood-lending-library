@@ -263,12 +263,41 @@
         color: #111 !important;
         font-weight: bold;
       }
-      /* .description {
-        max-width: 500px;
-      } */
+      section {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-around;
+        padding: 10px;
+      }
+      #item_search {
+        width: 500px;
+        height: 40px;
+        border-radius: 10px;
+      }
+      #submit_btn {
+        height: 40px;
+        width: 120px;
+        border-radius: 10px;
+      }
+      section > img {
+        width: 270px;
+        padding-right: 40px;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+      }
     </style>
   </head>
   <body>
+    <section>
+      <img src="https://lar-mo.com/images/lendingLib_logo.png">
+      <form action="{% url 'lendingLibrary:search_results' %}" method="post">
+        {% csrf_token %}
+        <input type="search" id="item_search" name="search_term" placeholder="&nbsp;&nbsp;&nbsp;search for an item">
+        <input type="submit" id="submit_btn" name="submit_btn">
+      </form>
+    </section>
     <header>
       {% if not request.user.username or message == 'logout' %}
         <span>Welcome!</span>

@@ -23,9 +23,9 @@
         <tr>
           <td style="text-align:center"><a href="{% url 'lendingLibrary:category' item.category %}">{{item.category}}</a></td>
           {% if item.category.name == "Books" %}
-            <td><span class="item_title">"<a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">{{item.name}}</a>"</span></td>
+            <td><span class="item_title">"<a href="{% url 'lendingLibrary:edit_item' item.id %}">{{item.name}}</a>"</span></td>
           {% else %}
-            <td><span class="item_title"><a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">{{item.name}}</a></span></td>
+            <td><span class="item_title"><a href="{% url 'lendingLibrary:edit_item' item.id %}">{{item.name}}</a></span></td>
           {% endif %}
           {% if item.description != '' %}
             <td><span class="item_description">{{item.description}}</span></td>

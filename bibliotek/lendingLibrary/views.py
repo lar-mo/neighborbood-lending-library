@@ -36,6 +36,12 @@ def item_details_no_slug(request, item_id):
     context = {'item': item}
     return render(request, 'lendingLibrary/item_details.html', context)
 
+def search_results(request):
+    search_term = request.POST['search_term']
+    items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__in=[6, 4]) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__in=[6, 4])
+    context = {'items': items, 'search_term': search_term}
+    return render(request, 'lendingLibrary/search_results.html', context)
+
 @login_required
 def request_item(request):
     user_item_id = request.POST['user_item']
