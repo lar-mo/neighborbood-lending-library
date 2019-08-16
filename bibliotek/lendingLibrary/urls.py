@@ -25,8 +25,14 @@ urlpatterns = [
     # /lendingLibrary/item/ - error handling, redirect to index if trying to go to / (index)
     path('item/', views.item, name='item'),
 
-    # /lendingLibrary/search/tent/ - search results
+    # /lendingLibrary/search/ - search results
     path('search/', views.search_results, name='search_results'),
+
+    # /lendingLibrary/search/ - search results
+    # path('search/', views.search_results_q, name='search_results_q'),
+
+    # /lendingLibrary/search/tent/ - search results
+    path('search/<str:search_term>/', views.search_results_keyword, name='search_results_keyword'),
 
     # /lendingLibrary/request_item/ - form handling
     path('request_item/', views.request_item, name='request_item'),

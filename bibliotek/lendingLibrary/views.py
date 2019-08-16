@@ -10,19 +10,19 @@ from django.contrib.auth.hashers import check_password
 from .models import UserItemStatus, CheckoutStatus, UserItemCategory, UserItemCondition, UserItem, UserItemCheckout
 
 def index(request):
-    items = UserItem.objects.order_by('category__name').exclude(item_status__in=[6, 4])
-    newest_items = UserItem.objects.filter(item_status=8).order_by('-id')[:3:1]
+    items = UserItem.objects.order_by('category__name').exclude(item_status__name__in=['Hidden', 'Lost'])
+    newest_items = UserItem.objects.filter(item_status__name='Available').order_by('-id')[:3:1]
     context = {'items': items, 'newest_items': newest_items}
     return render(request, 'lendingLibrary/index.html', context)
 
 def user_items(request, user_id):
     owner = User.objects.get(id=user_id)
-    items = owner.items.order_by('item_status__name', 'category__name').exclude(item_status__in=[6, 4])
+    items = owner.items.order_by('item_status__name', 'category__name').exclude(item_status__name__in=['Hidden', 'Lost'])
     context = {'items': items, 'owner': owner}
     return render(request, 'lendingLibrary/user_items.html', context)
 
 def category(request, category_name):
-    items = UserItem.objects.filter(category__name=category_name).exclude(item_status__in=[6, 4])
+    items = UserItem.objects.filter(category__name=category_name).exclude(item_status__name__in=['Hidden', 'Lost'])
     context = {'items': items, 'category_name': category_name}
     return render(request, 'lendingLibrary/category.html', context)
 
@@ -36,9 +36,21 @@ def item_details_no_slug(request, item_id):
     context = {'item': item}
     return render(request, 'lendingLibrary/item_details.html', context)
 
+# def search_results(request):
+#     search_term = request.POST['q']
+#     items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost'])
+#     context = {'items': items, 'search_term': search_term}
+#     return render(request, 'lendingLibrary/search_results.html', context)
+
 def search_results(request):
-    search_term = request.POST['search_term']
-    items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__in=[6, 4]) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__in=[6, 4])
+    search_term = request.GET['q']
+    items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost'])
+    context = {'items': items, 'search_term': search_term}
+    return render(request, 'lendingLibrary/search_results.html', context)
+
+def search_results_keyword(request, search_term):
+    # search_term = request.POST['search_term']
+    items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost'])
     context = {'items': items, 'search_term': search_term}
     return render(request, 'lendingLibrary/search_results.html', context)
 
@@ -46,8 +58,8 @@ def search_results(request):
 def request_item(request):
     user_item_id = request.POST['user_item']
     borrower_id = request.POST['borrower']
-    checkout_status = CheckoutStatus.objects.get(id=1) # 1=Pending
-    item_status = UserItemStatus.objects.get(id=9) # 9=Requested
+    checkout_status = CheckoutStatus.objects.get(name='Pending')
+    item_status = UserItemStatus.objects.get(name='Requested')
     user_item = UserItem.objects.get(id=user_item_id)
     borrower = User.objects.get(id=borrower_id)
     checkout_request_details = UserItemCheckout(user_item=user_item, borrower=borrower, checkout_status=checkout_status, request_date=timezone.now())
@@ -58,8 +70,8 @@ def request_item(request):
 
 @login_required
 def deny_request(request):
-    checkout_status = CheckoutStatus.objects.get(id=2) # 2=Denied
-    item_status = UserItemStatus.objects.get(id=8) # 8=Available
+    checkout_status = CheckoutStatus.objects.get(name='Denied')
+    item_status = UserItemStatus.objects.get(name='Available')
     deny_reason = request.POST['deny_reason']
     item_request_id = request.POST['item_request_id']
     item_request = UserItemCheckout.objects.get(id=item_request_id)
@@ -73,8 +85,8 @@ def deny_request(request):
 
 @login_required
 def approve_request(request):
-    checkout_status = CheckoutStatus.objects.get(id=3) # 3=Active
-    item_status = UserItemStatus.objects.get(id=10) # 10=Checked Out
+    checkout_status = CheckoutStatus.objects.get(name='Active')
+    item_status = UserItemStatus.objects.get(name='Checked Out')
     due_date = request.POST['due_date']
     item_request_id = request.POST['item_request_id']
     item_request = UserItemCheckout.objects.get(id=item_request_id)
@@ -89,8 +101,8 @@ def approve_request(request):
 
 @login_required
 def item_check_in(request):
-    checkout_status = CheckoutStatus.objects.get(id=4) # 4=Completed
-    item_status = UserItemStatus.objects.get(id=8) # 8=Available
+    checkout_status = CheckoutStatus.objects.get(name='Completed')
+    item_status = UserItemStatus.objects.get(name='Available')
     item_request_id = request.POST['item_request_id']
     item_request = UserItemCheckout.objects.get(id=item_request_id)
     item_request.checkout_status = checkout_status
@@ -144,7 +156,7 @@ def check_pwd(request):
 @login_required
 def pending_requests(request):
     owner = request.user
-    pending_requests = UserItemCheckout.objects.filter(checkout_status_id=1, user_item__owner=owner.id).exclude(borrower_id=owner.id)
+    pending_requests = UserItemCheckout.objects.filter(checkout_status__name='Pending', user_item__owner=owner.id).exclude(borrower_id=owner.id)
     context = {'owner': owner, 'pending_requests': pending_requests}
     return render(request, 'lendingLibrary/pending_requests.html', context)
 
@@ -160,7 +172,7 @@ def my_checkouts(request):
 def my_items(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'category__name')
-    item_requests = UserItemCheckout.objects.filter(user_item__in=items).exclude(checkout_status=2)
+    item_requests = UserItemCheckout.objects.filter(user_item__in=items).exclude(checkout_status__name='Denied')
     filter = ['Available', 'Unavailable', 'Lost', 'Hidden']
     context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'filter': filter}
     return render(request, 'lendingLibrary/my_items.html', context)
@@ -201,7 +213,7 @@ def edit_item(request, item_id):
     items = owner.items.order_by('item_status__name', 'category__name')
     categories = UserItemCategory.objects.order_by('name')
     conditions = UserItemCondition.objects.order_by('id')
-    item_statuses = UserItemStatus.objects.order_by('name').exclude(id__in=[9, 10])
+    item_statuses = UserItemStatus.objects.order_by('name').exclude(name__in=['Requested', 'Checked Out'])
     context = {'item': item, 'items': items, 'categories': categories, 'conditions': conditions, 'item_statuses': item_statuses}
     return render(request, 'lendingLibrary/edit_item.html', context)
 

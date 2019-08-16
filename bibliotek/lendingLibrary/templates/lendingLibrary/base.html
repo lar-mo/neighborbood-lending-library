@@ -270,12 +270,12 @@
         justify-content: space-around;
         padding: 20px;
       }
-      #item_search {
+      #q {
         width: 500px;
         height: 40px;
         border-radius: 10px;
       }
-      #submit_btn {
+      #search_btn {
         height: 40px;
         width: 120px;
         border-radius: 10px;
@@ -288,17 +288,18 @@
         position: absolute;
         top: 5px;
         left: 5px;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
     <section>
-      <img src="https://lar-mo.com/images/lendingLib_logo.png">
-      <form action="{% url 'lendingLibrary:search_results' %}" method="post">
-        {% csrf_token %}
-        <input type="search" id="item_search" name="search_term" placeholder="&nbsp;&nbsp;&nbsp;search for an item">
-        <input type="submit" id="submit_btn" name="submit_btn">
-      </form>
+      <img src="https://lar-mo.com/images/lendingLib_logo.png" onclick="javascript:window.location.href='{% url 'lendingLibrary:index' %}'" onmouseover="">
+      <!-- <form action="{% url 'lendingLibrary:search_results' %}" method="POST"> -->
+        <!-- {% csrf_token %} -->
+        <span><input type="search" id="q" name="q" placeholder="&nbsp;&nbsp;&nbsp;search for an item">
+        <button type="submit" id="search_btn"><b>Search</b></button></span>
+      <!-- </form> -->
     </section>
     <header>
       {% if not request.user.username or message == 'logout' %}
@@ -351,6 +352,11 @@
           item_description[i].style.whiteSpace = "normal"
           item_description[i].style.overflow = "visible"
         }
+      }
+      search_btn = document.querySelector('#search_btn')
+      q = document.querySelector('#q')
+      search_btn.onclick = function() {
+        window.location="{% url 'lendingLibrary:search_results' %}?q=" + q.value
       }
     </script>
   </body>
