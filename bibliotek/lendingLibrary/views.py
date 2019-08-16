@@ -44,7 +44,8 @@ def item_details_no_slug(request, item_id):
 
 def search_results(request):
     search_term = request.GET['q']
-    items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost'])
+    items = UserItem.objects.filter(name__iregex=r'\b{0}\b'.format(search_term)).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__iregex=r'\b{0}\b'.format(search_term)).exclude(item_status__name__in=['Hidden', 'Lost']) # this is for whole word match, e.g. 'on' => 'on', not 'one', 'won'
+    # items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) # this is for partial match, e.g. 'on' => 'won', 'one', 'on'
     context = {'items': items, 'search_term': search_term}
     return render(request, 'lendingLibrary/search_results.html', context)
 

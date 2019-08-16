@@ -358,6 +358,11 @@
       search_btn.onclick = function() {
         window.location="{% url 'lendingLibrary:search_results' %}?q=" + q.value
       }
+      q.addEventListener("keydown", function (event) { // listen for  key presses
+          if (event.keyCode === 13) {                                 // '13' is the Enter/Return key
+              search_btn.click()                                      // emulate button click
+          }
+      })
     </script>
   </body>
 </html>
