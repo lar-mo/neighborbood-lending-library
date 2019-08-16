@@ -5,17 +5,21 @@
 {% endblock %}
 
 {% block hero %}
-<div id="hero">
+<div id="hero_div">
   <div id="feature_item">
-    <table id="hero_table">
+    <table class="hero_table">
       <tr>
-        <th colspan="2">Featured Item: {{newest_item.name}}</th>
+        <th colspan="6">Featured Items</th>
       </tr>
       <tr>
+        {% for newest_item in newest_items %}
         <td class="hero_image">
           <img src="{% if newest_item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{newest_item.image_url}}{% endif %}">
         </td>
-        <td>
+        <td class="hero_td">
+          <div class="hero_item_details">
+            <b>{{newest_item.name}}</b>
+          </div>
           <div class="hero_item_details">
             <span>Category: </span>
             <span><a href="{% url 'lendingLibrary:category' newest_item.category %}">{{newest_item.category}}</a></span>
@@ -33,6 +37,7 @@
             <span>[ <a href="#">Request this item</a> ]</span>
           </div>
         </td>
+        {% endfor %}
       </tr>
     </table>
   </div>

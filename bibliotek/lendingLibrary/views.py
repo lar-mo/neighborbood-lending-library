@@ -11,8 +11,8 @@ from .models import UserItemStatus, CheckoutStatus, UserItemCategory, UserItemCo
 
 def index(request):
     items = UserItem.objects.order_by('category__name').exclude(item_status__in=[6, 4])
-    newest_item = UserItem.objects.filter(item_status=8).last()
-    context = {'items': items, 'newest_item': newest_item}
+    newest_items = UserItem.objects.filter(item_status=8).order_by('-id')[:3:1]
+    context = {'items': items, 'newest_items': newest_items}
     return render(request, 'lendingLibrary/index.html', context)
 
 def user_items(request, user_id):
