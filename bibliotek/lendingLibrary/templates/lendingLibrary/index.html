@@ -18,7 +18,7 @@
         </td>
         <td class="hero_td">
           <div class="hero_item_details">
-            <b>{{newest_item.name}}</b>
+            <b><a href="{% url 'lendingLibrary:item_details' newest_item.id newest_item.slug %}">{{newest_item.name}}</a></b>
           </div>
           <div class="hero_item_details">
             <span>Category: </span>
@@ -32,10 +32,12 @@
             <span>Condition: </span>
             <span>{{newest_item.condition}}</span>
           </div>
+          {% if request.user.is_authenticated %}
           <div class="hero_item_details">
             <span></span>
             <span>[ <a href="#">Request this item</a> ]</span>
           </div>
+          {% endif %}
         </td>
         {% endfor %}
       </tr>

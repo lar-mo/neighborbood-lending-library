@@ -5,20 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}{% endblock %}
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto,Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto,Montserrat,Red+Hat+Text&display=swap" rel="stylesheet">
     <style media="screen" type="text/css">
       html, body {
-        background-color: rgba(10, 10, 100, 0.225);
+        background-color: #C2CAD0;
         box-sizing: border-box;
         margin: 0;
         padding: 0;
         width: 100%;
         font-size: 0.95em;
         /* font-family: 'Roboto', sans-serif; */
-        font-family: 'Montserrat', sans-serif;
+        /* font-family: 'Montserrat', sans-serif; */
+        font-family: 'Red Hat Text', sans-serif;
+        color: #123;
       }
       header {
-        background-color: lightpink;
+        background-color: #E7717D;
         padding-left: 10px;
         padding-right: 10px;
         position: sticky;
@@ -28,9 +30,7 @@
         justify-content: space-between;
         font-size: 1.1em;
         z-index: 999;
-        /* box-shadow:         3px 3px 5px 0 #888; */
-        /* -moz-box-shadow:    3px 3px 5px 0 #888; */
-        /* -webkit-box-shadow: 3px 3px 5px 0 #888; */
+        font-weight: bold;
       }
       .wrapper {
         display: flex;
@@ -38,12 +38,16 @@
         flex-direction: row;
       }
       aside {
-        border: 1px solid #777;
-        background-color: #9c9;
+        border: 1px solid #7E685A;
+        background-color: #AFD275;
         height: 100%;
         margin: 0;
         margin-right: 10px;
         position: relative;
+        border-radius: 10px;
+        box-shadow:         3px 3px 5px 0 #888;
+        -moz-box-shadow:    3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888;
       }
       aside > div > span {
         font-size: 1.2em;
@@ -69,13 +73,29 @@
       h1, h2, h3, h4, h5 {
         text-align: center;
       }
-      table, tr, th, td {
-        border: 1px solid #777;
-        border-collapse: collapse;
-      }
       table {
-        background-color: #FFF;
+        background-color: none;
+        border-radius: 10px;
         width: 1024px;
+        /* border-spacing: 5px; */
+        margin-top: 0;
+      }
+      tr, th, td {
+        border: 1px solid #7E685A;
+        border-collapse: collapse;
+        border-radius: 10px;
+      }
+      th {
+        background-color: #C2B9B0;
+        box-shadow:         3px 3px 5px 0 #888;
+        -moz-box-shadow:    3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888;
+      }
+      td {
+        background-color: #FFF;
+        box-shadow:         3px 3px 5px 0 #888;
+        -moz-box-shadow:    3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888;
       }
       #profile_form, #password_form, #check_password {
         min-width: auto;
@@ -92,7 +112,8 @@
         padding: 9px;
       }
       th {
-        background-color: rgba(10, 10, 100, 0.2);
+        /* background-color: rgba(10, 10, 100, 0.2); */
+        /* color: #333; */
       }
       .item_description {
         display: block;
@@ -151,29 +172,37 @@
         justify-content: center
       }
       #hero_div {
-        background-color: #DAD2FF;
+        background-color: none;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        border-radius: 0 0 150px 150px;
       }
       .hero_table {
         margin: 10px;
-        background-color: rgba(77, 77, 77, 0.3);
+        /* background-color: rgba(77, 77, 77, 0.1); */
+        background-color: none;
       }
       .hero_table > tr, td {
-        background-color: #FFF;
+        /* background-color: #FFF; */
+        /* border-radius: 30px; */
+        /* border: none; */
+      }
+      .hero_table th:first-of-type {
+        /* color: #333; */
       }
       .hero_td {
         border: none;
       }
       .hero_image {
-        text-align: right;
-        padding: 10px 1px 10px 30px;
+        text-align: center;
+        padding: 10px 7px 10px 7px;
         border: none;
       }
       .hero_image > img {
         height: 90px;
+        border-radius: 5px;
       }
       .hero_item_details {
         font-size: 0.8em;
@@ -192,7 +221,11 @@
       }
       .detail_image {
         width: 300px;
-        border: 1px solid #777;
+        border: 1px solid #7E685A;
+        box-shadow:         3px 3px 5px 0 #888;
+        -moz-box-shadow:    3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888;
+        border-radius: 10px;
       }
       .item_details_text {
         padding: 0 15px;
@@ -202,19 +235,32 @@
       }
       .item_fields {
         padding: 20px;
+        /* background-color: #FFF; */
       }
       .field {
         font-size: 0.9em;
         margin: 5px;
+        /* background-color: #FFF; */
       }
       .field > span:first-child {
         float: left;
         width: 120px;
-        background-color: #ccc;
+        background-color: #7E685A;
+        color: #FFF;
         padding: 1px;
+        border-radius: 10px 0 0 10px;
       }
       .field > span:last-child {
         padding: 10px;
+      }
+      .availability-false {
+        background-color: #E7717D !important;
+        font-weight: bold;
+      }
+      .availability-true {
+        background-color: #AFD275 !important;
+        color: #111 !important;
+        font-weight: bold;
       }
       .description {
         max-width: 500px;
@@ -240,7 +286,7 @@
     <div class="wrapper"> <!-- start of 'wrapper'-->
       {% if request.user.is_authenticated %}
       <aside>
-        <div {% if request.path == '/pending_requests/' %}style="background-color:#FFF"{% endif %}>
+        <div {% if request.path == '/pending_requests/' %}style="background-color:#FFF;border-radius:10px 10px 0 0"{% endif %}>
           <span><a href="{% url 'lendingLibrary:pending_requests' %}">Pending Requests</a></span>
           <div>&#8227; ({{user.pending_requests_count}}) new {% if user.pending_requests_count == 1 %} request {% else %} requests {% endif %} for your items</div>
         </div>
@@ -252,7 +298,7 @@
           <span><a href="{% url 'lendingLibrary:my_items' %}">My Items</a></span>
           <div>&#8227; ({{user.my_items_available_count}} of {{user.my_items_total_count}}) {% if user.my_items_available_count == 1 %} item {% else %} items {% endif %} available to share</div>
         </div>
-        <div {% if request.path == '/manage_items/' or  request.path == '/new_item/' or '/edit_item/' in request.path %}style="background-color:#FFF"{% endif %}>
+        <div {% if request.path == '/manage_items/' or  request.path == '/new_item/' or '/edit_item/' in request.path %}style="background-color:#FFF;border-radius:0 0 10px 10px"{% endif %}>
           <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
           <div>&#8227; Add / Edit / Delete your items</div>
         </div>

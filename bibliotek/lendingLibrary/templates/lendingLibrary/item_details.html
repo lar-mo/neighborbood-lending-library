@@ -10,7 +10,6 @@
 
 {% block content %}
   <div class="item_details">
-    <div><img src="{% if item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{item.image_url}}{% endif %}" class="detail_image"/></div>
     <div class="item_details_text">
       <h3 style="text-align: left">{{item.name}}</h3>
       <span class="description">{{item.description}}</span>
@@ -32,10 +31,18 @@
           <span>${{item.replacement_cost|floatformat:2}}</span>
         </div>
         <div class="field">
-          <span>&nbsp;{{item.item_status.name}}</span>
-          <span>[ <a href="#">Request this item</a> ]</span>
+          {% if item.item_status.name == 'Available'%}
+          <span class="availability-true">&nbsp;{{item.item_status.name}}</span>
+          <span>{% if request.user.is_authenticated %}[ <a href="#">Request this item</a> ]{% endif %}</span>
+          {% else %}
+          <span class="availability-false">&nbsp;{{item.item_status.name}}</span>
+          <span></span>
+          {% endif %}
         </div>
       </div>
+    </div>
+    <div>
+      <img src="{% if item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{item.image_url}}{% endif %}" class="detail_image"/>
     </div>
   </div> <!-- end of 'item_details' -->
 {% endblock %}
