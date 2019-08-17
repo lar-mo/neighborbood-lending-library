@@ -27,7 +27,7 @@
             <span class="item_description" style="width: 580px"><i>no description</i></span>
             {% endif %}
             {% if request.user.username %}
-              <div align="center" style="padding: 25px">
+              <div class="status_block">
                 <span><b>Status</b>: <span style="border: 1px solid gray; padding: 4px; background-color: #FFF">{{item.item_status}}</span></span>
                 {% if item.item_status.name != 'Unavailable' and item.item_status.name != 'Requested' and item.item_status.name != 'Checked Out' %}
                 <form action="{% url 'lendingLibrary:request_item' %}" method="post">

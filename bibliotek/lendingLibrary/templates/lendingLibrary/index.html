@@ -77,7 +77,7 @@
             <span class="item_description fade" style="width: 580px"><i>no description</i></span>
             {% endif %}
             {% if request.user.username %}
-              <div align="center" style="padding: 10px">
+              <div class="status_block">
                 <span><b>Status</b>:
                     {% if item.item_status.name == "Available" %}
                       <span style="font-weight: bold; color: #379683">

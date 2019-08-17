@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="item_list">
+  <div id="item_list">
     {% if items %}
         {% for item in items %}
         <div class="single_row">
@@ -21,13 +21,27 @@
               <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">{{item.name}}</a>
             </span>
             {% if item.description != '' %}
-            <span class="item_description" style="width: 580px">{{item.description}}</span>
+            <span class="item_description fade" style="width: 580px">{{item.description}}</span>
             {% else %}
-            <span class="item_description" style="width: 580px"><i>no description</i></span>
+            <span class="item_description fade" style="width: 580px"><i>no description</i></span>
             {% endif %}
             {% if request.user.username %}
-              <div align="center" style="padding: 25px">
-                <span><b>Status</b>: <span style="border: 1px solid gray; padding: 4px; background-color: #FFF">{{item.item_status}}</span></span>
+              <div class="status_block">
+                <span><b>Status</b>:
+                    {% if item.item_status.name == "Available" %}
+                      <span style="font-weight: bold; color: #379683">
+                        {{item.item_status}}
+                      </span>
+                    {% elif item.item_status.name == "Requested" %}
+                      <span style="font-weight: bold; color: #05386B">
+                        {{item.item_status}}
+                      </span>
+                    {% else %}
+                      <span style="font-weight: bold; color: #FC4445">
+                        {{item.item_status}}
+                      </span>
+                    {% endif %}
+                </span>
                 {% if item.item_status.name != 'Unavailable' and item.item_status.name != 'Requested' and item.item_status.name != 'Checked Out' %}
                 <form action="{% url 'lendingLibrary:request_item' %}" method="post">
                   {% csrf_token %}
@@ -50,8 +64,8 @@
               <div><b>Lender</b>: <a href="{% url 'lendingLibrary:my_items' %}">{{item.owner.username|title}}</a></div>
             {% else %}
               <div><b>Lender</b>: <a href="/user/{{item.owner.id}}/">{{item.owner.username|title}}</a></div>
-              <div><b>Condition</b>: {{item.condition.name}}</div>
             {% endif %}
+            <div><b>Condition</b>: {{item.condition}}</div>
           </div>
         </div> <!-- end of 'single_row' -->
         {% endfor %}
