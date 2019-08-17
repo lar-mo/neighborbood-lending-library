@@ -158,7 +158,8 @@ def check_pwd(request):
 def pending_requests(request):
     owner = request.user
     pending_requests = UserItemCheckout.objects.filter(checkout_status__name='Pending', user_item__owner=owner.id).exclude(borrower_id=owner.id)
-    context = {'owner': owner, 'pending_requests': pending_requests}
+    tomorrows_date = timezone.now() + timezone.timedelta(days=1)
+    context = {'owner': owner, 'pending_requests': pending_requests, 'tomorrows_date': tomorrows_date}
     return render(request, 'lendingLibrary/pending_requests.html', context)
 
 @login_required

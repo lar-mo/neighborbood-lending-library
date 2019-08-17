@@ -35,7 +35,16 @@
           {% if request.user.is_authenticated and newest_item.item_status.name == "Available" %}
           <div class="hero_item_details">
             <span></span>
-            <span>[ <a href="#">Request this item</a> ]</span>
+            <span>
+              <form id="request_item" action="{% url 'lendingLibrary:request_item' %}" method="post">
+              <!-- <form id="request_item{{newest_item.id}}" action="{% url 'lendingLibrary:request_item' %}" method="post"> ## alt method 1 of 2 ## -->
+              {% csrf_token %}
+              <input type="hidden" name="user_item" value="{{newest_item.id}}">
+              <input type="hidden" name="borrower" value="{{request.user.id}}">
+              <!-- [ <a href="#" onclick="request_item{{newest_item.id}}.submit()">Request this item</a> ] ## alt method 2 of 2 ##-->
+              [ <button class="button_as_text_link" type="submit">Request this item</button> ]
+              </form>
+            </span>
           </div>
           {% endif %}
         </td>

@@ -31,9 +31,18 @@
           <span>${{item.replacement_cost|floatformat:2}}</span>
         </div>
         <div class="field">
-          {% if item.item_status.name == 'Available'%}
+          {% if item.item_status.name == 'Available' %}
           <span class="availability-true">&nbsp;{{item.item_status.name}}</span>
-          <span>{% if request.user.is_authenticated %}[ <form name="request_item" action="{% url 'lendingLibrary:request_item' %}" method="post">{% csrf_token %}<input type="hidden" name="user_item" value="{{item.id}}"><input type="hidden" name="borrower" value="{{request.user.id}}"><a href="#" onclick="request_item.submit()">Request this item</a> ]</form>{% endif %}</span>
+          <span>
+            {% if request.user.is_authenticated %}
+            <form id="request_item" action="{% url 'lendingLibrary:request_item' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="user_item" value="{{item.id}}">
+              <input type="hidden" name="borrower" value="{{request.user.id}}">
+              [ <a href="#" onclick="request_item.submit()">Request this item</a> ]
+            </form>
+            {% endif %}
+          </span>
           {% else %}
           <span class="availability-false">&nbsp;{{item.item_status.name}}</span>
           <span></span>

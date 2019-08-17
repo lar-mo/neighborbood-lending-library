@@ -26,7 +26,7 @@
         <td><u>Due Date</u>:
           <form id="approve_form" action="{% url 'lendingLibrary:approve_request' %}" method="post">
             {% csrf_token %}
-            <input type="date" name="due_date" value="{{item_request.due_date|date:'Y-m-d'}}" required/>
+            <input type="date" name="due_date" min="{{tomorrows_date|date:'Y-m-d'}}" required/>
             <input type="hidden" name="item_request_id" value="{{item_request.id}}">
             <button type="submit">Approve</button>
           </form>
