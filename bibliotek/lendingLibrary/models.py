@@ -4,12 +4,12 @@ from django.utils.text import slugify
 
 
 def pending_requests_count(user):
-    number_of_pending_requests = user.items.filter(item_status=9).count()
+    number_of_pending_requests = user.items.filter(item_status=9).exclude(owner=user).count()
     return number_of_pending_requests
 User.add_to_class('pending_requests_count', pending_requests_count)
 
 def my_checkouts_count(user):
-    number_of_my_checkouts= user.checkouts.exclude(checkout_status__in=[2,4]).count()
+    number_of_my_checkouts= user.checkouts.exclude(checkout_status__in=[2,4]).exclude(user_item__owner=user).count()
     return number_of_my_checkouts
 User.add_to_class('my_checkouts_count', my_checkouts_count)
 

@@ -10,8 +10,12 @@ from django.contrib.auth.hashers import check_password
 from .models import UserItemStatus, CheckoutStatus, UserItemCategory, UserItemCondition, UserItem, UserItemCheckout
 
 def index(request):
+    print("username: " + request.user.username)
     items = UserItem.objects.order_by('category__name').exclude(item_status__name__in=['Hidden', 'Lost'])
-    newest_items = UserItem.objects.filter(item_status__name='Available').order_by('-id')[:3:1]
+    if not request.user.username == "":
+        newest_items = UserItem.objects.filter(item_status__name='Available').exclude(owner=request.user).order_by('-id')[:3:1]
+    else:
+        newest_items = UserItem.objects.filter(item_status__name='Available').order_by('-id')[:3:1]
     context = {'items': items, 'newest_items': newest_items}
     return render(request, 'lendingLibrary/index.html', context)
 
@@ -57,17 +61,21 @@ def search_results_keyword(request, search_term):
 
 @login_required
 def request_item(request):
-    user_item_id = request.POST['user_item']
-    borrower_id = request.POST['borrower']
-    checkout_status = CheckoutStatus.objects.get(name='Pending')
-    item_status = UserItemStatus.objects.get(name='Requested')
-    user_item = UserItem.objects.get(id=user_item_id)
-    borrower = User.objects.get(id=borrower_id)
-    checkout_request_details = UserItemCheckout(user_item=user_item, borrower=borrower, checkout_status=checkout_status, request_date=timezone.now())
-    checkout_request_details.save()
-    user_item.item_status = item_status
-    user_item.save()
-    return HttpResponseRedirect(reverse('lendingLibrary:my_checkouts'))
+    open_request_count = UserItemCheckout.objects.filter(borrower=request.user.id).count()
+    if open_request_count > 4:
+        return HttpResponse(open_request_count)
+    else:
+        user_item_id = request.POST['user_item']
+        borrower_id = request.POST['borrower']
+        checkout_status = CheckoutStatus.objects.get(name='Pending')
+        item_status = UserItemStatus.objects.get(name='Requested')
+        user_item = UserItem.objects.get(id=user_item_id)
+        borrower = User.objects.get(id=borrower_id)
+        checkout_request_details = UserItemCheckout(user_item=user_item, borrower=borrower, checkout_status=checkout_status, request_date=timezone.now())
+        checkout_request_details.save()
+        user_item.item_status = item_status
+        user_item.save()
+        return HttpResponseRedirect(reverse('lendingLibrary:my_checkouts'))
 
 @login_required
 def deny_request(request):
@@ -166,7 +174,7 @@ def pending_requests(request):
 def my_checkouts(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'category__name')
-    checkouts = owner.checkouts.order_by('-request_date')
+    checkouts = owner.checkouts.order_by('-request_date').exclude(user_item__owner=request.user)
     context = {'owner': owner, 'checkouts': checkouts}
     return render(request, 'lendingLibrary/my_checkouts.html', context)
 
