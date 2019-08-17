@@ -4,7 +4,7 @@ from django.utils.text import slugify
 
 
 def pending_requests_count(user):
-    number_of_pending_requests = user.items.filter(item_status=9).exclude(owner=user).count()
+    number_of_pending_requests = user.items.filter(item_status=9).count()
     return number_of_pending_requests
 User.add_to_class('pending_requests_count', pending_requests_count)
 
