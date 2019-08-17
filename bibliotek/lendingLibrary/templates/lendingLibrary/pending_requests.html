@@ -23,26 +23,31 @@
         <td>{{item_request.user_item.name}}</td>
         <td>{{item_request.borrower.username|title}}</td>
         <td>{{item_request.request_date|date:'Y-m-d'}}</td>
-        <td><u>Due Date</u>:
-          <form id="approve_form" action="{% url 'lendingLibrary:approve_request' %}" method="post">
-            {% csrf_token %}
-            <input type="date" name="due_date" min="{{tomorrows_date|date:'Y-m-d'}}" required/>
-            <input type="hidden" name="item_request_id" value="{{item_request.id}}">
-            <button type="submit">Approve</button>
-          </form>
-          &nbsp;or&nbsp;
-          <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
-            {% csrf_token %}
-            <select name="deny_reason" required>
-              <option selected disabled value="">select a reason</option>
-              <option>Items Overdue</option>
-              <option>Items Lost</option>
-              <option>Reserved for owner's use</option>
-              <option>Other</option>
-            </select>
-            <input type="hidden" name="item_request_id" value="{{item_request.id}}">
-            <button type="submit">Deny</button>
-          </form>
+        <td>
+          <div class="request_actions">
+            <span><i>Set Due Date</i></span>
+            <form id="approve_form" action="{% url 'lendingLibrary:approve_request' %}" method="post">
+              {% csrf_token %}
+              <input type="date" name="due_date" min="{{tomorrows_date|date:'Y-m-d'}}" required/>
+              <input type="hidden" name="item_request_id" value="{{item_request.id}}">
+              <button type="submit">&nbsp;&nbsp;Approve&nbsp;</button>
+            </form>
+          </div>
+          <div class="request_actions">
+            <span><i>Set a Reason</i></span>
+            <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
+              {% csrf_token %}
+              <select name="deny_reason" required>
+                <option selected disabled value="">-----</option>
+                <option>Items Overdue</option>
+                <option>Items Lost</option>
+                <option>Reserved for owner's use</option>
+                <option>Other</option>
+              </select>
+              <input type="hidden" name="item_request_id" value="{{item_request.id}}">
+              <button type="submit">Deny</button>
+            </form>
+          </div>
         </td>
       </tr>
       {% endfor %}

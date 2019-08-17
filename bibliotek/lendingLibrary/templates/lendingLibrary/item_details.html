@@ -34,7 +34,7 @@
           {% if item.item_status.name == 'Available' %}
           <span class="availability-true">&nbsp;{{item.item_status.name}}</span>
           <span>
-            {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated and item.owner != request.user %}
             <form id="request_item" action="{% url 'lendingLibrary:request_item' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="user_item" value="{{item.id}}">

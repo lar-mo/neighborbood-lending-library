@@ -15,6 +15,7 @@
         margin: 0;
         padding: 0;
         width: 100%;
+        height: 100%;
         font-size: 0.95em;
         /* font-family: 'Roboto', sans-serif; */
         /* font-family: 'Montserrat', sans-serif; */
@@ -38,17 +39,36 @@
         -moz-box-shadow:      3px 3px 5px 0 rgba(25,25,25,0.4);
         -webkit-box-shadow:   3px 3px 5px 0 rgba(25,25,25,0.4);
       }
+      footer {
+        padding: 5px;
+        text-align: center;
+        font-size: 0.9em;
+        font-weight: bold;
+        background: linear-gradient(0.25turn, #5CDB95, #379683);
+        position: fixed;
+        top: 100%;
+        width: 100%;
+        margin-top: -29px;
+        box-shadow:           -3px -3px 5px 0 rgba(25,25,25,0.4);
+        -moz-box-shadow:      -3px -3px 5px 0 rgba(25,25,25,0.4);
+        -webkit-box-shadow:   -3px -3px 5px 0 rgba(25,25,25,0.4);
+      }
+      .content {
+        /* min-height: 100%; */
+      }
       .wrapper {
         display: flex;
         justify-content: center;
         flex-direction: row;
+        padding: 0 20px;
       }
       section {
         background-color: #05386B;
         display: flex;
         flex-direction: row;
         justify-content: center;
-        padding: 22px;
+        padding: 20px;
+        height: 85px;
         position: sticky;
         top: 0;
         z-index: 999;
@@ -102,24 +122,17 @@
         flex-direction: column;
         justify-content: flex-start;
       }
-      footer {
-        padding: 1px;
-        text-align: center;
-        background-color: rgba(10, 10, 100, 0.2);
-        position: static;
-        width: 100%;
-      }
       h1, h2, h3, h4, h5 {
         text-align: center;
       }
       table {
         background-color: none;
-        width: 1024px;
+        width: 890px;
         margin-top: 0;
         border-collapse: collapse;
-        /* box-shadow:         3px 3px 5px 0 #888;
-        -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888; */
+        box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.4);
+        -moz-box-shadow:    3px 3px 5px 0 rgba(25,25,25,0.4);
+        -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.4);
       }
       tr, th, td {
         border-bottom: 1px solid #7E685A;
@@ -130,6 +143,11 @@
       }
       td {
         background-color: #FFF;
+      }
+      .request_actions {
+        margin: 10px;
+        text-align: center;
+        padding: 1px;
       }
       #profile_form, #password_form, #check_password {
         min-width: auto;
@@ -248,8 +266,8 @@
         width: 60px;
       }
       .item_details {
-        max-width: 1024px;
-        min-width: 1024px;
+        max-width: 890px;
+        min-width: 890px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -260,7 +278,7 @@
         -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.4);
       }
       .detail_image {
-        width: 300px;
+        width: 317px;
         /* border: 1px solid #7E685A; */
         border: -1px;
         box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.4);
@@ -268,14 +286,14 @@
         -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.4);
       }
       .item_details_text {
-        padding: 0 15px;
-        /* min-width: 71%; */
+        padding: 15px;
       }
       h3 {
         margin-top: 5px;
       }
       .item_fields {
         padding: 20px;
+        width: 285px;
         /* background-color: #FFF; */
         /* text-align: right; */
         margin-left: 10%;
@@ -376,6 +394,7 @@
     </style>
   </head>
   <body>
+    <div id="content">
     <section>
       <img src="https://lar-mo.com/images/lendingLib_logo2.png" onclick="javascript:window.location.href='{% url 'lendingLibrary:index' %}'" onmouseover="">
       <!-- <form action="{% url 'lendingLibrary:search_results' %}" method="POST"> -->
@@ -428,8 +447,9 @@
     </div><!-- end of 'wrapper'-->
     <div><p>&nbsp;</p></div>
     <footer>
-      <div>&copy; 2019 Neighborhood Lending Library - TOS - FAQs - About</div>
+      <div>&copy; 2019 Community Lending Library - TOS - FAQs - About</div>
     </footer>
+    </div>
     <script type="text/javascript">
       // item_description = document.querySelectorAll('.item_description')
       // for (let i=0; i<item_description.length; ++i) {

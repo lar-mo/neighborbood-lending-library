@@ -42,7 +42,7 @@
                       </span>
                     {% endif %}
                 </span>
-                {% if item.item_status.name != 'Unavailable' and item.item_status.name != 'Requested' and item.item_status.name != 'Checked Out' %}
+                {% if item.item_status.name != 'Unavailable' and item.item_status.name != 'Requested' and item.item_status.name != 'Checked Out' and item.owner != request.user %}
                 <form action="{% url 'lendingLibrary:request_item' %}" method="post">
                   {% csrf_token %}
                   <input type="hidden" name="user_item" value="{{item.id}}"/>

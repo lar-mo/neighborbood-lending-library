@@ -9,57 +9,69 @@
 {% endblock %}
 
 {% block content %}
-  <div id="item_list"> <!-- start of 'item_list' -->
-    {% if items %}
-      <table>
-        <tr>
-          <th>Category</th>
-          <th style="text-align:left">Item</th>
-          <th style="text-align:left">Description</th>
-          <th>Status</th>
-          <th>Borrower</th>
-        </tr>
-        {% for item in items %}
-        <tr>
-          <td style="text-align:center"><a href="{% url 'lendingLibrary:category' item.category %}">{{item.category}}</a></td>
-          {% if item.category.name == "Books" %}
-            <td><span class="item_title">"<a href="{% url 'lendingLibrary:edit_item' item.id %}">{{item.name}}</a>"</span></td>
-          {% else %}
-            <td><span class="item_title"><a href="{% url 'lendingLibrary:edit_item' item.id %}">{{item.name}}</a></span></td>
-          {% endif %}
-          {% if item.description != '' %}
-            <td><span class="item_description">{{item.description}}</span></td>
-          {% else %}
-            <td><span class="item_description"><i>no description</i></span></td>
-          {% endif %}
-          {% if item.item_status.name == 'Available' %}
-            <td style="background-color:lightgreen;text-align:center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Requested' %}
-            <td style="background-color:blue;color:#FFF;text-align:center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Checked Out' %}
-            {% for request in item_requests %}
-              {% if request.user_item.name == item.name %}
-              <td style="background-color:pink;text-align:center"><form action="{% url 'lendingLibrary:item_check_in' %}" method="post">{% csrf_token%}<input type="hidden" name="item_request_id" value="{{request.id}}"><button type="submit">Check In</button></form></td>
+  <div id="item_  <div id="item_list">
+      {% if items %}
+          {% for item in items %}
+          <div class="single_row">
+            <div>
+              <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}"><img src="{{item.image_url}}" class="item_detail_image"/></a>
+            </div>
+            <div>
+              <span class="item_title_new">
+                <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">{{item.name}}</a>
+              </span>
+              {% if item.description != '' %}
+              <span class="item_description fade" style="width: 580px">{{item.description}}</span>
+              {% else %}
+              <span class="item_description fade" style="width: 580px"><i>no description</i></span>
               {% endif %}
-            {% endfor %}
-          {% elif item.item_status.name == 'Unavailable' %}
-            <td style="background-color:yellow;text-align:center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Hidden' %}
-            <td style="background-color:#777;color:#FFF;text-align:center">{{item.item_status}}</td>
-          {% elif item.item_status.name == 'Lost' %}
-            <td style="background-color:#333;color:#FFF;text-align:center">{{item.item_status}}</td>
-          {% endif %}
-          {% for request in item_requests %}
-            {% if request.user_item.name == item.name and request.checkout_status.name != 'Completed' %}
-              <td align="center">{{request.borrower.username|title}}</td>
-            {% endif %}
-          {% endfor %}
-          {% if item.item_status.name in filter %}
-            <td>&nbsp;</td>
-          {% endif %}
-        </tr>
+              {% if request.user.username %}
+                <div class="status_block">
+                  <span><b>Status</b>:
+                      {% if item.item_status.name == "Available" %}
+                        <span style="font-weight: bold; color: #379683">
+                          {{item.item_status}}
+                        </span>
+                      {% elif item.item_status.name == "Requested" %}
+                        <span style="font-weight: bold; color: #05386B">
+                          {{item.item_status}}
+                        </span>
+                      {% else %}
+                        {% for request in item_requests %}
+                          {% if request.user_item.name == item.name %}
+                            <span>
+                              <form action="{% url 'lendingLibrary:item_check_in' %}" method="post">
+                                {% csrf_token%}
+                                <input type="hidden" name="item_request_id" value="{{request.id}}">
+                                <button type="submit">Check In</button>
+                              </form>
+                            </span>
+                          {% endif %}
+                        {% endfor %}
+                        {% for request in item_requests %}
+                          {% if request.user_item.name == item.name and request.checkout_status.name != 'Completed' %}
+                            <div align="center">(Borrower: {{request.borrower.username|title}})</div>
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                  </span>
+                </div>
+              {% else %}
+                <p style="font-size:0.7em">You have to be logged in.</p>
+              {% endif %}
+            </div>
+            <div>
+              <!-- Available, Unavailable, Checked Out, Requested, Hidden, Lost -->
+              <div><b>Category</b>: <a href="{% url 'lendingLibrary:category' item.category %}">{{item.category|title}}</a></div>
+              {% if item.owner.username == request.user.username %}
+                <div><b>Lender</b>: <a href="{% url 'lendingLibrary:my_items' %}">{{item.owner.username|title}}</a></div>
+              {% else %}
+                <div><b>Lender</b>: <a href="/user/{{item.owner.id}}/">{{item.owner.username|title}}</a></div>
+              {% endif %}
+              <div><b>Condition</b>: {{item.condition}}</div>
+            </div>
+          </div> <!-- end of 'single_row' -->
         {% endfor %}
-      </table>
     {% else %}
       <p><i>You don't have any items to lend</i></p>
     {% endif %}
