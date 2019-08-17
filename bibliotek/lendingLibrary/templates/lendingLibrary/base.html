@@ -9,7 +9,8 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
     <style media="screen" type="text/css">
       html, body {
-        background-color: #C2CAD0;
+        /* background-color: #5CDB95; */
+        background: linear-gradient(0.25turn, #5CDB95, #379683);
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -33,9 +34,9 @@
         font-size: 1.1em;
         z-index: 999;
         font-weight: bold;
-        box-shadow:           0 3px 3px 0 #888;
-        -moz-box-shadow:      0 3px 3px 0 #888;
-        -webkit-box-shadow:   0 3px 3px 0 #888;
+        box-shadow:           3px 3px 5px 0 rgba(25,25,25,0.4);
+        -moz-box-shadow:      3px 3px 5px 0 rgba(25,25,25,0.4);
+        -webkit-box-shadow:   3px 3px 5px 0 rgba(25,25,25,0.4);
       }
       .wrapper {
         display: flex;
@@ -43,46 +44,49 @@
         flex-direction: row;
       }
       section {
-        background-color: #C2B9B0;
+        background-color: #05386B;
         display: flex;
         flex-direction: row;
-        align-items: stretch;
         justify-content: center;
-        padding: 20px;
+        padding: 22px;
         position: sticky;
         top: 0;
         z-index: 999;
       }
       #q {
-        width: 500px;
-        height: 42px;
+        width: 600px;
+        height: 40px;
+        margin-left: 425px;
+        /* background-color: #C2B9B0; */
+        border: none;
       }
       #search_btn {
         height: 40px;
         width: 120px;
-        border: 0;
+        /* border: 1px solid black; */
+        background-color: #EDF5E1;
       }
       section > img {
-        width: 270px;
+        height: 105px;
         padding-right: 40px;
-        padding-top: 10px;
-        padding-left: 5px;
+        padding-top: 0;
+        padding-left: 0;
         position: absolute;
         top: 5px;
         left: 5px;
         cursor: pointer;
       }
       aside {
-        border: 1px solid #7E685A;
-        background-color: #AFD275;
+        /* border: 1px solid #7E685A; */
+        background-color: #EDF5E1;
         height: 100%;
         margin: 0;
         margin-right: 10px;
         position: relative;
         z-index: 1;
-        box-shadow:         3px 3px 5px 0 #888;
-        -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888;
+        box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.4);
+        -moz-box-shadow:    3px 3px 5px 0 rgba(25,25,25,0.4);
+        -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.4);
       }
       aside > div > span {
         font-size: 1.2em;
@@ -113,16 +117,16 @@
         width: 1024px;
         margin-top: 0;
         border-collapse: collapse;
-        box-shadow:         3px 3px 5px 0 #888;
+        /* box-shadow:         3px 3px 5px 0 #888;
         -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888; */
       }
       tr, th, td {
-        border: 1px solid #7E685A;
+        border-bottom: 1px solid #7E685A;
         border-collapse: collapse;
       }
       th {
-        background-color: #C2B9B0;
+        background-color: rgba(255, 255, 255, 0.3);
       }
       td {
         background-color: #FFF;
@@ -146,20 +150,23 @@
         /* color: #333; */
       }
       .item_description {
-        display: block;
+        display: inline-block;
         min-width: 550px;
         max-width: 550px;
-        white-space: nowrap;
+      }
+      .fade {
+        display: block;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: wrap;
       }
       .item_title {
         display: block;
-        min-width: 150px;
-        max-width: 150px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        /* deprecated by .item_title_new (next rule) */
+      }
+      .item_title_new {
+        display: block;
+        font-size: 1.5em;
       }
       .spacer {
         margin: 5px;
@@ -211,9 +218,9 @@
       .hero_table {
         margin: 20px;
         /* background-color: none; */
-        box-shadow:         3px 3px 5px 0 #888;
-        -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888;
+        box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.4);
+        -moz-box-shadow:    3px 3px 5px 0 rgba(25,25,25,0.4);
+        -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.4);
       }
       .hero_table > tr, td {
         /* background-color: #FFF; */
@@ -245,26 +252,33 @@
         min-width: 1024px;
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: flex-start;
+        background-color: #EDF5E1;
+        box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.4);
+        -moz-box-shadow:    3px 3px 5px 0 rgba(25,25,25,0.4);
+        -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.4);
       }
       .detail_image {
         width: 300px;
-        border: 1px solid #7E685A;
-        box-shadow:         3px 3px 5px 0 #888;
-        -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888;
+        /* border: 1px solid #7E685A; */
+        border: -1px;
+        box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.4);
+        -moz-box-shadow:    3px 3px 5px 0 rgba(25,25,25,0.4);
+        -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.4);
       }
       .item_details_text {
         padding: 0 15px;
-        width: 800px;
+        /* min-width: 71%; */
       }
       h3 {
-        margin-top: 0;
+        margin-top: 5px;
       }
       .item_fields {
         padding: 20px;
         /* background-color: #FFF; */
+        /* text-align: right; */
+        margin-left: 10%;
       }
       .field {
         font-size: 0.9em;
@@ -274,7 +288,7 @@
       .field > span:first-child {
         float: left;
         width: 120px;
-        background-color: #7E685A;
+        background-color: #05386B;
         color: #FFF;
         padding: 1px;
       }
@@ -282,11 +296,11 @@
         padding: 10px;
       }
       .availability-false {
-        background-color: #E7717D !important;
+        background-color: #FC4445 !important;
         font-weight: bold;
       }
       .availability-true {
-        background-color: #AFD275 !important;
+        background-color: #5CDB95 !important;
         color: #111 !important;
         font-weight: bold;
       }
@@ -301,15 +315,68 @@
         text-decoration: underline;
         cursor: pointer;
       }
+      .item_list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      .single_row {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: 0 auto 10px;
+        width: 890px;
+        box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.3);
+        -moz-box-shadow:    3px 3px 5px 0 rgba(25,25,25,0.3);
+        -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.3);
+      }
+      .single_row > div > span {
+        padding: 10px;
+      }
+      .single_row > div {
+        padding-right: 15px;
+        margin: 0;
+      }
+      .single_row > div > div:first-child {
+        padding-top: 10px;
+        margin: 0;
+      }
+      .single_row:nth-child(even) {
+        background-color: #FFF;
+        /* background-color: rgba(255, 255, 255, 0.8); */
+        padding: 0;
+      }
+      .single_row:nth-child(odd) {
+        background-color: #FFF;
+        /* background-color: rgba(255, 255, 255, 0.95); */
+      }
+      .single_row > div:last-child {
+        text-align: justify;
+      }
+      .single_row > div > a > img {
+        width: 150px;
+        /* deprecated by item_detail_image (next rule)*/
+      }
+      .item_detail_image {
+        width: 150px;
+      }
+      .block_heading {
+        font-size: 2.1em;
+        text-align: center;
+        padding: 10px;
+        width: 100%;
+      }
     </style>
   </head>
   <body>
     <section>
-      <img src="https://lar-mo.com/images/lendingLib_logo.png" onclick="javascript:window.location.href='{% url 'lendingLibrary:index' %}'" onmouseover="">
+      <img src="https://lar-mo.com/images/lendingLib_logo2.png" onclick="javascript:window.location.href='{% url 'lendingLibrary:index' %}'" onmouseover="">
       <!-- <form action="{% url 'lendingLibrary:search_results' %}" method="POST"> -->
         <!-- {% csrf_token %} -->
-        <span><input type="search" id="q" name="q" placeholder="&nbsp;&nbsp;&nbsp;search for an item">
-        <button type="submit" id="search_btn"><b>Search</b></button></span>
+        <input type="search" id="q" class="w3-input" name="q" placeholder="&nbsp;&nbsp;&nbsp;search for an item">
+        <button type="submit" class="w3-button" id="search_btn"><b>Search</b></button>
       <!-- </form> -->
     </section>
     <header>
@@ -337,7 +404,7 @@
           <div>&#8227; ({{user.pending_requests_count}}) new {% if user.pending_requests_count == 1 %} request {% else %} requests {% endif %} for your items</div>
         </div>
         <div {% if request.path == '/my_checkouts/' %}style="background-color:#FFF"{% endif %}>
-          <span><a href="{% url 'lendingLibrary:my_checkouts' %}">Requested Items & Checkouts</a></span>
+          <span><a href="{% url 'lendingLibrary:my_checkouts' %}">My Checkouts</a></span>
           <div>&#8227; ({{user.my_checkouts_count}}) {% if user.my_checkouts_count == 1 %} item {% else %} items {% endif %} requested or checked out</div>
         </div>
         <div {% if request.path == '/my_items/' %}style="background-color:#FFF"{% endif %}>
@@ -359,13 +426,13 @@
       <div>&copy; 2019 Neighborhood Lending Library - TOS - FAQs - About</div>
     </footer>
     <script type="text/javascript">
-      item_description = document.querySelectorAll('.item_description')
-      for (let i=0; i<item_description.length; ++i) {
-        item_description[i].onclick = function() {
-          item_description[i].style.whiteSpace = "normal"
-          item_description[i].style.overflow = "visible"
-        }
-      }
+      // item_description = document.querySelectorAll('.item_description')
+      // for (let i=0; i<item_description.length; ++i) {
+      //   item_description[i].onclick = function() {
+      //     item_description[i].style.whiteSpace = "normal"
+      //     item_description[i].style.overflow = "visible"
+      //   }
+      // }
       search_btn = document.querySelector('#search_btn')
       q = document.querySelector('#q')
       search_btn.onclick = function() {
