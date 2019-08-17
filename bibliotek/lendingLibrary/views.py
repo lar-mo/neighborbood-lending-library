@@ -62,7 +62,7 @@ def search_results_keyword(request, search_term):
 @login_required
 def request_item(request):
     open_request_count = UserItemCheckout.objects.filter(borrower=request.user.id, checkout_status__name__in=['Pending', 'Active']).count()
-    if open_request_count > 4: #limits user to 4 items (pending or checked out/active)
+    if open_request_count > 4: #limits user to 4 items: pending or active(checked out)
         return HttpResponse(open_request_count)
     else:
         user_item_id = request.POST['user_item']

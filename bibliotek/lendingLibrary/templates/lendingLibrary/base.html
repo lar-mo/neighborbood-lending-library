@@ -21,22 +21,56 @@
         color: #123;
       }
       header {
-        background-color: #E7717D;
-        padding-left: 10px;
-        padding-right: 10px;
+        background-color: #FAFAFA;
+        /* padding-left: 10px; */
+        /* padding-right: 10px; */
+        padding: 10px;
         position: sticky;
-        top: 0;
+        top: 80px;
         display:flex;
         flex-direction: row;
         justify-content: space-between;
         font-size: 1.1em;
         z-index: 999;
         font-weight: bold;
+        box-shadow:           0 3px 3px 0 #888;
+        -moz-box-shadow:      0 3px 3px 0 #888;
+        -webkit-box-shadow:   0 3px 3px 0 #888;
       }
       .wrapper {
         display: flex;
         justify-content: center;
         flex-direction: row;
+      }
+      section {
+        background-color: #C2B9B0;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: center;
+        padding: 20px;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+      }
+      #q {
+        width: 500px;
+        height: 42px;
+      }
+      #search_btn {
+        height: 40px;
+        width: 120px;
+        border: 0;
+      }
+      section > img {
+        width: 270px;
+        padding-right: 40px;
+        padding-top: 10px;
+        padding-left: 5px;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        cursor: pointer;
       }
       aside {
         border: 1px solid #7E685A;
@@ -45,9 +79,10 @@
         margin: 0;
         margin-right: 10px;
         position: relative;
-        /* box-shadow:         3px 3px 5px 0 #888;
+        z-index: 1;
+        box-shadow:         3px 3px 5px 0 #888;
         -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888; */
+        -webkit-box-shadow: 3px 3px 5px 0 #888;
       }
       aside > div > span {
         font-size: 1.2em;
@@ -78,6 +113,9 @@
         width: 1024px;
         margin-top: 0;
         border-collapse: collapse;
+        box-shadow:         3px 3px 5px 0 #888;
+        -moz-box-shadow:    3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888;
       }
       tr, th, td {
         border: 1px solid #7E685A;
@@ -85,15 +123,9 @@
       }
       th {
         background-color: #C2B9B0;
-        /* box-shadow:         3px 3px 5px 0 #888;
-        -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888; */
       }
       td {
         background-color: #FFF;
-        /* box-shadow:         3px 3px 5px 0 #888;
-        -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888; */
       }
       #profile_form, #password_form, #check_password {
         min-width: auto;
@@ -177,9 +209,11 @@
         align-items: center;
       }
       .hero_table {
-        margin: 10px;
-        /* background-color: rgba(77, 77, 77, 0.1); */
-        background-color: none;
+        margin: 20px;
+        /* background-color: none; */
+        box-shadow:         3px 3px 5px 0 #888;
+        -moz-box-shadow:    3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888;
       }
       .hero_table > tr, td {
         /* background-color: #FFF; */
@@ -256,31 +290,6 @@
         color: #111 !important;
         font-weight: bold;
       }
-      section {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-around;
-        padding: 20px;
-      }
-      #q {
-        width: 500px;
-        height: 40px;
-      }
-      #search_btn {
-        height: 40px;
-        width: 120px;
-      }
-      section > img {
-        width: 270px;
-        padding-right: 40px;
-        padding-top: 10px;
-        padding-left: 5px;
-        position: absolute;
-        top: 5px;
-        left: 5px;
-        cursor: pointer;
-      }
       .button_as_text_link {
         background: none!important;
         border: none;
@@ -316,8 +325,10 @@
         <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> | <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a></span>
       {% endif %}
     </header>
+
     {% block hero %}{% endblock %}
     {% block heading %}{% endblock %}
+
     <div class="wrapper"> <!-- start of 'wrapper'-->
       {% if request.user.is_authenticated %}
       <aside>
