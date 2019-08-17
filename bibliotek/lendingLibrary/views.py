@@ -48,8 +48,8 @@ def item_details_no_slug(request, item_id):
 
 def search_results(request):
     search_term = request.GET['q']
-    items = UserItem.objects.filter(name__iregex=r'\b{0}\b'.format(search_term)).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__iregex=r'\b{0}\b'.format(search_term)).exclude(item_status__name__in=['Hidden', 'Lost']) # this is for whole word match, e.g. 'on' => 'on', not 'one', 'won'
-    # items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) # this is for partial match, e.g. 'on' => 'won', 'one', 'on'
+    items = UserItem.objects.filter(name__iregex=r'\b{0}\b'.format(search_term)).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__iregex=r'\b{0}\b'.format(search_term)).exclude(item_status__name__in=['Hidden', 'Lost']) ## whole word match, e.g. 'mat' => 'on', not 'one', 'won' ##
+    # items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) ## partial match, e.g. 'on' => 'won', 'one', 'on' ##
     context = {'items': items, 'search_term': search_term}
     return render(request, 'lendingLibrary/search_results.html', context)
 
@@ -61,8 +61,8 @@ def search_results_keyword(request, search_term):
 
 @login_required
 def request_item(request):
-    open_request_count = UserItemCheckout.objects.filter(borrower=request.user.id).count()
-    if open_request_count > 4:
+    open_request_count = UserItemCheckout.objects.filter(borrower=request.user.id, checkout_status__name__in=['Pending', 'Active']).count()
+    if open_request_count > 4: #limits user to 4 items (pending or checked out/active)
         return HttpResponse(open_request_count)
     else:
         user_item_id = request.POST['user_item']

@@ -45,10 +45,9 @@
         margin: 0;
         margin-right: 10px;
         position: relative;
-        border-radius: 10px;
-        box-shadow:         3px 3px 5px 0 #888;
+        /* box-shadow:         3px 3px 5px 0 #888;
         -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888; */
       }
       aside > div > span {
         font-size: 1.2em;
@@ -76,27 +75,25 @@
       }
       table {
         background-color: none;
-        border-radius: 10px;
         width: 1024px;
-        /* border-spacing: 5px; */
         margin-top: 0;
+        border-collapse: collapse;
       }
       tr, th, td {
         border: 1px solid #7E685A;
         border-collapse: collapse;
-        border-radius: 10px;
       }
       th {
         background-color: #C2B9B0;
-        box-shadow:         3px 3px 5px 0 #888;
+        /* box-shadow:         3px 3px 5px 0 #888;
         -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888; */
       }
       td {
         background-color: #FFF;
-        box-shadow:         3px 3px 5px 0 #888;
+        /* box-shadow:         3px 3px 5px 0 #888;
         -moz-box-shadow:    3px 3px 5px 0 #888;
-        -webkit-box-shadow: 3px 3px 5px 0 #888;
+        -webkit-box-shadow: 3px 3px 5px 0 #888; */
       }
       #profile_form, #password_form, #check_password {
         min-width: auto;
@@ -178,7 +175,6 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        border-radius: 0 0 150px 150px;
       }
       .hero_table {
         margin: 10px;
@@ -187,7 +183,6 @@
       }
       .hero_table > tr, td {
         /* background-color: #FFF; */
-        /* border-radius: 30px; */
         /* border: none; */
       }
       .hero_table th:first-of-type {
@@ -203,7 +198,6 @@
       }
       .hero_image > img {
         height: 90px;
-        border-radius: 5px;
       }
       .hero_item_details {
         font-size: 0.8em;
@@ -226,7 +220,6 @@
         box-shadow:         3px 3px 5px 0 #888;
         -moz-box-shadow:    3px 3px 5px 0 #888;
         -webkit-box-shadow: 3px 3px 5px 0 #888;
-        border-radius: 10px;
       }
       .item_details_text {
         padding: 0 15px;
@@ -250,7 +243,6 @@
         background-color: #7E685A;
         color: #FFF;
         padding: 1px;
-        border-radius: 10px 0 0 10px;
       }
       .field > span:last-child {
         padding: 10px;
@@ -274,12 +266,10 @@
       #q {
         width: 500px;
         height: 40px;
-        border-radius: 10px;
       }
       #search_btn {
         height: 40px;
         width: 120px;
-        border-radius: 10px;
       }
       section > img {
         width: 270px;
@@ -331,7 +321,7 @@
     <div class="wrapper"> <!-- start of 'wrapper'-->
       {% if request.user.is_authenticated %}
       <aside>
-        <div {% if request.path == '/pending_requests/' %}style="background-color:#FFF;border-radius:10px 10px 0 0"{% endif %}>
+        <div {% if request.path == '/pending_requests/' %}style="background-color:#FFF"{% endif %}>
           <span><a href="{% url 'lendingLibrary:pending_requests' %}">Pending Requests</a></span>
           <div>&#8227; ({{user.pending_requests_count}}) new {% if user.pending_requests_count == 1 %} request {% else %} requests {% endif %} for your items</div>
         </div>
@@ -343,7 +333,7 @@
           <span><a href="{% url 'lendingLibrary:my_items' %}">My Items</a></span>
           <div>&#8227; ({{user.my_items_available_count}} of {{user.my_items_total_count}}) {% if user.my_items_available_count == 1 %} item {% else %} items {% endif %} available to share</div>
         </div>
-        <div {% if request.path == '/manage_items/' or  request.path == '/new_item/' or '/edit_item/' in request.path %}style="background-color:#FFF;border-radius:0 0 10px 10px"{% endif %}>
+        <div {% if request.path == '/manage_items/' or  request.path == '/new_item/' or '/edit_item/' in request.path %}style="background-color:#FFF"{% endif %}>
           <span><a href="{% url 'lendingLibrary:manage_items' %}">Manage Items</a></span>
           <div>&#8227; Add / Edit / Delete your items</div>
         </div>
