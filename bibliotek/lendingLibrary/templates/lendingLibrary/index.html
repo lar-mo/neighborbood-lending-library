@@ -1,66 +1,64 @@
 {% extends 'lendingLibrary/base.html' %}
 
 {% block title %}
-<title>Homepage - Neighborhood Lending Library</title>
+  <title>Homepage - Neighborhood Lending Library</title>
 {% endblock %}
 
 {% block hero %}
-<div id="hero_div">
-  <div id="feature_item">
-    <table class="hero_table">
-      <tr>
-        <th colspan="6">Featured Items</th>
-      </tr>
-      <tr>
-        {% for newest_item in newest_items %}
-        <td class="hero_image">
-          <img src="{% if newest_item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{newest_item.image_url}}{% endif %}">
-        </td>
-        <td class="hero_td">
-          <div class="hero_item_details">
-            <b><a href="{% url 'lendingLibrary:item_details' newest_item.id newest_item.slug %}">{{newest_item.name}}</a></b>
-          </div>
-          <div class="hero_item_details">
-            <span>Category: </span>
-            <span><a href="{% url 'lendingLibrary:category' newest_item.category %}">{{newest_item.category}}</a></span>
-          </div>
-          <div class="hero_item_details">
-            <span>Owner: </span>
-            <span><a href="{% url 'lendingLibrary:user_items' newest_item.owner.id %}">{{newest_item.owner|title}}</a></span>
-          </div>
-          <div class="hero_item_details">
-            <span>Condition: </span>
-            <span>{{newest_item.condition}}</span>
-          </div>
-          {% if request.user.is_authenticated and newest_item.item_status.name == "Available" %}
-          <div class="hero_item_details">
-            <span></span>
-            <span>
-              <form id="request_item" action="{% url 'lendingLibrary:request_item' %}" method="post">
-              <!-- <form id="request_item{{newest_item.id}}" action="{% url 'lendingLibrary:request_item' %}" method="post"> ## alt method 1 of 2 ## -->
-              {% csrf_token %}
-              <input type="hidden" name="user_item" value="{{newest_item.id}}">
-              <input type="hidden" name="borrower" value="{{request.user.id}}">
-              <!-- [ <a href="#" onclick="request_item{{newest_item.id}}.submit()">Request this item</a> ] ## alt method 2 of 2 ##-->
-              [ <button class="button_as_text_link" type="submit">Request this item</button> ]
-              </form>
-            </span>
-          </div>
-          {% endif %}
-        </td>
-        {% endfor %}
-      </tr>
-    </table>
+  <div id="hero_div">
+    <div id="feature_item">
+      <table class="hero_table">
+        <tr>
+          <th colspan="6">Featured Items</th>
+        </tr>
+        <tr>
+          {% for newest_item in newest_items %}
+          <td class="hero_image">
+            <img src="{% if newest_item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{newest_item.image_url}}{% endif %}">
+          </td>
+          <td class="hero_td">
+            <div class="hero_item_details">
+              <b><a href="{% url 'lendingLibrary:item_details' newest_item.id newest_item.slug %}">{{newest_item.name}}</a></b>
+            </div>
+            <div class="hero_item_details">
+              <span>Category: </span>
+              <span><a href="{% url 'lendingLibrary:category' newest_item.category %}">{{newest_item.category}}</a></span>
+            </div>
+            <div class="hero_item_details">
+              <span>Owner: </span>
+              <span><a href="{% url 'lendingLibrary:user_items' newest_item.owner.id %}">{{newest_item.owner|title}}</a></span>
+            </div>
+            <div class="hero_item_details">
+              <span>Condition: </span>
+              <span>{{newest_item.condition}}</span>
+            </div>
+            {% if request.user.is_authenticated and newest_item.item_status.name == "Available" %}
+            <div class="hero_item_details">
+              <span></span>
+              <span>
+                <form id="request_item" action="{% url 'lendingLibrary:request_item' %}" method="post">
+                <!-- <form id="request_item{{newest_item.id}}" action="{% url 'lendingLibrary:request_item' %}" method="post"> ## alt method 1 of 2 ## -->
+                {% csrf_token %}
+                <input type="hidden" name="user_item" value="{{newest_item.id}}">
+                <input type="hidden" name="borrower" value="{{request.user.id}}">
+                <!-- [ <a href="#" onclick="request_item{{newest_item.id}}.submit()">Request this item</a> ] ## alt method 2 of 2 ##-->
+                [ <button class="button_as_text_link" type="submit">Request this item</button> ]
+                </form>
+              </span>
+            </div>
+            {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+      </table>
+    </div>
   </div>
-</div>
 {% endblock %}
 
 {% block heading %}
-<h2>All Items</h2>
+  <h2>All Items</h2>
 {% endblock %}
 
 {% block content %}
-
-{% include "lendingLibrary/item_list.html" %}
-
+  {% include "lendingLibrary/item_list.html" %}
 {% endblock %}

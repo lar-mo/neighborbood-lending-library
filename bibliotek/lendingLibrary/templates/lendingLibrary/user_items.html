@@ -1,15 +1,13 @@
 {% extends 'lendingLibrary/base.html' %}
 
 {% block title %}
-<title>User's Items - Neighborhood Lending Library</title>
+  <title>User's Items - Neighborhood Lending Library</title>
 {% endblock %}
 
 {% block heading %}
-<h2>{{owner.username|title}}'s Items</h2>
+  <h2>{{owner.username|title}}'s Items</h2>
 {% endblock %}
 
 {% block content %}
-
-{% include "lendingLibrary/item_list.html" %}
-
+  {% include "lendingLibrary/item_list.html" %}
 {% endblock %}

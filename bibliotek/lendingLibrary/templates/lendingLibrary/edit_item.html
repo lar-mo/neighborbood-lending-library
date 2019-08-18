@@ -1,93 +1,91 @@
 {% extends 'lendingLibrary/base.html' %}
 
 {% block title %}
-<title>Edit Item - Neighborhood Lending Library</title>
+  <title>Edit Item - Neighborhood Lending Library</title>
 {% endblock %}
 
 {% block heading %}
-<h2>Manage Your Items</h2>
+  <h2>Manage Your Items</h2>
 {% endblock %}
 
 {% block content %}
-
-{% include "lendingLibrary/manage_html_js.html" %}
-
-<div class="spacer"></div>
-<div id="edit_item"> <!-- start of 'edit_item' -->
-  <table>
-    <tr>
-      <th><h2>Edit an item</h2></th>
-    </tr>
-    <tr>
-      <td>
-        <div class="add_edit_form_div">
-          <form action="{% url 'lendingLibrary:save_edited_item' %}" method="post" name="edit_item" id="edit_item_form">
-            {% csrf_token %}
-            <div class="field_label">Item Name</div>
-            <div>
-              <input name="name" type="text" value="{{item.name}}" style="width: 300px" required>
-            </div>
-            <div class="field_label">Description</div>
-            <div>
-              <textarea name="description" style="width: 300px">{{item.description}}</textarea>
-            </div>
-            <div class="field_label">Image URL</div>
-            <div>
-              <input name="image_url" type="text" value="{{item.image_url}}" style="width: 300px">
-            </div>
-            <div class="field_label">Category</div>
-            <div>
-              <select name="category" value="" style="width: 300px" required>
-                {% for category in categories %}
-                  {% if item.category.id == category.id %}
-                    <option value="{{category.id}}" selected>{{category.name}}</option>
-                  {% else %}
-                    <option value="{{category.id}}">{{category.name}}</option>
-                  {% endif %}
-                {% endfor %}
-              </select>
-            </div>
-            <div class="field_label">Condition</div>
-            <div>
-              <select name="condition" value="" style="width: 300px" required>
-                {% for condition in conditions %}
-                  {% if item.condition.id == condition.id %}
-                    <option value="{{condition.id}}" selected>{{condition.name}}</option>
-                  {% else %}
-                    <option value="{{condition.id}}">{{condition.name}}</option>
-                  {% endif %}
-                {% endfor %}
-              </select>
-            </div>
-            <div class="field_label">Replacement Cost</div>
-            <div>
-              &#36;&nbsp;<input name="replacement_cost" type="number" step="0.01" value="{{item.replacement_cost|floatformat:2}}" style="width: 300px" required>
-            </div>
-            {% if item.item_status.name != "Checked Out" %}
-              <div class="field_label">Item Status</div>
+  {% include "lendingLibrary/manage_html_js.html" %}
+  <div class="spacer"></div>
+  <div id="edit_item"> <!-- start of 'edit_item' -->
+    <table>
+      <tr>
+        <th><h2>Edit an item</h2></th>
+      </tr>
+      <tr>
+        <td>
+          <div class="add_edit_form_div">
+            <form action="{% url 'lendingLibrary:save_edited_item' %}" method="post" name="edit_item" id="edit_item_form">
+              {% csrf_token %}
+              <div class="field_label">Item Name</div>
               <div>
-                <select name="item_status" style="width: 300px" required>
-                  {% for item_status in item_statuses %}
-                    {% if item.item_status.id == item_status.id %}
-                      <option value="{{item_status.id}}" selected>{{item_status.name}}</option>
+                <input name="name" type="text" value="{{item.name}}" style="width: 300px" required>
+              </div>
+              <div class="field_label">Description</div>
+              <div>
+                <textarea name="description" style="width: 300px">{{item.description}}</textarea>
+              </div>
+              <div class="field_label">Image URL</div>
+              <div>
+                <input name="image_url" type="text" value="{{item.image_url}}" style="width: 300px">
+              </div>
+              <div class="field_label">Category</div>
+              <div>
+                <select name="category" value="" style="width: 300px" required>
+                  {% for category in categories %}
+                    {% if item.category.id == category.id %}
+                      <option value="{{category.id}}" selected>{{category.name}}</option>
                     {% else %}
-                      <option value="{{item_status.id}}">{{item_status.name}}</option>
+                      <option value="{{category.id}}">{{category.name}}</option>
                     {% endif %}
                   {% endfor %}
                 </select>
               </div>
-            {% else %}
-              <span></span> <!-- kludge prevents button indent due to CSS odd/even rules :( -->
-              <input type="hidden" name="item_status" value="{{item.item_status.id}}"/>
-            {% endif %}
-            <div class="form_submit_div">
-              <input type="submit" value="Save item" class="form_submit_button"/>
-            </div>
-            <input type="hidden" name="item_id" value="{{item.id}}"/>
-          </form>
-        </div>
-      </td>
-    </tr>
-  </table>
-</div> <!-- end of 'edit_item' -->
+              <div class="field_label">Condition</div>
+              <div>
+                <select name="condition" value="" style="width: 300px" required>
+                  {% for condition in conditions %}
+                    {% if item.condition.id == condition.id %}
+                      <option value="{{condition.id}}" selected>{{condition.name}}</option>
+                    {% else %}
+                      <option value="{{condition.id}}">{{condition.name}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="field_label">Replacement Cost</div>
+              <div>
+                &#36;&nbsp;<input name="replacement_cost" type="number" step="0.01" value="{{item.replacement_cost|floatformat:2}}" style="width: 300px" required>
+              </div>
+              {% if item.item_status.name != "Checked Out" %}
+                <div class="field_label">Item Status</div>
+                <div>
+                  <select name="item_status" style="width: 300px" required>
+                    {% for item_status in item_statuses %}
+                      {% if item.item_status.id == item_status.id %}
+                        <option value="{{item_status.id}}" selected>{{item_status.name}}</option>
+                      {% else %}
+                        <option value="{{item_status.id}}">{{item_status.name}}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              {% else %}
+                <span></span> <!-- kludge prevents button indent due to CSS odd/even rules :( -->
+                <input type="hidden" name="item_status" value="{{item.item_status.id}}"/>
+              {% endif %}
+              <div class="form_submit_div">
+                <input type="submit" value="Save item" class="form_submit_button"/>
+              </div>
+              <input type="hidden" name="item_id" value="{{item.id}}"/>
+            </form>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div> <!-- end of 'edit_item' -->
 {% endblock %}
