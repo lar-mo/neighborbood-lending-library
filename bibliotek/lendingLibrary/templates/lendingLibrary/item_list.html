@@ -10,9 +10,9 @@
             <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">{{item.name}}</a>
           </span>
           {% if item.description != '' %}
-          <span class="item_description" style="width: 580px">{{item.description}}</span>
+          <span class="item_description">{{item.description}}</span>
           {% else %}
-          <span class="item_description" style="width: 580px"><i>no description</i></span>
+          <span class="item_description"><i>no description</i></span>
           {% endif %}
           {% if request.user.username %}
             <div class="status_block">
@@ -41,18 +41,29 @@
               {% else %}
               <button style="visibility: hidden">--------</button>
               {% endif %}
-            </div>
+            </div> <!-- end of 'status_block'-->
           {% endif %}
         </div>
         <div>
-          <!-- Available, Unavailable, Checked Out, Requested, Hidden, Lost -->
-          <div><b>Category</b>: <a href="{% url 'lendingLibrary:category' item.category %}">{{item.category|title}}</a></div>
+          <div>
+            <span style="float:left;width:78px"><b>Category</b>: </span>
+            <span><a href="{% url 'lendingLibrary:category' item.category %}">{{item.category|title}}</a></span>
+          </div>
           {% if item.owner.username == request.user.username %}
-            <div><b>Lender</b>: <a href="{% url 'lendingLibrary:my_items' %}">{{item.owner.username|title}}</a></div>
+            <div>
+              <span style="float:left;width:78px"><b>Lender</b>: </span>
+              <span><a href="{% url 'lendingLibrary:my_items' %}">{{item.owner.username|title}}</a></span>
+            </div>
           {% else %}
-            <div><b>Lender</b>: <a href="{% url 'lendingLibrary:user_items' item.owner.id %}">{{item.owner.username|title}}</a></div>
+            <div>
+              <span style="float:left;width:78px"><b>Lender</b>: </span>
+              <span><a href="{% url 'lendingLibrary:user_items' item.owner.id %}">{{item.owner.username|title}}</a></span>
+            </div>
           {% endif %}
-          <div><b>Condition</b>: {{item.condition}}</div>
+          <div>
+            <span style="float:left;width:78px"><b>Condition</b>: </span>
+            <span>{{item.condition}}</span>
+          </div>
         </div>
       </div> <!-- end of 'single_row' -->
       {% endfor %}
