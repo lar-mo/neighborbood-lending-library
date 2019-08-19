@@ -81,8 +81,10 @@
   </div> <!-- end of 'requests_checkouts'-->
   <script type="text/javascript">
     let tmp_error_message = document.querySelector('#tmp_error_message')
-    setTimeout(() => {
-      window.location = {% url 'lendingLibrary:my_checkouts' %}
-    }, 2000)
+    if (tmp_error_message.innerHTML != '') {
+      setTimeout(() => {
+        window.location = {% url 'lendingLibrary:my_checkouts' %}
+      }, 2000)
+    }
   </script>
 {% endblock %}
