@@ -1,0 +1,32 @@
+{% if request.user.username %}
+  <div class="status_block">
+    <span><b>Status</b>:
+        {% if item.item_status.name == "Available" %}
+          <span style="font-weight: bold; color: #379683">
+            {{item.item_status}}
+          </span>
+        {% elif item.item_status.name == "Requested" %}
+          <span style="font-weight: bold; color: #05386B">
+            {{item.item_status}}
+          </span>
+        {% else %}
+            {% for request in item_requests %}
+              {% if request.user_item.name == item.name %}
+                <span>
+                  <form action="{% url 'lendingLibrary:item_check_in' %}" method="post">
+                    {% csrf_token%}
+                    <input type="hidden" name="item_request_id" value="{{request.id}}">
+                    <button type="submit">Check In</button>
+                  </form>
+                </span>
+              {% endif %}
+            {% endfor %}
+            {% for request in item_requests %}
+              {% if request.user_item.name == item.name and request.checkout_status.name != 'Completed' %}
+                <div align="center">(Borrower: {{request.borrower.username|title}})</div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+      </span>
+  </div> <!-- end of 'status_block' -->
+{% endif %}

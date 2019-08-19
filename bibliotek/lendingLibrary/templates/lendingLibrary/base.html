@@ -155,7 +155,9 @@
         text-align: center;
         padding: 1px;
       }
-      #profile_form, #password_form, #check_password {
+      #profile_form,
+      #password_form,
+      #check_password {
         min-width: auto;
         width: 500px;
       }
@@ -179,17 +181,7 @@
         max-width: 547px;
         text-align: justify;
       }
-      .fade {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: wrap;
-      }
       .item_title {
-        display: block;
-        /* deprecated by .item_title_new (next rule) */
-      }
-      .item_title_new {
         display: block;
         font-size: 1.5em;
       }
@@ -204,11 +196,13 @@
       form {
         display: inline;
       }
-      #new_item_form > div:nth-child(odd), #edit_item_form > div:nth-child(odd){
+      #new_item_form > div:nth-child(odd),
+      #edit_item_form > div:nth-child(odd){
         margin: auto 40px 25px;
         padding: 5px;
       }
-      #new_item_form > div:nth-child(even), #edit_item_form > div:nth-child(even) {
+      #new_item_form > div:nth-child(even),
+      #edit_item_form > div:nth-child(even) {
         font-weight: bold;
         font-size: 1.1em;
         padding: 5px;
@@ -319,6 +313,10 @@
       }
       .field > span:last-child {
         padding: 10px;
+      }
+      .item_facts {
+        float: left;
+        width: 78px;
       }
       .availability-false {
         background-color: #FC4445 !important;

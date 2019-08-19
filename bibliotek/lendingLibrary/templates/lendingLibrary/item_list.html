@@ -1,3 +1,6 @@
+<!-- NOTE: Don't forget to update my_items.html when making changes below -->
+<!-- See https://www.diffchecker.com/wTzLIHCv -->
+
 <div id="item_list">
   {% if items %}
       {% for item in items %}
@@ -6,7 +9,7 @@
           <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}"><img src="{{item.image_url}}" class="item_detail_image"/></a>
         </div>
         <div>
-          <span class="item_title_new">
+          <span class="item_title">
             <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">{{item.name}}</a>
           </span>
           {% if item.description != '' %}
@@ -14,54 +17,32 @@
           {% else %}
           <span class="item_description"><i>no description</i></span>
           {% endif %}
-          {% if request.user.username %}
-            <div class="status_block">
-              <span><b>Status</b>:
-                  {% if item.item_status.name == "Available" %}
-                    <span style="font-weight: bold; color: #379683">
-                      {{item.item_status}}
-                    </span>
-                  {% elif item.item_status.name == "Requested" %}
-                    <span style="font-weight: bold; color: #05386B">
-                      {{item.item_status}}
-                    </span>
-                  {% else %}
-                    <span style="font-weight: bold; color: #FC4445">
-                      {{item.item_status}}
-                    </span>
-                  {% endif %}
-              </span>
-              {% if item.item_status.name != 'Unavailable' and item.item_status.name != 'Requested' and item.item_status.name != 'Checked Out' and item.owner != request.user %}
-              <form action="{% url 'lendingLibrary:request_item' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="user_item" value="{{item.id}}"/>
-                <input type="hidden" name="borrower" value="{{request.user.id}}"/>
-                <button type="submit" class="w3-hover-blue">Request</button>
-              </form>
-              {% else %}
-              <button style="visibility: hidden">--------</button>
-              {% endif %}
-            </div> <!-- end of 'status_block'-->
+
+          {% if 'my_items' in request.path %}
+            {% include 'lendingLibrary/status_block_my_items.html' %}
+          {% else %}
+            {% include 'lendingLibrary/status_block.html' %}
           {% endif %}
+
         </div>
         <div>
           <div>
-            <span style="float:left;width:78px"><b>Category</b>: </span>
+            <span class="item_facts"><b>Category</b>: </span>
             <span><a href="{% url 'lendingLibrary:category' item.category %}">{{item.category|title}}</a></span>
           </div>
           {% if item.owner.username == request.user.username %}
             <div>
-              <span style="float:left;width:78px"><b>Lender</b>: </span>
+              <span class="item_facts"><b>Lender</b>: </span>
               <span><a href="{% url 'lendingLibrary:my_items' %}">{{item.owner.username|title}}</a></span>
             </div>
           {% else %}
             <div>
-              <span style="float:left;width:78px"><b>Lender</b>: </span>
+              <span class="item_facts"><b>Lender</b>: </span>
               <span><a href="{% url 'lendingLibrary:user_items' item.owner.id %}">{{item.owner.username|title}}</a></span>
             </div>
           {% endif %}
           <div>
-            <span style="float:left;width:78px"><b>Condition</b>: </span>
+            <span class="item_facts"><b>Condition</b>: </span>
             <span>{{item.condition}}</span>
           </div>
         </div>
