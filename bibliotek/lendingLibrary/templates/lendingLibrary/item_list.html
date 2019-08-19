@@ -89,6 +89,12 @@
       </div> <!-- end of 'single_row' -->
       {% endfor %}
   {% else %}
-    <p><i>There are 0 available items in this category.</i></p>
+    <div class="no_items_message">
+      <table>
+        <tr>
+          <th><h4><i>There are no available items.</i></h4></th>
+        </tr>
+      </table>
+    </div>
   {% endif %}
 </div> <!-- end of 'item_list' -->

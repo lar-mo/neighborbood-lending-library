@@ -17,7 +17,7 @@
             <option value="{{item.id}}">{{item.name}}</option>
           {% endfor %}
           </select>
-          <button id="btn_load_data">Load Data</button>
+          <button id="btn_load_data" style="display: none">Load Data</button>
         </td>
         <td style="text-align:center">
           <div>
@@ -56,6 +56,11 @@
           window.location = url
         } // end of outer 'if statement'
       } // end of 'onclick'
+      sel_user_items.onchange = function() {
+        let sel_item_id = sel_user_items.options[sel_user_items.selectedIndex].value
+        url = '/edit_item/' + sel_item_id + '/'
+        window.location = url
+      }
 
       let btn_delete = document.querySelector('#btn_delete')
       let select_item_delete = document.querySelector('#select_user_items')
