@@ -21,39 +21,57 @@
           <div class="add_edit_form_div">
             <form action="{% url 'lendingLibrary:create_new_item' %}" method="post" name="new_item_form" id="new_item_form">
               {% csrf_token %}
-              <div class="field_label">Item Name</div>
-              <div>
-                <input name="name" type="text" id="name_field" style="width: 300px" required>
+              <div class="field_label">
+                Item Name
               </div>
-              <div class="field_label">Description</div>
               <div>
-                <textarea name="description" style="width: 300px"></textarea>
+                <input name="name" type="text" required>
               </div>
-              <div class="field_label">Image URL</div>
-              <div>
-                <input name="image_url" type="text" style="width: 300px">
+              <div class="field_label">
+                Description
               </div>
-              <div class="field_label">Category</div>
               <div>
-                <select name="category" style="width: 300px" required>
-                  <option value="" selected disabled>-----</option>
+                <textarea name="description" rows="7" cols="75">
+                </textarea>
+              </div>
+              <div class="field_label">
+                Image URL
+              </div>
+              <div>
+                <input name="image_url" id="image_url" type="text">
+                <span>
+                  <img id="item_thumbnail" class="edit_form_img_thumb" width="75"/>
+                </span>
+              </div>
+              <div class="field_label">
+                Category
+              </div>
+              <div>
+                <select name="category" required>
+                  <option value="" disabled selected>-----</option>
                   {% for category in categories %}
-                    <option value="{{category.id}}">{{category.name}}</option>
+                    <option value="{{category.id}}">
+                      {{category.name}}
+                    </option>
                   {% endfor %}
                 </select>
               </div>
               <div class="field_label">Condition</div>
               <div>
-                <select name="condition" style="width: 300px" required>
-                  <option value="" selected disabled>-----</option>
+                <select name="condition" required>
+                  <option value="" disabled selected>-----</option>
                   {% for condition in conditions %}
-                    <option value="{{condition.id}}">{{condition.name}}</option>
+                    <option value="{{condition.id}}">
+                      {{condition.name}}
+                    </option>
                   {% endfor %}
                 </select>
               </div>
-              <div class="field_label">Replacement Cost</div>
+              <div class="field_label">
+                Replacement Cost
+              </div>
               <div>
-                &#36;&nbsp;<input name="replacement_cost" type="number" step="0.01" style="width: 300px" required>
+                &#36;&nbsp;<input name="replacement_cost" type="number" step="0.01" value="{{item.replacement_cost|floatformat:2}}" required>
               </div>
               <input type="hidden" name="item_status" value="8"/>
               <input type="hidden" name="name_slug" id="name_slug"/>
@@ -66,4 +84,11 @@
       </tr>
     </table>
   </div> <!-- end of 'new_item' -->
+  <script type="text/javascript">
+    let image_url = document.querySelector('#image_url')
+    let item_thumbnail = document.querySelector('#item_thumbnail')
+    image_url.onchange = function() {
+      item_thumbnail.setAttribute('src', image_url.value)
+    }
+  </script>
 {% endblock %}

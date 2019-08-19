@@ -6,16 +6,36 @@
       {% for item in items %}
       <div class="single_row">
         <div>
-          <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}"><img src="{{item.image_url}}" class="item_detail_image"/></a>
+          {% if 'my_items' in request.path %}
+            <a href="{% url 'lendingLibrary:edit_item' item.id %}">
+              <img src="{{item.image_url}}" class="item_detail_image"/>
+            </a>
+          {% else %}
+            <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">
+              <img src="{{item.image_url}}" class="item_detail_image"/>
+            </a>
+          {% endif %}
         </div>
         <div>
           <span class="item_title">
-            <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">{{item.name}}</a>
+            {% if 'my_items' in request.path %}
+              <a href="{% url 'lendingLibrary:edit_item' item.id %}">
+                {{item.name}}
+              </a>
+            {% else %}
+              <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">
+                {{item.name}}
+              </a>
+            {% endif %}
           </span>
           {% if item.description != '' %}
-          <span class="item_description">{{item.description}}</span>
+          <span class="item_description">
+            {{item.description}}
+          </span>
           {% else %}
-          <span class="item_description"><i>no description</i></span>
+          <span class="item_description">
+            <i>no description</i>
+          </span>
           {% endif %}
 
           {% if 'my_items' in request.path %}
@@ -27,23 +47,43 @@
         </div>
         <div>
           <div>
-            <span class="item_facts"><b>Category</b>: </span>
-            <span><a href="{% url 'lendingLibrary:category' item.category %}">{{item.category|title}}</a></span>
+            <span class="item_facts">
+              <b>Category</b>:
+            </span>
+            <span>
+              <a href="{% url 'lendingLibrary:category' item.category %}">
+                {{item.category|title}}
+              </a>
+            </span>
           </div>
           {% if item.owner.username == request.user.username %}
             <div>
               <span class="item_facts"><b>Lender</b>: </span>
-              <span><a href="{% url 'lendingLibrary:my_items' %}">{{item.owner.username|title}}</a></span>
+              <span>
+                <a href="{% url 'lendingLibrary:my_items' %}">
+                  {{item.owner.username|title}}
+                </a>
+              </span>
             </div>
           {% else %}
             <div>
-              <span class="item_facts"><b>Lender</b>: </span>
-              <span><a href="{% url 'lendingLibrary:user_items' item.owner.id %}">{{item.owner.username|title}}</a></span>
+              <span class="item_facts">
+                <b>Lender</b>:
+              </span>
+              <span>
+                <a href="{% url 'lendingLibrary:user_items' item.owner.id %}">
+                  {{item.owner.username|title}}
+                </a>
+              </span>
             </div>
           {% endif %}
           <div>
-            <span class="item_facts"><b>Condition</b>: </span>
-            <span>{{item.condition}}</span>
+            <span class="item_facts">
+              <b>Condition</b>:
+            </span>
+            <span>
+              {{item.condition}}
+            </span>
           </div>
         </div>
       </div> <!-- end of 'single_row' -->
