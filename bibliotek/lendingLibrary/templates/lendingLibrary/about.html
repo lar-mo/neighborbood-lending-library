@@ -1,0 +1,36 @@
+{% extends 'lendingLibrary/base.html' %}
+
+{% block title %}
+  <title>About This App - Neighborhood Lending Library</title>
+{% endblock %}
+
+{% block heading %}
+  <h2>&nbsp;</h2>
+{% endblock %}
+
+{% block content %}
+<div class="about_page">
+  <div class="about_title">Django Capstone project PDX Code Guild (Summer 2019)</div>
+  <div class="about_content">
+    <p class="about_heading">Project Overview</p>
+    <p>
+      The creation of this app was inspired by a <a href="https://www.kptv.com/news/scout-troop-asks-for-help-finding-trailer-stolen-day-before/article_a3fb09f2-ae98-11e9-aab6-8fca529363ff.html" target="_new">KPTV news story</a> about a girl scout troop whose trailer full of camping gear was stolen the day before a big trip to Crater Lake. At the eleventh hour, neighbors, friends and family rallied to ensure the troop had the gear they needed to take the trip as scheduled. People loaned or donated tents, sleeping bags, stoves, tarps, lights, etc.
+    </p>
+    <p>
+      For anything that was on loan only, the scout leader presumably had to keep track of who each item belonged to. Why not make an app that makes it easy for neighbors, friends, family, teams, hobby groups, basically people that know each other IRL (in real life), to share their stuff?
+    </p>
+    <p>
+      <b>Think of it as a virtual library for more than just books.</b> You might find games, garden tools, camping gear, sport equipment, beach gear, tools, luggage, ... the list goes on; stuff people have in their garages that's gathering dust most of the time.
+    </p>
+    <p>
+      <span><b>This app will include</b>:</span>
+      <ul>
+        <li>a user registration system</li>
+        <li>user profile pages</li>
+        <li>a catalog of items that can be checked out from a variety of categories</li>
+        <li>an interface for lenders to add, edit, and remove items</li>
+        <li>an interface for borrowers to request, checkout/check in items</li>
+      </ul>
+    </div> <!-- end of 'about_content' -->
+</div> <!-- end of 'about_page' -->
+{% endblock %}

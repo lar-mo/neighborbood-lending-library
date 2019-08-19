@@ -14,7 +14,7 @@
     <table>
       <tr>
         <th>Item</th>
-        <th>Owner</th>
+        <th>Borrower</th>
         <th>Request Date</th>
         <th>Status</th>
         <th>Checkout Date</th>
@@ -31,7 +31,7 @@
       {% for checkout in checkouts %}
       <tr align="center">
         <td><a href="{% url 'lendingLibrary:item_details' checkout.user_item.id checkout.user_item.slug %}">{{checkout.user_item.name}}</a></td>
-        <td>{{checkout.user_item.owner.username|title}}</td>
+        <td>{{checkout.borrower.username|title}}</td>
         <td>{{checkout.request_date|date:'Y-m-d'}}</td>
         {% if checkout.checkout_status.name == 'Pending' %}
           <td style="background-color:#FFFF66">{{checkout.checkout_status.name}}</td>

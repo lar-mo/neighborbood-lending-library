@@ -15,7 +15,7 @@
       <tr>
         <th>Item</th>
         <th>Requestor</th>
-        <th>Request Date</th>
+        <th>Request Date &#x25BC;</th>
         <th>Actions</th>
       </tr>
       {% for item_request in pending_requests %}
@@ -37,7 +37,7 @@
             <span><i>Set a Reason</i></span>
             <form action="{% url 'lendingLibrary:deny_request' %}" method="post">
               {% csrf_token %}
-              <select name="deny_reason" required>
+              <select name="deny_reason" required style="width: 177px !important">
                 <option selected disabled value="">-----</option>
                 <option>Items Overdue</option>
                 <option>Items Lost</option>
