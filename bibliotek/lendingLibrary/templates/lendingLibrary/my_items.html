@@ -1,7 +1,7 @@
 {% extends 'lendingLibrary/base.html' %}
 
 {% block title %}
-  <title>Item History - Neighborhood Lending Library</title>
+  <title>My Items - Neighborhood Lending Library</title>
 {% endblock %}
 
 {% block heading %}
@@ -25,10 +25,20 @@
           <div class="history_item_details">
             <img src="{{item.image_url}}" width="100">
             <ul>
-              <li><b>Category</b>: {{item.category}}</li>
-              <li><b>Condition</b>: {{item.condition}}</li>
+              <li><b>Category</b>: {{item.category.name}}</li>
+              <li><b>Condition</b>: {{item.condition.name}}</li>
               <li><b>Replacement Cost</b>: ${{item.replacement_cost|floatformat:"2"}}</li>
-              <li><b>Item Status</b>: {{item.item_status}}</li>
+              <li><b>Item Status</b>:
+                {% if item.item_status.name == 'Available' %}
+                  <span style="color:green;font-weight:bold">{{item.item_status.name}}</span>
+                {% elif item.item_status.name == 'Checked Out' %}
+                  <span style="color:#FC4445;font-weight:bold">{{item.item_status.name}}</span>
+                {% elif item.item_status.name == 'Requested' %}
+                  <span style="color:#05386B;font-weight:bold">{{item.item_status.name}}</span>
+                {% else %}
+                  <span style="font-weight:bold">{{item.item_status.name}}</span>
+                {% endif %}
+              </li>
             </ul>
           </div>
           <div style="text-align: center;display:flex;align-items:center;flex-direction:column">

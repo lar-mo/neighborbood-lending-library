@@ -520,7 +520,7 @@
           <select id="category_select">
               <option value="" disabled selected>Categories</option>
             {% for category in categories %}
-              <option value="{{category}}" style="font-weight: normal">{{category}}</option>
+              <option value="{{category}}">{{category}}</option>
             {% endfor %}
           </select> |
           <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> |
