@@ -13,7 +13,14 @@
   <div class="single_row"> <!-- start of 'single_row'-->
     <div id="items"> <!-- start of 'items'-->
       <div id="items_inner">
-          <div>{{item.name}}</div>
+          <div>
+            <a href="{% url 'lendingLibrary:edit_item' item.id %}">
+              {{item.name}}
+            </a>&nbsp;
+            <a href="{% url 'lendingLibrary:edit_item' item.id %}" style="font-size:12px;">
+              (edit)
+            </a>
+          </div>
           <div>{{item.description}}</div>
           <div class="history_item_details">
             <img src="{{item.image_url}}" width="100">
@@ -85,7 +92,7 @@
                               <form action="{% url 'lendingLibrary:item_check_in' %}" method="post">
                                 {% csrf_token%}
                                 <input type="hidden" name="item_request_id" value="{{request.id}}">
-                                <button type="submit">Check In</button>
+                                <button type="submit" class="w3-hover-blue">Check In</button>
                               </form>
                             </span>
                           {% endif %}
