@@ -18,19 +18,19 @@
       <table id="profile_form">
         <tr>
           <th>Username</th>
-          <td><input disabled value="{{user_info.username}}"/></td>
+          <td><input type="text" disabled value="{{user_info.username}}" class="profile_fields"/></td>
         </tr>
         <tr>
           <th>First Name</th>
-          <td><input type="text" name="first_name" value="{{user_info.first_name}}" required></td>
+          <td><input type="text" name="first_name" value="{{user_info.first_name}}" required class="profile_fields"/></td>
         </tr>
         <tr>
           <th>Last Name</th>
-          <td><input type="text" name="last_name" value="{{user_info.last_name}}" required></td>
+          <td><input type="text" name="last_name" value="{{user_info.last_name}}" required class="profile_fields"/></td>
         </tr>
         <tr>
           <th>Email</th>
-          <td><input type="text" name="email" value="{{user_info.email}}" required></td>
+          <td><input type="text" name="email" value="{{user_info.email}}" required class="profile_fields"/></td>
         </tr>
       </table>
       <center><input type="submit" name="save_new_info" value="Save Info" style="padding: 10px 20px"/></center>
@@ -49,15 +49,15 @@
       <table id="password_form">
         <tr>
           <th>Old Password</th>
-          <td><input type="password" name="old_password" required/></td>
+          <td><input type="password" name="old_password" required class="profile_fields"/></td>
         </tr>
         <tr>
           <th>New Password</th>
-          <td><input type="password" name="new_password" required/></td>
+          <td><input type="password" name="new_password" required class="profile_fields"/></td>
         </tr>
         <tr>
           <th>Confirm New Password</th>
-          <td><input type="password" name="confirm_new_password" required></td>
+          <td><input type="password" name="confirm_new_password" required class="profile_fields"/></td>
         </tr>
       </table>
       <center><input type="submit" name="save_new_password" value="Save Password" style="padding: 10px 20px"/></center>

@@ -26,7 +26,7 @@
         background-color: #FAFAFA;
         /* padding-left: 10px; */
         /* padding-right: 10px; */
-        padding: 10px;
+        padding: 10px 10px 7px;
         position: sticky;
         position: -webkit-sticky;
         position: -moz-sticky;
@@ -109,7 +109,7 @@
         margin: 0;
         margin-right: 10px;
         position: relative;
-        z-index: 1;
+        z-index: 0;
         box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.4);
         -moz-box-shadow:    3px 3px 5px 0 rgba(25,25,25,0.4);
         -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.4);
@@ -162,6 +162,10 @@
         min-width: auto;
         width: 500px;
       }
+      .profile_fields {
+        padding: 0!important;
+        margin:0!important;
+      }
       input[type=text],
       input[type=password] {
         width: 350px;
@@ -201,7 +205,7 @@
         font-size: 1.1em;
         padding: 5px;
       }
-      input[type=text], input[type=number] {
+      input[type=text], input[type=number], input[type=password] {
         width: 85%;
         padding: 12px 20px;
         margin: 8px 0;
@@ -218,6 +222,18 @@
         background-color: #EDF5E1;
         margin: 5px;
         font-size: 16px;
+      }
+      #category_select {
+        height:21px;
+        width:85px!important;
+        background-color:#FAFAFA;
+        -webkit-appearance:none;
+        -moz-appearance:none;
+        padding:0;
+        margin:0;
+        color:#123;
+        text-decoration: underline;
+        cursor: pointer;
       }
       textarea {
         width: 100%;
@@ -488,14 +504,28 @@
     <header>
       {% if not request.user.username or message == 'logout' %}
         <span>Welcome!</span>
-        <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Register</a> | <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Login</a></span>
+        <span>
+          <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
+          <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Register</a> |
+          <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Login</a>
+        </span>
       {% else %}
         {% if request.user.first_name %}
           <span>Welcome, {{user.first_name|title}}!</span>
         {% else %}
           <span>Welcome, {{user.username|title}}!</span>
         {% endif %}
-        <span><a href="{% url 'lendingLibrary:index' %}">All Items</a> | <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> | <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a></span>
+        <span>
+          <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
+          <select id="category_select">
+              <option value="" disabled selected>Categories</option>
+            {% for category in categories %}
+              <option value="{{category}}" style="font-weight: normal">{{category}}</option>
+            {% endfor %}
+          </select> |
+          <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> |
+          <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a>
+        </span>
       {% endif %}
     </header>
 
@@ -566,6 +596,13 @@
               search_btn.click()                                      // emulate button click
           }
       })
+
+      let category_select = document.querySelector('#category_select')
+      category_select.onchange = function() {
+        let sel_category = category_select.options[category_select.selectedIndex].value
+        url = '/category/' + sel_category + '/'
+        window.location = url
+      }
     </script>
   </body>
 </html>
