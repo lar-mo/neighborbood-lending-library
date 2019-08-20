@@ -16,23 +16,27 @@ def index(request):
         newest_items = UserItem.objects.filter(item_status__name='Available').exclude(owner=request.user).order_by('-id')[:3:1]
     else:
         newest_items = UserItem.objects.filter(item_status__name='Available').order_by('-id')[:3:1]
-    context = {'items': items, 'newest_items': newest_items}
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'items': items, 'newest_items': newest_items, 'categories': categories}
     return render(request, 'lendingLibrary/index.html', context)
 
 def user_items(request, user_id):
     owner = User.objects.get(id=user_id)
     items = owner.items.order_by('item_status__name', 'category__name').exclude(item_status__name__in=['Hidden', 'Lost'])
-    context = {'items': items, 'owner': owner}
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'items': items, 'owner': owner, 'categories': categories}
     return render(request, 'lendingLibrary/user_items.html', context)
 
 def category(request, category_name):
     items = UserItem.objects.filter(category__name=category_name).exclude(item_status__name__in=['Hidden', 'Lost'])
-    context = {'items': items, 'category_name': category_name}
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'items': items, 'category_name': category_name, 'categories': categories}
     return render(request, 'lendingLibrary/category.html', context)
 
 def item_details(request, item_id, name_slug):
     item = UserItem.objects.get(id=item_id)
-    context = {'item': item}
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'item': item, 'categories': categories}
     return render(request, 'lendingLibrary/item_details.html', context)
 
 def item_details_no_slug(request, item_id):
@@ -48,22 +52,26 @@ def item_details_no_slug(request, item_id):
 
 def search_results(request):
     search_term = request.GET['q']
-    items = UserItem.objects.filter(name__iregex=r'\b{0}\b'.format(search_term)).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__iregex=r'\b{0}\b'.format(search_term)).exclude(item_status__name__in=['Hidden', 'Lost']) ## whole word match, e.g. 'mat' => 'on', not 'one', 'won' ##
-    # items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) ## partial match, e.g. 'on' => 'won', 'one', 'on' ##
-    context = {'items': items, 'search_term': search_term}
+    items_filtered = UserItem.objects.exclude(item_status__name__in=['Hidden', 'Lost'])
+    items = items_filtered.filter(name__iregex=r'\b{0}\b'.format(search_term)) | items_filtered.filter(description__iregex=r'\b{0}\b'.format(search_term)) ## whole word match, e.g. 'mat' => 'on', not 'one', 'won' ##
+    # items = items_filtered.filter(name__contains=search_term) | items_filtered.filter(description__contains=search_term) ## partial match, e.g. 'on' => 'won', 'one', 'on' ##
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'items': items, 'search_term': search_term, 'categories': categories}
     return render(request, 'lendingLibrary/search_results.html', context)
 
 def search_results_keyword(request, search_term):
     # search_term = request.POST['search_term']
     items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost'])
-    context = {'items': items, 'search_term': search_term}
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'items': items, 'search_term': search_term, 'categories': categories}
     return render(request, 'lendingLibrary/search_results.html', context)
 
 @login_required
 def request_item(request):
     open_request_count = UserItemCheckout.objects.filter(borrower=request.user.id, checkout_status__name__in=['Pending', 'Active']).count()
-    if open_request_count > 4: #limits user to 4 items: pending or active(checked out)
-        return HttpResponse(open_request_count)
+    if open_request_count > 4: #limits user to 4 Pending items
+        # return HttpResponse(open_request_count)
+        return HttpResponseRedirect(reverse('lendingLibrary:my_checkouts')+'?message=over_request_limit')
     else:
         user_item_id = request.POST['user_item']
         borrower_id = request.POST['borrower']
@@ -126,7 +134,8 @@ def item_check_in(request):
 def my_profile(request):
     user_info = request.user
     message = request.GET.get('message', '').strip()
-    context = {'user_info': user_info, 'message': message}
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'user_info': user_info, 'message': message, 'categories': categories}
     return render(request, 'lendingLibrary/my_profile.html', context)
 
 def save_info(request):
@@ -165,33 +174,37 @@ def check_pwd(request):
 @login_required
 def pending_requests(request):
     owner = request.user
-    pending_requests = UserItemCheckout.objects.filter(checkout_status__name='Pending', user_item__owner=owner.id).exclude(borrower_id=owner.id)
+    pending_requests = UserItemCheckout.objects.filter(checkout_status__name='Pending', user_item__owner=owner.id).exclude(borrower_id=owner.id).order_by('-request_date')
     tomorrows_date = timezone.now() + timezone.timedelta(days=1)
-    context = {'owner': owner, 'pending_requests': pending_requests, 'tomorrows_date': tomorrows_date}
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'owner': owner, 'pending_requests': pending_requests, 'tomorrows_date': tomorrows_date, 'categories': categories}
     return render(request, 'lendingLibrary/pending_requests.html', context)
 
 @login_required
 def my_checkouts(request):
+    message = request.GET.get('message', '')
     owner = request.user
     items = owner.items.order_by('item_status__name', 'category__name')
-    checkouts = owner.checkouts.order_by('-request_date').exclude(user_item__owner=request.user)
-    context = {'owner': owner, 'checkouts': checkouts}
+    checkouts = owner.checkouts.order_by('-request_date')#.exclude(user_item__owner=request.user)
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'owner': owner, 'checkouts': checkouts, 'message': message, 'categories': categories}
     return render(request, 'lendingLibrary/my_checkouts.html', context)
 
 @login_required
 def my_items(request):
     owner = request.user
-    items = owner.items.order_by('item_status__name', 'category__name')
-    item_requests = UserItemCheckout.objects.filter(user_item__in=items).exclude(checkout_status__name='Denied')
-    filter = ['Available', 'Unavailable', 'Lost', 'Hidden']
-    context = {'items': items, 'owner': owner, 'item_requests': item_requests, 'filter': filter}
+    items = owner.items.order_by('-item_status__name', 'category__name')
+    item_requests = UserItemCheckout.objects.filter(user_item__in=items).order_by('-due_date', 'request_date')
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'owner': owner, 'items': items, 'item_requests': item_requests, 'categories': categories}
     return render(request, 'lendingLibrary/my_items.html', context)
 
 @login_required
 def manage_items(request):
     owner = request.user
     items = owner.items.order_by('item_status__name', 'category__name')
-    context = {'items': items, 'owner': owner}
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'items': items, 'owner': owner, 'categories': categories}
     return render(request, 'lendingLibrary/manage_items.html', context)
 
 @login_required
@@ -302,3 +315,13 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('lendingLibrary:index')+'?message=logout')
+
+def about(request):
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'categories': categories}
+    return render(request, 'lendingLibrary/about.html', context)
+
+def tos(request):
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'categories': categories}
+    return render(request, 'lendingLibrary/terms_of_service.html', context)

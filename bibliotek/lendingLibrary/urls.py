@@ -46,7 +46,7 @@ urlpatterns = [
     # /lendingLibrary/item_check_in/ - form handling
     path('item_check_in/', views.item_check_in, name='item_check_in'),
 
-    # /lendingLibrary/my_profile/ - logged in user's profile - view & edit profile (name, email, password)
+    # /lendingLibrary/my_profile/ - view & edit profile (name, email, password)
     path('my_profile/', views.my_profile, name='my_profile'),
 
     # /lendingLibrary/save_info/ - form handling
@@ -99,4 +99,10 @@ urlpatterns = [
 
     # /lendingLibrary/logout_user/ - logout a user
     path('logout_user/', views.logout_user, name='logout_user'),
+
+    # /lendingLibrary/about/ - about page
+    path('about/', views.about, name='about'),
+
+    # /lendingLibrary/tos/ - terms of service pages
+    path('tos/', views.tos, name='tos'),
 ]
