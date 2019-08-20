@@ -1,0 +1,104 @@
+{% extends 'lendingLibrary/base.html' %}
+
+{% block title %}
+  <title>Item History - Neighborhood Lending Library</title>
+{% endblock %}
+
+{% block heading %}
+  <h2><a href="{% url 'lendingLibrary:user_items' user.id %}">My Items</a></h2>
+{% endblock %}
+
+{% block content %}
+{% for item in items %}
+  <div class="single_row"> <!-- start of 'single_row'-->
+    <div id="items"> <!-- start of 'items'-->
+      <div id="items_inner">
+          <div>{{item.name}}</div>
+          <div>{{item.description}}</div>
+          <div class="history_item_details">
+            <img src="{{item.image_url}}" width="100">
+            <ul>
+              <li><b>Category</b>: {{item.category}}</li>
+              <li><b>Condition</b>: {{item.condition}}</li>
+              <li><b>Replacement Cost</b>: ${{item.replacement_cost|floatformat:"2"}}</li>
+              <li><b>Item Status</b>: {{item.item_status}}</li>
+            </ul>
+          </div>
+          <div style="text-align: center;display:flex;align-items:center;flex-direction:column">
+            <div><h3>Checkout History</h3></div>
+            <div>
+              <table class="history_table">
+                {% for request in item_requests %}
+                  {% if item.name == request.user_item.name %}
+                    <tr>
+                      <td align="left"
+                        {% if request.checkout_status.name == 'Active' %}
+                          style="background-color:#8EE4AF;"
+                        {% endif %}
+                      >
+                        <div><b>Borrower</b>: {{request.borrower.username|title}}</div>
+                        <div><b>Request Date</b>: {{request.request_date|date:'Y-m-d'}}</div>
+                        <div><b>Status</b>: {{request.checkout_status.name}}</div>
+                        {% if request.checkout_status.name == 'Denied' %}
+                          <div><b>Decline Reason</b>: {{request.reason}}</div>
+                        {% endif %}
+                      </td>
+                      <td align="right"
+                        {% if request.checkout_status.name == 'Active' %}
+                          style="background-color:#8EE4AF;"
+                        {% endif %}
+                      >
+                        <div>
+                          <b>Checkout Date</b>:
+                          {% if request.checkout_date %}
+                            {{request.checkout_date|date:'Y-m-d'}}
+                          {% else %}
+                            N/A
+                          {% endif %}
+                        </div>
+                        <div>
+                          <b>Due Date</b>:
+                          {% if request.due_date %}
+                            {{request.due_date|date:'Y-m-d'}}
+                          {% else %}
+                            N/A
+                          {% endif %}
+                        </div>
+                        <div>
+                          <b>Check In Date</b>:
+                          {% if request.checkin_date %}
+                            {{request.checkin_date|date:'Y-m-d'}}
+                          {% else %}
+                            N/A
+                          {% endif %}
+                        </div>
+                        {% if request.checkout_status.name == 'Denied' %}
+                          <div>&nbsp;</div>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% if request.checkout_status.name == 'Active' %}
+                    <tr>
+                      <td colspan="2" style="background-color:#8EE4AF;">
+                          {% if request.user_item.name == item.name and request.checkout_status.name == 'Active' %}
+                            <span>
+                              <form action="{% url 'lendingLibrary:item_check_in' %}" method="post">
+                                {% csrf_token%}
+                                <input type="hidden" name="item_request_id" value="{{request.id}}">
+                                <button type="submit">Check In</button>
+                              </form>
+                            </span>
+                          {% endif %}
+                      </td>
+                    </tr>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+      </div>
+    </div> <!-- end of 'items'-->
+  </div> <!-- end of 'single_row' -->
+  {% endfor %} <!-- end of 'items' for loop -->
+{% endblock %}

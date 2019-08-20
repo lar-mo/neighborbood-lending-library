@@ -11,7 +11,7 @@
           </span>
         {% else %}
             {% for request in item_requests %}
-              {% if request.user_item.name == item.name %}
+              {% if request.user_item.name == item.name and request.checkout_status.name == 'Active' %}
                 <span>
                   <form action="{% url 'lendingLibrary:item_check_in' %}" method="post">
                     {% csrf_token%}
@@ -22,7 +22,7 @@
               {% endif %}
             {% endfor %}
             {% for request in item_requests %}
-              {% if request.user_item.name == item.name and request.checkout_status.name != 'Completed' %}
+              {% if request.user_item.name == item.name and request.checkout_status.name == 'Active' %}
                 <div align="center">(Borrower: {{request.borrower.username|title}})</div>
               {% endif %}
             {% endfor %}
