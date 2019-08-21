@@ -1,7 +1,7 @@
 {% extends 'lendingLibrary/base.html' %}
 
 {% block title %}
-  <title>My Items - Neighborhood Lending Library</title>
+  <title>My Items - Community Lending Library</title>
 {% endblock %}
 
 {% block heading %}
@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+{% if items %}
 {% for item in items %}
   <div class="single_row"> <!-- start of 'single_row'-->
     <div id="items"> <!-- start of 'items'-->
@@ -42,7 +43,7 @@
             </ul>
           </div>
           <div style="text-align: center;display:flex;align-items:center;flex-direction:column">
-            <div><h3>Checkout History</h3></div>
+            <!-- <div><h3>Checkout History</h3></div> -->
             <div>
               <table class="history_table">
                 {% for request in item_requests %}
@@ -117,5 +118,8 @@
       </div>
     </div> <!-- end of 'items'-->
   </div> <!-- end of 'single_row' -->
-  {% endfor %} <!-- end of 'items' for loop -->
+{% endfor %} <!-- end of 'items' for loop -->
+{% else %}
+<h1>No items</h1>
+{% endif %}
 {% endblock %}

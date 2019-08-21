@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
+from django.core.mail import send_mail
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -277,6 +278,7 @@ def item(request):
 def register_login(request):
     message = request.GET.get('message', '')
     next = request.GET.get('next', '')
+
     context = {
         'message': message,
         'next': next
