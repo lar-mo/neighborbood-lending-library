@@ -56,7 +56,11 @@
 {% endblock %}
 
 {% block heading %}
-  <h2>All Items</h2>
+  {% if available_only == "true"%}
+    <h2>All Available Items</h2>
+  {% else %}
+    <h2>All Items</h2>
+  {% endif %}
 {% endblock %}
 
 {% block content %}

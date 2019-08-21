@@ -509,6 +509,15 @@
         <span>Welcome!</span>
         <span>
           <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
+          <a href="{% url 'lendingLibrary:index' %}?available">Available Items Only</a> |
+          <select id="category_select">
+              <option value="" disabled selected>Categories</option>
+            {% for category in categories %}
+              <option value="{{category}}">{{category}}</option>
+            {% endfor %}
+          </select> |
+        <!-- </span>
+        <span> -->
           {% if 'register_login' in request.path %}
             <a href="{% url 'lendingLibrary:register_login' %}?next=/">Register</a> |
             <a href="{% url 'lendingLibrary:register_login' %}?next=/">Login</a>
@@ -524,13 +533,19 @@
           <span>Welcome, {{user.username|title}}!</span>
         {% endif %}
         <span>
-          <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
+          {% if '?available' in request.get_full_path or request.path != '/' %}
+            <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
+          {% else %}
+            <a href="{% url 'lendingLibrary:index' %}?available">All Available Items</a> |
+          {% endif %}
           <select id="category_select">
               <option value="" disabled selected>Categories</option>
             {% for category in categories %}
               <option value="{{category}}">{{category}}</option>
             {% endfor %}
           </select> |
+        <!-- </span>
+        <span> -->
           <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> |
           <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a>
         </span>
