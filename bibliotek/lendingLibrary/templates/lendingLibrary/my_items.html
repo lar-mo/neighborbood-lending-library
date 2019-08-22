@@ -9,9 +9,39 @@
 {% endblock %}
 
 {% block content %}
+<table>
+  <tr>
+    <th style="padding:5px">
+      <div class="list_controls">
+        <!-- <a href="{% url 'lendingLibrary:index' %}">All Items</a>&nbsp;|&nbsp; -->
+        <input type="checkbox" id="cb_my_available"/>&nbsp;
+        <a id="lnk_my_available"><u>Available</u></a>&nbsp;(<span id="my_available_count"></span>)
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <input type="checkbox" id="cb_requested"/>&nbsp;
+        <a id="lnk_requested"><u>Requests</u></a>&nbsp;(<span id="requested_count"></span>)
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <input type="checkbox" id="cb_checkedout"/>&nbsp;
+        <a id="lnk_checkedout"><u>Checked Out</u></a>&nbsp;(<span id="checkedout_count"></span>)
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <input type="checkbox" id="cb_other"/>&nbsp;
+        <a id="lnk_other"><u>Other</u></a>&nbsp;(<span id="other_count"></span>)
+        <span id="category_select"></span>
+      </div>
+    </th>
+  </tr>
+</table>
+
 {% if items %}
 {% for item in items %}
-  <div class="single_row"> <!-- start of 'single_row'-->
+  {% if item.item_status.name == 'Available' %}
+    <div class="single_row my_available">
+  {% elif item.item_status.name == 'Checked Out' %}
+    <div class="single_row checkedout">
+  {% elif item.item_status.name == 'Requested' %}
+    <div class="single_row requested">
+  {% else %}
+    <div class="single_row other">
+  {% endif %}
     <div id="items"> <!-- start of 'items'-->
       <div id="items_inner">
           <div>
@@ -120,6 +150,167 @@
   </div> <!-- end of 'single_row' -->
 {% endfor %} <!-- end of 'items' for loop -->
 {% else %}
-<h1>No items</h1>
+  <h1>No items</h1>
 {% endif %}
+
+<script type="text/javascript">
+
+  let cb_my_available = document.querySelector('#cb_my_available')
+  let cb_unavailable = document.querySelector('#cb_unavailable')
+  let cb_requested = document.querySelector('#cb_requested')
+  let cb_checkedout = document.querySelector('#cb_checkedout')
+  let cb_other = document.querySelector('#cb_other')
+
+  let my_available = document.querySelectorAll('.my_available')
+  let unavailable = document.querySelectorAll('.unavailable')
+  let requested = document.querySelectorAll('.requested')
+  let checkedout = document.querySelectorAll('.checkedout')
+  let other = document.querySelectorAll('.other')
+
+  let lnk_my_available = document.querySelector('#lnk_my_available')
+  let lnk_unavailable = document.querySelector('#lnk_unavailable')
+  let lnk_requested = document.querySelector('#lnk_requested')
+  let lnk_checkedout = document.querySelector('#lnk_checkedout')
+  let lnk_other = document.querySelector('#lnk_other')
+
+  let my_available_count = document.querySelector("#my_available_count")
+  let unavailable_count = document.querySelector("#unavailable_count")
+  let requested_count = document.querySelector("#requested_count")
+  let checkedout_count = document.querySelector('#checkedout_count')
+  let other_count = document.querySelector('#other_count')
+
+  window.onload = function() {
+    my_available_count.innerHTML = my_available.length
+    requested_count.innerHTML = requested.length
+    checkedout_count.innerHTML = checkedout.length
+    other_count.innerHTML = other.length
+
+    if (my_available.length == 0) {
+      cb_my_available.disabled = true
+      lnk_my_available.style.cursor = "auto"
+    }
+    if (requested.length == 0) {
+      cb_requested.disabled = true
+      lnk_requested.style.cursor = "auto"
+    }
+    if (checkedout.length == 0) {
+      cb_checkedout.disabled = true
+      lnk_checkedout.style.cursor = "auto"
+    }
+    if (other.length == 0) {
+      cb_other.disabled = true
+      lnk_other.style.cursor = "auto"
+    }
+  }
+
+  cb_my_available.onchange = function() {
+    if (cb_my_available.checked) {
+      for (var i = 0; i < requested.length; i ++) {
+        requested[i].style.display = 'none';
+      }
+      for (var i = 0; i < checkedout.length; i ++) {
+        checkedout[i].style.display = 'none';
+      }
+      for (var i = 0; i < other.length; i ++) {
+        other[i].style.display = 'none';
+      }
+    } else {
+      for (var i = 0; i < requested.length; i ++) {
+        requested[i].style.display = 'flex';
+      }
+      for (var i = 0; i < checkedout.length; i ++) {
+        checkedout[i].style.display = 'flex';
+      }
+      for (var i = 0; i < other.length; i ++) {
+        other[i].style.display = 'flex';
+      }
+    }
+  }
+  lnk_my_available.onclick = function() {
+    cb_my_available.click()
+  }
+
+  cb_checkedout.onchange = function() {
+    if (cb_checkedout.checked) {
+      for (var i = 0; i < my_available.length; i ++) {
+        my_available[i].style.display = 'none';
+      }
+      for (var i = 0; i < requested.length; i ++) {
+        requested[i].style.display = 'none';
+      }
+      for (var i = 0; i < other.length; i ++) {
+        other[i].style.display = 'none';
+      }
+    } else {
+      for (var i = 0; i < my_available.length; i ++) {
+        my_available[i].style.display = 'flex';
+      }
+      for (var i = 0; i < requested.length; i ++) {
+        requested[i].style.display = 'flex';
+      }
+      for (var i = 0; i < other.length; i ++) {
+        other[i].style.display = 'flex';
+      }
+    }
+  }
+  lnk_checkedout.onclick = function() {
+    cb_checkedout.click()
+  }
+
+  cb_other.onchange = function() {
+    if (cb_other.checked) {
+      for (var i = 0; i < my_available.length; i ++) {
+        my_available[i].style.display = 'none';
+      }
+      for (var i = 0; i < requested.length; i ++) {
+        requested[i].style.display = 'none';
+      }
+      for (var i = 0; i < checkedout.length; i ++) {
+        checkedout[i].style.display = 'none';
+      }
+    } else {
+      for (var i = 0; i < my_available.length; i ++) {
+        my_available[i].style.display = 'flex';
+      }
+      for (var i = 0; i < requested.length; i ++) {
+        requested[i].style.display = 'flex';
+      }
+      for (var i = 0; i < checkedout.length; i ++) {
+        checkedout[i].style.display = 'flex';
+      }
+    }
+  }
+  lnk_other.onclick = function() {
+    cb_other.click()
+  }
+
+  cb_requested.onchange = function() {
+    if (cb_requested.checked) {
+      for (var i = 0; i < my_available.length; i ++) {
+        my_available[i].style.display = 'none';
+      }
+      for (var i = 0; i < checkedout.length; i ++) {
+        checkedout[i].style.display = 'none';
+      }
+      for (var i = 0; i < other.length; i ++) {
+        other[i].style.display = 'none';
+      }
+    } else {
+      for (var i = 0; i < my_available.length; i ++) {
+        my_available[i].style.display = 'flex';
+      }
+      for (var i = 0; i < checkedout.length; i ++) {
+        checkedout[i].style.display = 'flex';
+      }
+      for (var i = 0; i < other.length; i ++) {
+       other[i].style.display = 'flex';
+     }
+    }
+  }
+  lnk_requested.onclick = function() {
+    cb_requested.click()
+  }
+
+</script>
+
 {% endblock %}

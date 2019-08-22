@@ -36,7 +36,7 @@
         display:flex;
         flex-direction: row;
         justify-content: space-between;
-        font-size: 1.1em;
+        font-size: 1.0em;
         z-index: 999;
         font-weight: bold;
         box-shadow:           3px 3px 5px 0 rgba(25,25,25,0.4);
@@ -226,21 +226,6 @@
         margin: 5px;
         font-size: 16px;
       }
-      #category_select {
-        height:21px;
-        width:83px!important;
-        background-color:#FAFAFA;
-        -webkit-appearance:none;
-        -moz-appearance:none;
-        padding:0;
-        margin:0;
-        color:#123;
-        text-decoration: underline;
-        cursor: pointer;
-      }
-      #cb_available {
-        vertical-align: text-top;
-      }
       textarea {
         width: 100%;
         height: 150px;
@@ -275,7 +260,6 @@
         justify-content: center
       }
       #hero_div {
-        background-color: none;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -451,8 +435,44 @@
       .single_row > div:last-child {
         text-align: justify;
       }
+      .list_controls {
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        font-weight: bold;
+      }
+      #available_count {
+        padding: 0;
+      }
+      #lnk_available,
+      #lnk_my_available,
+      #lnk_checkedout,
+      #lnk_requested,
+      #lnk_other {
+        cursor: pointer;
+      }
+      #category_select {
+        height:21px;
+        width:83px!important;
+        background-color: rgba(0,0,0,0.0);
+        -webkit-appearance:none;
+        -moz-appearance:none;
+        padding:0;
+        margin:0;
+        color:#123;
+        text-decoration: underline;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      #cb_available {
+        vertical-align: text-top;
+        background-color: #CCC;
+      }
       .no_items_message {
         width: 892px;
+        background-color: #FFF;
       }
       .item_detail_image {
         width: 150px;
@@ -511,19 +531,12 @@
       {% if not request.user.username or message == 'logout' %}
         <span>Welcome!</span>
         <span>
-          <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
-          <select id="category_select">
-              <option value="" disabled selected>Categories</option>
-            {% for category in categories %}
-              <option value="{{category}}">{{category}}</option>
-            {% endfor %}
-          </select> |
-        <!-- </span>
-        <span> -->
           {% if 'register_login' in request.path %}
+            <a href="{% url 'lendingLibrary:index' %}">Home</a> |
             <a href="{% url 'lendingLibrary:register_login' %}?next=/">Register</a> |
             <a href="{% url 'lendingLibrary:register_login' %}?next=/">Login</a>
           {% else %}
+            <a href="{% url 'lendingLibrary:index' %}">Home</a> |
             <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Register</a> |
             <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Login</a>
           {% endif %}
@@ -535,16 +548,7 @@
           <span>Welcome, {{user.username|title}}!</span>
         {% endif %}
         <span>
-          <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
-          <input type="checkbox" id="cb_available"/> Available Only (<span id="available_count"></span>) |
-          <select id="category_select">
-              <option value="" disabled selected>Categories</option>
-            {% for category in categories %}
-              <option value="{{category}}">{{category}}</option>
-            {% endfor %}
-          </select> |
-        <!-- </span>
-        <span> -->
+          <a href="{% url 'lendingLibrary:index' %}">Home</a> |
           <a href="{% url 'lendingLibrary:my_profile' %}">My Profile</a> |
           <a href="{% url 'lendingLibrary:logout_user' %}">Logout</a>
         </span>
@@ -625,27 +629,39 @@
         url = '/category/' + sel_category + '/'
         window.location = url
       }
-      let cb_available = document.querySelector('#cb_available')
-      let available = document.querySelectorAll('.available')
-      let not_available = document.querySelectorAll('.not_available')
-      let available_count = document.querySelector('#available_count')
-      window.onload = function() {
-        available_count.innerHTML = available.length;
-        if (available.length == 0 | not_available.length == 0) {
-          cb_available.disabled = true
-        }
-      }
-      cb_available.onchange = function() {
-        if (cb_available.checked) {
-          for (var i = 0; i < not_available.length; i ++) {
-            not_available[i].style.display = 'none';
+
+      if (window.location.pathname == '/') {
+
+          let cb_available = document.querySelector('#cb_available')
+          let available = document.querySelectorAll('.available')
+          let not_available = document.querySelectorAll('.not_available')
+          let lnk_available = document.querySelector('#lnk_available')
+          let available_count = document.querySelector('#available_count')
+
+          window.onload = function() {
+            available_count.innerHTML = available.length
+            if (available.length == 0 | not_available.length == 0) {
+              cb_available.disabled = true
+              lnk_available.style.cursor = "auto"
+            }
           }
-        } else {
-          for (var i = 0; i < not_available.length; i ++) {
-            not_available[i].style.display = 'flex';
+
+          cb_available.onchange = function() {
+            if (cb_available.checked) {
+              for (var i = 0; i < not_available.length; i ++) {
+                not_available[i].style.display = 'none';
+              }
+            } else {
+              for (var i = 0; i < not_available.length; i ++) {
+                not_available[i].style.display = 'flex';
+              }
+            }
           }
-        }
+          lnk_available.onclick = function() {
+            cb_available.click()
+          }
       }
+
     </script>
   </body>
 </html>

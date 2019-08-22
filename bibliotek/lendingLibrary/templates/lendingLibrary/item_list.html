@@ -1,10 +1,31 @@
 <div id="item_list">
+  <!-- <div class="single_row"> -->
+  <table>
+    <tr>
+      <th style="padding:5px">
+        <div class="list_controls">
+          <!-- <a href="{% url 'lendingLibrary:index' %}">All Items</a>&nbsp;|&nbsp; -->
+          <input type="checkbox" id="cb_available"/>&nbsp;
+          <a id="lnk_available"><u>Available</u></a>&nbsp;(<span id="available_count"></span>)
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <select id="category_select">
+            <option value="" disabled selected>Categories</option>
+              {% for category in categories %}
+                <option value="{{category}}">{{category}}</option>
+              {% endfor %}
+          </select>
+        </div>
+      </th>
+    </tr>
+  </table>
+
+  <!-- </div> -->
   {% if items %}
       {% for item in items %}
         {% if item.item_status.name == 'Available' %}
-          <div class="single_row available">
+          <div class="single_row available"> <!-- start of 'single_row' -->
         {% else %}
-          <div class="single_row not_available">
+          <div class="single_row not_available"> <!-- start of 'single_row' -->
         {% endif %}
         <div>
           {% if 'my_items' in request.path %}
@@ -43,15 +64,15 @@
               <span><b>Status</b>:
                   {% if item.item_status.name == "Available" %}
                     <span style="font-weight: bold; color: #379683">
-                      {{item.item_status}}
+                      {{item.item_status.name}}
                     </span>
                   {% elif item.item_status.name == "Requested" %}
                     <span style="font-weight: bold; color: #05386B">
-                      {{item.item_status}}
+                      {{item.item_status.name}}
                     </span>
                   {% else %}
                     <span style="font-weight: bold; color: #FC4445">
-                      {{item.item_status}}
+                      {{item.item_status.name}}
                     </span>
                   {% endif %}
               </span>
