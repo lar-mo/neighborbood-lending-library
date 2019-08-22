@@ -11,19 +11,13 @@ from django.contrib.auth.hashers import check_password
 from .models import UserItemStatus, CheckoutStatus, UserItemCategory, UserItemCondition, UserItem, UserItemCheckout
 
 def index(request):
-    available = request.GET.get('available')
-    if available is None:
-        items = UserItem.objects.order_by('category__name').exclude(item_status__name__in=['Hidden', 'Lost'])
-        available_only = "false"
-    else:
-        items = UserItem.objects.filter(item_status__name='Available').order_by('category__name')
-        available_only = "true"
+    items = UserItem.objects.order_by('category__name').exclude(item_status__name__in=['Hidden', 'Lost'])
     if not request.user.username == "":
         newest_items = UserItem.objects.filter(item_status__name='Available').exclude(owner=request.user).order_by('-id')[:3:1]
     else:
         newest_items = UserItem.objects.filter(item_status__name='Available').order_by('-id')[:3:1]
     categories = UserItemCategory.objects.order_by('name')
-    context = {'items': items, 'newest_items': newest_items, 'categories': categories, 'available_only': available_only}
+    context = {'items': items, 'newest_items': newest_items, 'categories': categories}
     return render(request, 'lendingLibrary/index.html', context)
 
 def user_items(request, user_id):

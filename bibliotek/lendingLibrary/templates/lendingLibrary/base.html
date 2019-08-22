@@ -228,7 +228,7 @@
       }
       #category_select {
         height:21px;
-        width:82px!important;
+        width:83px!important;
         background-color:#FAFAFA;
         -webkit-appearance:none;
         -moz-appearance:none;
@@ -237,6 +237,9 @@
         color:#123;
         text-decoration: underline;
         cursor: pointer;
+      }
+      #cb_available {
+        vertical-align: text-top;
       }
       textarea {
         width: 100%;
@@ -509,7 +512,6 @@
         <span>Welcome!</span>
         <span>
           <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
-          <a href="{% url 'lendingLibrary:index' %}?available">Available Items Only</a> |
           <select id="category_select">
               <option value="" disabled selected>Categories</option>
             {% for category in categories %}
@@ -533,11 +535,8 @@
           <span>Welcome, {{user.username|title}}!</span>
         {% endif %}
         <span>
-          {% if '?available' in request.get_full_path or request.path != '/' %}
-            <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
-          {% else %}
-            <a href="{% url 'lendingLibrary:index' %}?available">All Available Items</a> |
-          {% endif %}
+          <a href="{% url 'lendingLibrary:index' %}">All Items</a> |
+          <input type="checkbox" id="cb_available"/> Available Only (<span id="available_count"></span>) |
           <select id="category_select">
               <option value="" disabled selected>Categories</option>
             {% for category in categories %}
@@ -625,6 +624,27 @@
         let sel_category = category_select.options[category_select.selectedIndex].value
         url = '/category/' + sel_category + '/'
         window.location = url
+      }
+      let cb_available = document.querySelector('#cb_available')
+      let available = document.querySelectorAll('.available')
+      let not_available = document.querySelectorAll('.not_available')
+      let available_count = document.querySelector('#available_count')
+      window.onload = function() {
+        available_count.innerHTML = available.length;
+        if (available.length == 0 | not_available.length == 0) {
+          cb_available.disabled = true
+        }
+      }
+      cb_available.onchange = function() {
+        if (cb_available.checked) {
+          for (var i = 0; i < not_available.length; i ++) {
+            not_available[i].style.display = 'none';
+          }
+        } else {
+          for (var i = 0; i < not_available.length; i ++) {
+            not_available[i].style.display = 'flex';
+          }
+        }
       }
     </script>
   </body>
