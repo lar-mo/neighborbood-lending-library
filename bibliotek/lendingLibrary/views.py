@@ -326,3 +326,6 @@ def tos(request):
     categories = UserItemCategory.objects.order_by('name')
     context = {'categories': categories}
     return render(request, 'lendingLibrary/terms_of_service.html', context)
+
+def image_upload(request):
+    return HttpResponse('ok')
