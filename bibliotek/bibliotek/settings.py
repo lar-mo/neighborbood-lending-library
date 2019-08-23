@@ -122,9 +122,10 @@ LOGIN_URL = '/register_login/'
 MEDIA_URL = '/uploaded_files/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')
 
-EMAIL_HOST = 'smtp.gmail.com'
+# Dreamhost Settings
+EMAIL_HOST = 'smtp.dreamhost.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'larrymoiola2017@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-DEFAULT_FROM_EMAIL = 'Larry <larrymoiola2017@gmail.com>'
+EMAIL_HOST_USER = 'postmaster@community-lending-library.org'
+EMAIL_HOST_PASSWORD = os.environ['DH_EMAIL_HOST_PASSWORD']
+DEFAULT_FROM_EMAIL = 'Postmaster <postmaster@community-lending-library.org>'

@@ -83,6 +83,20 @@ def request_item(request):
         checkout_request_details.save()
         user_item.item_status = item_status
         user_item.save()
+        send_mail(
+            'Item Requested',
+            'Your item [' + user_item.name + '] was requested by ' + borrower.username.capitalize() + '.',
+            'Postmaster <postmaster@community-lending-library.org>',
+            [user_item.owner.email],
+            fail_silently=False,
+        )
+        send_mail(
+            'Item Requested',
+            'Your request for [' + user_item.name + '] was sent to ' + user_item.owner.username.capitalize() + '.',
+            'Postmaster <postmaster@community-lending-library.org>',
+            [borrower.email],
+            fail_silently=False,
+        )
         return HttpResponseRedirect(reverse('lendingLibrary:my_checkouts'))
 
 @login_required
@@ -98,6 +112,13 @@ def deny_request(request):
     user_item = UserItem.objects.get(id=item_request.user_item_id)
     user_item.item_status = item_status
     user_item.save()
+    send_mail(
+        'Item Request Declined',
+        'Your request for [' + user_item.name + '] was declined.\nReason: ' + deny_reason,
+        'Postmaster <postmaster@community-lending-library.org>',
+        [item_request.borrower.email],
+        fail_silently=False,
+    )
     return HttpResponseRedirect(reverse('lendingLibrary:pending_requests'))
 
 @login_required
@@ -114,6 +135,13 @@ def approve_request(request):
     user_item = UserItem.objects.get(id=item_request.user_item_id)
     user_item.item_status = item_status
     user_item.save()
+    send_mail(
+        'Item Request Approved',
+        'Your request for [' + user_item.name + '] was approved.\nThe due date is ' + item_request.due_date + '.',
+        'Postmaster <postmaster@community-lending-library.org>',
+        [item_request.borrower.email],
+        fail_silently=False,
+    )
     return HttpResponseRedirect(reverse('lendingLibrary:pending_requests'))
 
 @login_required
@@ -128,6 +156,13 @@ def item_check_in(request):
     user_item = UserItem.objects.get(id=item_request.user_item_id)
     user_item.item_status = item_status
     user_item.save()
+    send_mail(
+        'Item Returned',
+        '[' + user_item.name + '] was received by ' + user_item.owner.username.capitalize() + '.',
+        'Postmaster <postmaster@community-lending-library.org>',
+        [item_request.borrower.email],
+        fail_silently=False,
+    )
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
 @login_required
@@ -159,6 +194,13 @@ def save_password(request):
         user = User.objects.get(id=request.user.id)
         user.set_password(new_password)
         user.save()
+        send_mail(
+            'Password Changed',
+            'Your password was changed.',
+            'Postmaster <postmaster@community-lending-library.org>',
+            [user.email],
+            fail_silently=False,
+        )
         login(request, user)
         return HttpResponseRedirect(reverse('lendingLibrary:my_profile')+'?message=password_saved')
 
@@ -259,6 +301,13 @@ def save_edited_item(request):
 def delete_item(request):
     user_item_id = request.POST['user_items']
     user_item = UserItem.objects.get(id=user_item_id)
+    send_mail(
+        'Item Deleted',
+        'Your item [' + user_item.name + '] was deleted.',
+        'Postmaster <postmaster@community-lending-library.org>',
+        [user_item.owner.email],
+        fail_silently=False,
+    )
     user_item.delete()
     return HttpResponseRedirect(reverse('lendingLibrary:manage_items'))
 
@@ -292,6 +341,13 @@ def register_user(request):
 
     user = User.objects.create_user(username, email, password)
     login(request, user)
+    send_mail(
+        'New Registration',
+        'Thank you for registering with the Community Lending Library.',
+        'Postmaster <postmaster@community-lending-library.org>',
+        [email],
+        fail_silently=False,
+    )
 
     if next != '':
         return HttpResponseRedirect(next)
