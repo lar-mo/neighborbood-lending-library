@@ -156,21 +156,25 @@
 <script type="text/javascript">
 
   let cb_my_available = document.querySelector('#cb_my_available')
+  let cb_unavailable = document.querySelector('#cb_unavailable')
   let cb_requested = document.querySelector('#cb_requested')
   let cb_checkedout = document.querySelector('#cb_checkedout')
   let cb_other = document.querySelector('#cb_other')
 
   let my_available = document.querySelectorAll('.my_available')
+  let unavailable = document.querySelectorAll('.unavailable')
   let requested = document.querySelectorAll('.requested')
   let checkedout = document.querySelectorAll('.checkedout')
   let other = document.querySelectorAll('.other')
 
   let lnk_my_available = document.querySelector('#lnk_my_available')
+  let lnk_unavailable = document.querySelector('#lnk_unavailable')
   let lnk_requested = document.querySelector('#lnk_requested')
   let lnk_checkedout = document.querySelector('#lnk_checkedout')
   let lnk_other = document.querySelector('#lnk_other')
 
   let my_available_count = document.querySelector("#my_available_count")
+  let unavailable_count = document.querySelector("#unavailable_count")
   let requested_count = document.querySelector("#requested_count")
   let checkedout_count = document.querySelector('#checkedout_count')
   let other_count = document.querySelector('#other_count')
@@ -200,14 +204,6 @@
   }
 
   cb_my_available.onchange = function() {
-
-    cb_requested.disabled = true
-    lnk_requested.style.cursor = "auto"
-    cb_checkedout.disabled = true
-    lnk_checkedout.style.cursor = "auto"
-    cb_other.disabled = true
-    lnk_other.style.cursor = "auto"
-
     if (cb_my_available.checked) {
       for (var i = 0; i < requested.length; i ++) {
         requested[i].style.display = 'none';
@@ -219,20 +215,6 @@
         other[i].style.display = 'none';
       }
     } else {
-
-      if (requested.length != 0) {
-        cb_requested.disabled = false
-        lnk_requested.style.cursor = "pointer"
-      }
-      if (checkedout.length != 0) {
-        cb_checkedout.disabled = false
-        lnk_checkedout.style.cursor = "pointer"
-      }
-      if (other.length != 0) {
-        cb_other.disabled = false
-        lnk_other.style.cursor = "pointer"
-      }
-
       for (var i = 0; i < requested.length; i ++) {
         requested[i].style.display = 'flex';
       }
@@ -248,65 +230,8 @@
     cb_my_available.click()
   }
 
-  cb_requested.onchange = function() {
-    if (cb_requested.checked) {
-
-      cb_my_available.disabled = true
-      lnk_my_available.style.cursor = "auto"
-      cb_checkedout.disabled = true
-      lnk_checkedout.style.cursor = "auto"
-      cb_other.disabled = true
-      lnk_other.style.cursor = "auto"
-
-      for (var i = 0; i < my_available.length; i ++) {
-        my_available[i].style.display = 'none';
-      }
-      for (var i = 0; i < checkedout.length; i ++) {
-        checkedout[i].style.display = 'none';
-      }
-      for (var i = 0; i < other.length; i ++) {
-        other[i].style.display = 'none';
-      }
-    } else {
-
-      if (my_available.length != 0) {
-        cb_my_available.disabled = false
-        lnk_my_available.style.cursor = "pointer"
-      }
-      if (checkedout.length != 0) {
-        cb_checkedout.disabled = false
-        lnk_checkedout.style.cursor = "pointer"
-      }
-      if (other.length != 0) {
-        cb_other.disabled = false
-        lnk_other.style.cursor = "pointer"
-      }
-
-      for (var i = 0; i < my_available.length; i ++) {
-        my_available[i].style.display = 'flex';
-      }
-      for (var i = 0; i < checkedout.length; i ++) {
-        checkedout[i].style.display = 'flex';
-      }
-      for (var i = 0; i < other.length; i ++) {
-       other[i].style.display = 'flex';
-     }
-    }
-  }
-  lnk_requested.onclick = function() {
-    cb_requested.click()
-  }
-
   cb_checkedout.onchange = function() {
     if (cb_checkedout.checked) {
-
-      cb_my_available.disabled = true
-      lnk_my_available.style.cursor = "auto"
-      cb_requested.disabled = true
-      lnk_requested.style.cursor = "auto"
-      cb_other.disabled = true
-      lnk_other.style.cursor = "auto"
-
       for (var i = 0; i < my_available.length; i ++) {
         my_available[i].style.display = 'none';
       }
@@ -317,20 +242,6 @@
         other[i].style.display = 'none';
       }
     } else {
-
-      if (my_available.length != 0) {
-        cb_my_available.disabled = false
-        lnk_my_available.style.cursor = "pointer"
-      }
-      if (requested.length != 0) {
-        cb_requested.disabled = false
-        lnk_requested.style.cursor = "pointer"
-      }
-      if (other.length != 0) {
-        cb_other.disabled = false
-        lnk_other.style.cursor = "pointer"
-      }
-
       for (var i = 0; i < my_available.length; i ++) {
         my_available[i].style.display = 'flex';
       }
@@ -348,14 +259,6 @@
 
   cb_other.onchange = function() {
     if (cb_other.checked) {
-
-      cb_my_available.disabled = true
-      lnk_my_available.style.cursor = "auto"
-      cb_requested.disabled = true
-      lnk_requested.style.cursor = "auto"
-      cb_checkedout.disabled = true
-      lnk_checkedout.style.cursor = "auto"
-
       for (var i = 0; i < my_available.length; i ++) {
         my_available[i].style.display = 'none';
       }
@@ -366,20 +269,6 @@
         checkedout[i].style.display = 'none';
       }
     } else {
-
-      if (my_available.length != 0) {
-        cb_my_available.disabled = false
-        lnk_my_available.style.cursor = "pointer"
-      }
-      if (requested.length != 0) {
-        cb_requested.disabled = false
-        lnk_requested.style.cursor = "pointer"
-      }
-      if (checkedout.length != 0) {
-        cb_checkedout.disabled = false
-        lnk_checkedout.style.cursor = "pointer"
-      }
-
       for (var i = 0; i < my_available.length; i ++) {
         my_available[i].style.display = 'flex';
       }
@@ -393,6 +282,33 @@
   }
   lnk_other.onclick = function() {
     cb_other.click()
+  }
+
+  cb_requested.onchange = function() {
+    if (cb_requested.checked) {
+      for (var i = 0; i < my_available.length; i ++) {
+        my_available[i].style.display = 'none';
+      }
+      for (var i = 0; i < checkedout.length; i ++) {
+        checkedout[i].style.display = 'none';
+      }
+      for (var i = 0; i < other.length; i ++) {
+        other[i].style.display = 'none';
+      }
+    } else {
+      for (var i = 0; i < my_available.length; i ++) {
+        my_available[i].style.display = 'flex';
+      }
+      for (var i = 0; i < checkedout.length; i ++) {
+        checkedout[i].style.display = 'flex';
+      }
+      for (var i = 0; i < other.length; i ++) {
+       other[i].style.display = 'flex';
+     }
+    }
+  }
+  lnk_requested.onclick = function() {
+    cb_requested.click()
   }
 
 </script>
