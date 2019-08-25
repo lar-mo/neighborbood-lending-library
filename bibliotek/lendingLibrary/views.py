@@ -161,7 +161,7 @@ def item_check_in(request):
     send_mail(
         'Item Returned',
         '[' + user_item.name + '] was received by ' + user_item.owner.username.capitalize() + '.',
-        'Postmaster <postmaster@community-lending-library.org>',
+        'Librarian <postmaster@community-lending-library.org>',
         [item_request.borrower.email],
         fail_silently=False,
     )

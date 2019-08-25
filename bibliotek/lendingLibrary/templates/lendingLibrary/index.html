@@ -14,7 +14,7 @@
         <tr>
           {% for newest_item in newest_items %}
           <td class="hero_image">
-            <img src="{% if newest_item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{newest_item.image_url}}{% endif %}">
+            <img src="{% if newest_item.image.url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{newest_item.image.url}}{% endif %}">
           </td>
           <td class="hero_td">
             <div class="hero_item_details">

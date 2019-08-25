@@ -11,7 +11,7 @@
       html, body, #bg_blur {
         /* background: linear-gradient(0.25turn, #5CDB95, #379683); */
         /* background: linear-gradient(0.25turn, #379683, #5CDB95); */
-        background-image: url('https://lar-mo.com/images/garage_interior4.jpg?');
+        background-image: url('https://lar-mo.com/images/garage_interior5.jpg?');
         background-attachment: fixed;
         background-size: cover;
         box-sizing: border-box;
@@ -165,7 +165,7 @@
         -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.4);
       }
       th {
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 255, 0.9);
         padding: 9px;
       }
       td {
@@ -577,6 +577,13 @@
         visibility: visible;
         opacity: 1;
       }
+      #block_heading {
+        background-color: rgba(5,56,107,0.3);
+        color: #EDF5E1;
+        box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.3);
+        -moz-box-shadow:    3px 3px 5px 0 rgba(25,25,25,0.3);
+        -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.3);
+      }
     </style>
   </head>
   <body>
@@ -618,7 +625,7 @@
     </header>
 
     {% block hero %}{% endblock %}
-    {% block heading %}{% endblock %}
+    <div id="block_heading">{% block heading %}{% endblock %}</div>
 
     <div class="wrapper"> <!-- start of 'wrapper'-->
       {% if request.user.is_authenticated %}

@@ -128,4 +128,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'postmaster@community-lending-library.org'
 EMAIL_HOST_PASSWORD = os.environ['DH_EMAIL_HOST_PASSWORD']
-DEFAULT_FROM_EMAIL = 'Postmaster <postmaster@community-lending-library.org>'
+DEFAULT_FROM_EMAIL = 'Librarian <postmaster@community-lending-library.org>'
