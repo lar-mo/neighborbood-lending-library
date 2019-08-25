@@ -26,6 +26,7 @@
         color: #123;
       }
       #bg_blur {
+        background-color: #000;
         background-image: url('https://lar-mo.com/images/garage_interior5.jpg?');
         background-attachment: fixed;
         filter: blur(3px);
@@ -33,6 +34,8 @@
         width: 100%;
         height: 100%;
         min-height: 100% !important;
+        opacity: 0.8;
+        position: fixed;
       }
       #content {
         position: absolute;
@@ -575,18 +578,22 @@
       }
       .tooltip:hover .tooltiptext {
         visibility: visible;
-        opacity: 1;
+        opacity: 0.95;
       }
       #block_heading {
-        background-color: rgba(5,56,107,0.3);
+        background-color: rgba(5,56,107,0.33);
         color: #EDF5E1;
         box-shadow:         3px 3px 5px 0 rgba(25,25,25,0.3);
         -moz-box-shadow:    3px 3px 5px 0 rgba(25,25,25,0.3);
         -webkit-box-shadow: 3px 3px 5px 0 rgba(25,25,25,0.3);
       }
+      #block_heading > h2 {
+        /* text-shadow: 2px 2px 5px rgba(5,56,107,0.7); */
+        text-shadow: 3px 3px 5px rgba(25,25,25,0.95);
     </style>
   </head>
   <body>
+   <div id="bg_blur"></div>
    <div id="content">
      <section>
        <img src="https://lar-mo.com/images/lendingLib_logo2.png" onclick="javascript:window.location.href='{% url 'lendingLibrary:index' %}'" onmouseover="">
