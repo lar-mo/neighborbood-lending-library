@@ -269,7 +269,7 @@ def create_new_item(request):
     replacement_cost = request.POST['replacement_cost']
     item_status_id = request.POST['item_status']
     owner = request.user
-    new_user_item = UserItem(name=name, description=description, image_url=image_url, image=image, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
+    new_user_item = UserItem(name=name, description=description, image=image, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
     new_user_item.save()
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
@@ -303,14 +303,13 @@ def save_edited_item(request):
 def delete_item(request):
     user_item_id = request.POST['user_items']
     user_item = UserItem.objects.get(id=user_item_id)
-    send_mail(
-        'Item Deleted',
-        'Your item [' + user_item.name + '] was deleted.',
-        'Postmaster <postmaster@community-lending-library.org>',
-        [user_item.owner.email],
-        fail_silently=False,
-    )
     user_item.delete()
+    subject = 'Item Deleted'
+    plain_text_message = 'Your item [' + user_item.name + '] was deleted.'
+    sender = 'Postmaster <postmaster@community-lending-library.org>'
+    recipient = [user_item.owner.email]
+    html_message = '<h1>Your item <u><i>' + user_item.name + '</i></u> was deleted.</h1>'
+    send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
     return HttpResponseRedirect(reverse('lendingLibrary:manage_items'))
 
 def user(request):

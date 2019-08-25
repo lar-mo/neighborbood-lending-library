@@ -76,7 +76,7 @@
               <input type="hidden" name="item_status" value="8"/>
               <input type="hidden" name="name_slug" id="name_slug"/>
               <div class="form_submit_div">
-                <input type="submit" value="Create item" class="form_submit_button"/>
+                <input type="submit" value="Create item" class="form_submit_button" id="btn_submit"/>
               </div>
             </form>
           </div>
@@ -84,12 +84,34 @@
       </tr>
     </table>
   </div> <!-- end of 'new_item' -->
-  <!-- <script type="text/javascript">
-    let image = document.querySelector('#image')
-    let item_thumbnail = document.querySelector('#item_thumbnail')
-    image.onchange = function() {
-      // item_thumbnail.setAttribute('src', image.value)
-
+  <script type="text/javascript">
+    function readableBytes(bytes) {
+      var i = Math.floor(Math.log(bytes) / Math.log(1024)),
+      sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+      return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i];
     }
-  </script> -->
+
+    let btn_submit = document.querySelector('#btn_submit')
+    let image = document.querySelector('#image')
+
+    btn_submit.onclick = function(event) {
+      for (let i = 0; i < image.files.length; ++i) {
+        let size = image.files.item(i).size
+        let human_readable_size = readableBytes(size)
+        if (size > 1000000) {
+          alert("This image is too big:\n\nFile Size : " + human_readable_size)
+          event.preventDefault()
+        }
+      }
+    }
+    image.onchange = function(event) {
+      for (let i = 0; i < image.files.length; ++i) {
+        let size = image.files.item(i).size
+        let human_readable_size = readableBytes(size)
+        if (size > 1000000) {
+          alert("This image is too big:\n\nFile Size : " + human_readable_size)
+        }
+      }
+    }
+  </script>
 {% endblock %}
