@@ -19,7 +19,7 @@
       <tr>
         <td>
           <div class="add_edit_form_div">
-            <form action="{% url 'lendingLibrary:create_new_item' %}" method="post" name="new_item_form" id="new_item_form">
+            <form action="{% url 'lendingLibrary:create_new_item' %}" method="post" name="new_item_form" id="new_item_form" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="field_label">
                 Item Name
@@ -35,13 +35,13 @@
                 </textarea>
               </div>
               <div class="field_label">
-                Image URL
+                Image
               </div>
               <div>
-                <input name="image_url" id="image_url" type="text">
-                <span>
+                <input name="image" id="image" type="file" accept="image/*" required>
+                <!-- <span>
                   <img id="item_thumbnail" class="edit_form_img_thumb" width="75"/>
-                </span>
+                </span> -->
               </div>
               <div class="field_label">
                 Category
@@ -84,11 +84,12 @@
       </tr>
     </table>
   </div> <!-- end of 'new_item' -->
-  <script type="text/javascript">
-    let image_url = document.querySelector('#image_url')
+  <!-- <script type="text/javascript">
+    let image = document.querySelector('#image')
     let item_thumbnail = document.querySelector('#item_thumbnail')
-    image_url.onchange = function() {
-      item_thumbnail.setAttribute('src', image_url.value)
+    image.onchange = function() {
+      // item_thumbnail.setAttribute('src', image.value)
+
     }
-  </script>
+  </script> -->
 {% endblock %}

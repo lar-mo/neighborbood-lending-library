@@ -30,11 +30,11 @@
         <div>
           {% if 'my_items' in request.path %}
             <a href="{% url 'lendingLibrary:edit_item' item.id %}">
-              <img src="{{item.image_url}}" class="item_detail_image"/>
+              <img src="{{item.image.url}}" class="item_detail_image"/>
             </a>
           {% else %}
             <a href="{% url 'lendingLibrary:item_details' item.id item.slug %}">
-              <img src="{{item.image_url}}" class="item_detail_image"/>
+              <img src="{{item.image.url}}" class="item_detail_image"/>
             </a>
           {% endif %}
         </div>

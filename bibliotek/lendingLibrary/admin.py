@@ -6,7 +6,6 @@ from .models import UserItemCategory
 from .models import UserItemCondition
 from .models import UserItem
 from .models import UserItemCheckout
-from .models import ItemImage
 
 admin.site.register(UserItemStatus)
 admin.site.register(CheckoutStatus)
@@ -14,4 +13,3 @@ admin.site.register(UserItemCategory)
 admin.site.register(UserItemCondition)
 admin.site.register(UserItem)
 admin.site.register(UserItemCheckout)
-admin.site.register(ItemImage)

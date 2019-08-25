@@ -51,7 +51,11 @@
       </div>
     </div>
     <div>
-      <img src="{% if item.image_url == '' %}https://lar-mo.com/images/lazy_placeholder.gif{% else %}{{item.image_url}}{% endif %}" class="detail_image"/>
+      <img src="{% if item.image_url == '' %}
+        https://lar-mo.com/images/lazy_placeholder.gif
+      {% else %}
+        {{item.image.url}}
+      {% endif %}" class="detail_image"/>
     </div>
   </div> <!-- end of 'item_details' -->
 {% endblock %}

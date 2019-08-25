@@ -21,7 +21,7 @@
       <tr>
         <td>
           <div class="add_edit_form_div">
-            <form action="{% url 'lendingLibrary:save_edited_item' %}" method="post" name="edit_item" id="edit_item_form">
+            <form action="{% url 'lendingLibrary:save_edited_item' %}" method="post" name="edit_item" id="edit_item_form" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="field_label">
                 Item Name
@@ -38,12 +38,12 @@
                 </textarea>
               </div>
               <div class="field_label">
-                Image URL
+                Image
               </div>
               <div>
-                <input name="image_url" id="image_url" type="text" value="{{item.image_url}}">
+                <input name="image" id="image" type="file" accept="image/*" required>
                 <span>
-                  <img src="{{item.image_url}}" id="item_thumbnail" class="edit_form_img_thumb" width="75"/>
+                  <img src="{{item.image.url}}" id="item_thumbnail" class="edit_form_img_thumb" width="100"/>
                 </span>
               </div>
               <div class="field_label">
@@ -120,10 +120,10 @@
     </table>
   </div> <!-- end of 'edit_item' -->
   <script type="text/javascript">
-    let image_url = document.querySelector('#image_url')
+    let image = document.querySelector('#image')
     let item_thumbnail = document.querySelector('#item_thumbnail')
-    image_url.onchange = function() {
-      item_thumbnail.setAttribute('src', image_url.value)
+    image.onchange = function() {
+      item_thumbnail.setAttribute('src', 'https://lar-mo.com/images/newImagePlaceholder.png?new')
     }
   </script>
 {% endblock %}

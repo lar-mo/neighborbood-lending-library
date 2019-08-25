@@ -38,7 +38,11 @@
         {% elif checkout.checkout_status.name == 'Active' %}
           <td style="background-color:lightgreen">{{checkout.checkout_status.name}}</td>
         {% elif checkout.checkout_status.name == 'Denied' %}
-          <td style="background-color:pink">{{checkout.checkout_status.name}}</td>
+          <td style="background-color:pink">
+            <div class="tooltip">{{checkout.checkout_status.name}}
+              <span class="tooltiptext">Reason:<br>{{checkout.reason}}</span>
+            </div>
+          </td>
         {% elif checkout.checkout_status.name == 'Completed' %}
           <td style="background-color:#999">{{checkout.checkout_status.name}}</td>
         {% endif %}
@@ -76,7 +80,7 @@
         <th>Check In Date</th>
       </tr>
     </table>
-    <h3><i>You don't have any requests</i></h3>
+    <h3><i>You don't have any checkouts.</i></h3>
     {% endif %}
   </div> <!-- end of 'requests_checkouts'-->
   <script type="text/javascript">

@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 
+import craigslist
+
 from .models import UserItemStatus, CheckoutStatus, UserItemCategory, UserItemCondition, UserItem, UserItemCheckout
 
 def index(request):
@@ -261,13 +263,13 @@ def new_item(request):
 def create_new_item(request):
     name = request.POST['name'].strip()
     description = request.POST['description'].strip()
-    image_url = request.POST['image_url'].strip()
+    image = request.FILES['image']
     category_id = request.POST['category']
     condition_id = request.POST['condition']
     replacement_cost = request.POST['replacement_cost']
     item_status_id = request.POST['item_status']
     owner = request.user
-    new_user_item = UserItem(name=name, description=description, image_url=image_url, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
+    new_user_item = UserItem(name=name, description=description, image_url=image_url, image=image, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
     new_user_item.save()
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
@@ -290,7 +292,7 @@ def save_edited_item(request):
     user_item = owner.items.get(id=user_item_id)
     user_item.name = request.POST['name'].strip()
     user_item.description = request.POST['description'].strip()
-    user_item.image_url = request.POST['image_url'].strip()
+    user_item.image = request.FILES['image']
     user_item.category_id = request.POST['category']
     user_item.condition_id = request.POST['condition']
     user_item.replacement_cost = request.POST['replacement_cost']
@@ -384,4 +386,15 @@ def tos(request):
     return render(request, 'lendingLibrary/terms_of_service.html', context)
 
 def image_upload(request):
-    return HttpResponse('ok')
+    # return HttpResponse('ok')
+    # items = UserItem.objects.order_by('category__name')
+    item = UserItem.objects.get(id='35')
+    category = item.category.name
+    # category_map = {
+    #     'Tools': 'tls'
+    # }
+    # cl_cat = category_map.get(category, 'tls')
+    # craigslist_items = craigslist.search('portland', cl_cat, postal=97217, search_distance=1, limit=1)
+    # context = {'item': item, 'craigslist_items': craigslist_items, 'category': category}
+    context = {'item': item, 'category': category}
+    return render(request, 'lendingLibrary/image_upload.html', context)

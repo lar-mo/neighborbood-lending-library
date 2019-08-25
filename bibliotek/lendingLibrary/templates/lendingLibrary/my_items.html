@@ -54,7 +54,7 @@
           </div>
           <div>{{item.description}}</div>
           <div class="history_item_details">
-            <img src="{{item.image_url}}" width="100">
+            <img src="{{item.image.url}}" width="100">
             <ul>
               <li><b>Category</b>: {{item.category.name}}</li>
               <li><b>Condition</b>: {{item.condition.name}}</li>
@@ -150,7 +150,7 @@
   </div> <!-- end of 'single_row' -->
 {% endfor %} <!-- end of 'items' for loop -->
 {% else %}
-  <h1>No items</h1>
+  <h3><i>You don't have any items to share.</i></h3>
 {% endif %}
 
 <script type="text/javascript">

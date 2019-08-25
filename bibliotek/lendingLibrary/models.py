@@ -50,7 +50,7 @@ class UserItem(models.Model):
     name            = models.CharField(max_length=200)
     slug            = models.SlugField()
     description     = models.TextField()
-    image_url       = models.CharField(max_length=200)
+    image           = models.ImageField(upload_to='images/', blank=True, null=True)
     category        = models.ForeignKey(UserItemCategory, on_delete=models.PROTECT)
     condition       = models.ForeignKey(UserItemCondition, on_delete=models.PROTECT)
     replacement_cost = models.FloatField()
@@ -76,10 +76,3 @@ class UserItemCheckout(models.Model):
 
     def __str__(self):
         return self.user_item.name
-
-class ItemImage(models.Model):
-    label           = models.CharField(max_length=200)
-    item_image      = models.ImageField(upload_to='images/')
-
-    def __str__(self):
-        return self.label

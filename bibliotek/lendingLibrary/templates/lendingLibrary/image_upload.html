@@ -1,0 +1,73 @@
+<!-- {% for craigslist_item in craigslist_items %}
+  <p>
+    <a href="{{craigslist_item.url}}">{{craigslist_item.title}}</a>
+    <img src="{% if craigslist_item.thumbnail %}{{craigslist_item.thumbnail}}{% endif %}"/>
+  </p>
+{% endfor %}
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p> -->
+
+<button id="btn_check_size">Check size</button>
+<br><br>
+{{item.name}}<br>
+{{category}}<br>
+{% if item.image %}
+<img src="{{item.image.url}}" id="image" width="300"><br>
+{% endif %}
+<p>&nbsp;</p>
+
+<script type="text/javascript">
+  let img = document.querySelector('#image');
+  let btn_check_size = document.querySelector('#btn_check_size')
+  //or however you get a handle to the IMG
+  var width = img.naturalWidth;
+  var height = img.naturalHeight;
+  btn_check_size.onclick = function() {
+    if (width > 900 | height > 900) {
+      alert(width + 'x' + height)
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="flex">
+  <div id="qotd_header">Quote of the Day</div>
+  <span id="qotd_display">"There is no spoon."<br/>-Spoon Boy<br/>(The Matrix, 1999)</span>
+</div>
+<div class="flex">
+  <span>
+    <button id="bt_getQotd">Fetch another quote</button>
+    <button id="bt_reset">Reset</button>
+  </span>
+</div>
+<script type="text/javascript">
+  let qotd_display = document.querySelector('#qotd_display')    // get elements out of DOM
+  let bt_getQotd = document.querySelector('#bt_getQotd')        //
+  let bt_reset = document.querySelector('#bt_reset')            //
+  let url = 'https://favqs.com/api/qotd'                        // set URL for QOTD api
+
+  function fetchQotd() {                                        // fetch the QOTD
+    axios.get(url)                                              // exec axios
+    .then(function (response) {                                 // do cool stuff with api resp
+      let data = response.data                                  // assign data of api resp to var
+      let qotd_body = data.quote.body                           // assign quote body to var
+      let qotd_author = data.quote.author                       // assign quote author to var
+      let qotd_url = data.quote.url                             // assign quote url to var
+      qotd_display.style.fontSize = '18px'                      // set display font size
+      qotd_display.style.textAlign = 'justify'                  // set display text alignment
+      qotd_display.innerText = '"' + qotd_body + '"\n---\nAuthor: ' + qotd_author + '\nURL: ' + qotd_url
+    })                                                          // output result to display
+  }
+
+  window.onload = fetchQotd                                // listen for Get Quote button clicks
+                                                                // execute fetchQotd function
+  bt_reset.onclick = function() {                               // listen for Reset button clicks
+    qotd_display.style.fontSize = '40px'                        // set default display font size
+    qotd_display.style.textAlign = 'center'                     // set default display text alignment
+    qotd_display.innerText = '"There is no spoon."\n-Spoon Boy\n(The Matrix, 1999)'
+  }                                                             // set default innerText
+</script>
