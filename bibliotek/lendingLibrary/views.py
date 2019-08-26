@@ -85,20 +85,21 @@ def request_item(request):
         checkout_request_details.save()
         user_item.item_status = item_status
         user_item.save()
-        send_mail(
-            'Item Requested',
-            'Your item [' + user_item.name + '] was requested by ' + borrower.username.capitalize() + '.',
-            'Postmaster <postmaster@community-lending-library.org>',
-            [user_item.owner.email],
-            fail_silently=False,
-        )
-        send_mail(
-            'Item Requested',
-            'Your request for [' + user_item.name + '] was sent to ' + user_item.owner.username.capitalize() + '.',
-            'Postmaster <postmaster@community-lending-library.org>',
-            [borrower.email],
-            fail_silently=False,
-        )
+
+        subject = 'Item Requested'
+        plain_text_message = 'Your item [' + user_item.name + '] was requested by ' + borrower.username.capitalize() + '.'
+        sender = 'Postmaster <postmaster@community-lending-library.org>'
+        recipient = [user_item.owner.email]
+        html_message = '<h1>Your item <u><i>' + user_item.name + '</i></u> was was requested by ' + borrower.username.capitalize() + '.</h1>'
+        send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+
+        subject = 'Item Requested'
+        plain_text_message = 'Your request for [' + user_item.name + '] was sent to ' + user_item.owner.username.capitalize() + '.'
+        sender = 'Postmaster <postmaster@community-lending-library.org>'
+        recipient = [borrower.email]
+        html_message = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was sent to ' + user_item.owner.username.capitalize() + '.</h1>'
+        send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+
         return HttpResponseRedirect(reverse('lendingLibrary:my_checkouts'))
 
 @login_required
@@ -114,13 +115,14 @@ def deny_request(request):
     user_item = UserItem.objects.get(id=item_request.user_item_id)
     user_item.item_status = item_status
     user_item.save()
-    send_mail(
-        'Item Request Declined',
-        'Your request for [' + user_item.name + '] was declined.\nReason: ' + deny_reason,
-        'Postmaster <postmaster@community-lending-library.org>',
-        [item_request.borrower.email],
-        fail_silently=False,
-    )
+
+    subject = 'Item Request Declined'
+    plain_text_message = 'Your request for [' + user_item.name + '] was declined.\nReason: ' + deny_reason
+    sender = 'Postmaster <postmaster@community-lending-library.org>'
+    recipient = [item_request.borrower.email]
+    html_message = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was declined.</h1><h3>Reason: ' + deny_reason + '</h3>'
+    send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+
     return HttpResponseRedirect(reverse('lendingLibrary:pending_requests'))
 
 @login_required
@@ -137,13 +139,14 @@ def approve_request(request):
     user_item = UserItem.objects.get(id=item_request.user_item_id)
     user_item.item_status = item_status
     user_item.save()
-    send_mail(
-        'Item Request Approved',
-        'Your request for [' + user_item.name + '] was approved.\nThe due date is ' + item_request.due_date + '.',
-        'Postmaster <postmaster@community-lending-library.org>',
-        [item_request.borrower.email],
-        fail_silently=False,
-    )
+
+    subject = 'Item Request Approved'
+    plain_text_message = 'Your request for [' + user_item.name + '] was approved.\nThe due date is ' + item_request.due_date + '.'
+    sender = 'Postmaster <postmaster@community-lending-library.org>'
+    recipient = [item_request.borrower.email]
+    html_message = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was approved.</h1><h3>The due date is ' + item_request.due_date + '.</h3>'
+    send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+
     return HttpResponseRedirect(reverse('lendingLibrary:pending_requests'))
 
 @login_required
@@ -158,13 +161,14 @@ def item_check_in(request):
     user_item = UserItem.objects.get(id=item_request.user_item_id)
     user_item.item_status = item_status
     user_item.save()
-    send_mail(
-        'Item Returned',
-        '[' + user_item.name + '] was received by ' + user_item.owner.username.capitalize() + '.',
-        'Librarian <postmaster@community-lending-library.org>',
-        [item_request.borrower.email],
-        fail_silently=False,
-    )
+
+    subject = 'Item Returned'
+    plain_text_message = '[' + user_item.name + '] was received by ' + user_item.owner.username.capitalize() + '.'
+    sender = 'Postmaster <postmaster@community-lending-library.org>'
+    recipient = [item_request.borrower.email]
+    html_message = '<h1><u><i>' + user_item.name + '</i></u> was received by ' + user_item.owner.username.capitalize() + '.</h1>'
+    send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
 @login_required
@@ -304,12 +308,14 @@ def delete_item(request):
     user_item_id = request.POST['user_items']
     user_item = UserItem.objects.get(id=user_item_id)
     user_item.delete()
+
     subject = 'Item Deleted'
     plain_text_message = 'Your item [' + user_item.name + '] was deleted.'
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [user_item.owner.email]
     html_message = '<h1>Your item <u><i>' + user_item.name + '</i></u> was deleted.</h1>'
     send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+
     return HttpResponseRedirect(reverse('lendingLibrary:manage_items'))
 
 def user(request):
