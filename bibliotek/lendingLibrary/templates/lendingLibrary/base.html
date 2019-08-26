@@ -375,6 +375,7 @@
       }
       h3 {
         margin-top: 5px;
+        background-color: #FFF;
       }
       .item_fields {
         padding: 20px;
@@ -713,7 +714,7 @@
         }
       }
 
-      let allowed_pages = ['', 'category', 'user'];
+      let allowed_pages = ['', 'category', 'user', 'search'];
       if (allowed_pages.includes(window.location.pathname.split('/')[1])) {
 
           let cb_available = document.querySelector('#cb_available')
