@@ -618,11 +618,11 @@
         <span>
           {% if 'register_login' in request.path %}
             <a href="{% url 'lendingLibrary:index' %}">Home</a> |
-            <a href="{% url 'lendingLibrary:register_login' %}?next=/">Register</a> |
+            <a href="{% url 'lendingLibrary:register_login' %}?next=/#register_section">Register</a> |
             <a href="{% url 'lendingLibrary:register_login' %}?next=/">Login</a>
           {% else %}
             <a href="{% url 'lendingLibrary:index' %}">Home</a> |
-            <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Register</a> |
+            <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}#register_section">Register</a> |
             <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Login</a>
           {% endif %}
         </span>
