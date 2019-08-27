@@ -1,0 +1,7 @@
+{% if page == 'test' %}
+  Hello {{owner|title}},
+  Your item, {{item}} , is in {{category}}.
+{% else %}
+  Hello {{owner|title}},
+  Your item, {{item}}, is in {{category}}.
+{% endif %}

@@ -134,10 +134,47 @@
       {% endfor %}
   {% else %}
     <div class="no_items_message">
-      <table>
+      <table border=0>
         <tr>
-          <th><h4><i>There are no available items.</i></h4></th>
+          <th colspan="6"><h4><i>There are no available items.</i></h4></th>
         </tr>
+        {% if search_term == 'wagon' %}
+        <tr>
+          <th colspan="6" style="background-color: #d6d6d6"><h4>Suggested Items<h4></th>
+        </tr>
+        <tr>
+          <th width="125" align="right">
+            <img src="https://lar-mo.com/images/wagon.jpg" width="75">
+          </th>
+          <td width="175">
+            <span>Ozark Trail Folding Wagon
+              <br>$44.88
+              <br>
+              Buy: <a href="https://www.walmart.com/ip/Ozark-Trail-Folding-Multipurpose-Wagon/670509406" target="_blank">Walmart</a>
+            </span>
+          </td>
+          <th width="125" align="right">
+            <img src="https://lar-mo.com/images/wagon2.jpg" width="75">
+          </th>
+          <td width="175">
+            <span>L.L.Bean Collapsible Wagon
+              <br>$119.00
+              <br>
+              Buy: <a href="https://www.llbean.com/llb/shop/118118" target="_blank">L.L.Bean</a>
+            </span>
+          </td>
+          <th width="125" align="right">
+            <img src="https://lar-mo.com/images/wagon3.jpg" width="75">
+          </th>
+          <td width="175">
+            <span>Heavy-Duty Jumbo Crate Wagon
+              <br>$169.28
+              <br>
+              Buy: <a href="https://www.walmart.com/ip/Sandusky-60-x-31-Heavy-Duty-Jumbo-Crate-Wagon-Green/23009868" target="_blank">Walmart
+            </span>
+          </td>
+        </tr>
+        {% endif %}
       </table>
     </div>
   {% endif %}

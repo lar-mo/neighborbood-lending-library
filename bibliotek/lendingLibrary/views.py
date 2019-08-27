@@ -2,13 +2,12 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
-
-import craigslist
 
 from .models import UserItemStatus, CheckoutStatus, UserItemCategory, UserItemCondition, UserItem, UserItemCheckout
 
@@ -62,7 +61,6 @@ def search_results(request):
     return render(request, 'lendingLibrary/search_results.html', context)
 
 def search_results_keyword(request, search_term):
-    # search_term = request.POST['search_term']
     items = UserItem.objects.filter(name__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost']) | UserItem.objects.filter(description__contains=search_term).exclude(item_status__name__in=['Hidden', 'Lost'])
     categories = UserItemCategory.objects.order_by('name')
     context = {'items': items, 'search_term': search_term, 'categories': categories}
@@ -72,7 +70,6 @@ def search_results_keyword(request, search_term):
 def request_item(request):
     open_request_count = UserItemCheckout.objects.filter(borrower=request.user.id, checkout_status__name__in=['Pending', 'Active']).count()
     if open_request_count > 4: #limits user to 4 Pending items
-        # return HttpResponse(open_request_count)
         return HttpResponseRedirect(reverse('lendingLibrary:my_checkouts')+'?message=over_request_limit')
     else:
         user_item_id = request.POST['user_item']
@@ -87,18 +84,24 @@ def request_item(request):
         user_item.save()
 
         subject = 'Item Requested'
-        plain_text_message = 'Your item [' + user_item.name + '] was requested by ' + borrower.username.capitalize() + '.'
+        msg_plain = 'Your item [' + user_item.name + '] was requested by ' + borrower.username.capitalize() + '.'
         sender = 'Postmaster <postmaster@community-lending-library.org>'
         recipient = [user_item.owner.email]
-        html_message = '<h1>Your item <u><i>' + user_item.name + '</i></u> was was requested by ' + borrower.username.capitalize() + '.</h1>'
-        send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+        msg_html = '<h1>Your item <u><i>' + user_item.name + '</i></u> was was requested by ' + borrower.username.capitalize() + '.</h1>'
+        try:
+            send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+        except:
+            print('!!! There was an error sending an email! !!!')
 
         subject = 'Item Requested'
-        plain_text_message = 'Your request for [' + user_item.name + '] was sent to ' + user_item.owner.username.capitalize() + '.'
+        msg_plain = 'Your request for [' + user_item.name + '] was sent to ' + user_item.owner.username.capitalize() + '.'
         sender = 'Postmaster <postmaster@community-lending-library.org>'
         recipient = [borrower.email]
-        html_message = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was sent to ' + user_item.owner.username.capitalize() + '.</h1>'
-        send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+        msg_html = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was sent to ' + user_item.owner.username.capitalize() + '.</h1>'
+        try:
+            send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+        except:
+            print('!!! There was an error sending an email! !!!')
 
         return HttpResponseRedirect(reverse('lendingLibrary:my_checkouts'))
 
@@ -117,11 +120,14 @@ def deny_request(request):
     user_item.save()
 
     subject = 'Item Request Declined'
-    plain_text_message = 'Your request for [' + user_item.name + '] was declined.\nReason: ' + deny_reason
+    msg_plain = 'Your request for [' + user_item.name + '] was declined.\nReason: ' + deny_reason
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [item_request.borrower.email]
-    html_message = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was declined.</h1><h3>Reason: ' + deny_reason + '</h3>'
-    send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+    msg_html = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was declined.</h1><h3>Reason: ' + deny_reason + '</h3>'
+    try:
+        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+    except:
+        print('!!! There was an error sending an email! !!!')
 
     return HttpResponseRedirect(reverse('lendingLibrary:pending_requests'))
 
@@ -141,11 +147,14 @@ def approve_request(request):
     user_item.save()
 
     subject = 'Item Request Approved'
-    plain_text_message = 'Your request for [' + user_item.name + '] was approved.\nThe due date is ' + item_request.due_date + '.'
+    msg_plain = 'Your request for [' + user_item.name + '] was approved.\nThe due date is ' + item_request.due_date + '.'
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [item_request.borrower.email]
-    html_message = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was approved.</h1><h3>The due date is ' + item_request.due_date + '.</h3>'
-    send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+    msg_html = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was approved.</h1><h3>The due date is ' + item_request.due_date + '.</h3>'
+    try:
+        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+    except:
+        print('!!! There was an error sending an email! !!!')
 
     return HttpResponseRedirect(reverse('lendingLibrary:pending_requests'))
 
@@ -163,11 +172,14 @@ def item_check_in(request):
     user_item.save()
 
     subject = 'Item Returned'
-    plain_text_message = '[' + user_item.name + '] was received by ' + user_item.owner.username.capitalize() + '.'
+    msg_plain = '[' + user_item.name + '] was received by ' + user_item.owner.username.capitalize() + '.'
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [item_request.borrower.email]
-    html_message = '<h1><u><i>' + user_item.name + '</i></u> was received by ' + user_item.owner.username.capitalize() + '.</h1>'
-    send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+    msg_html = '<h1><u><i>' + user_item.name + '</i></u> was received by ' + user_item.owner.username.capitalize() + '.</h1>'
+    try:
+        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+    except:
+        print('!!! There was an error sending an email! !!!')
 
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
@@ -185,6 +197,17 @@ def save_info(request):
     user_info.last_name = request.POST['last_name'].strip()
     user_info.email = request.POST['email'].strip()
     user_info.save()
+
+    subject = 'Profile Info Updated'
+    msg_plain = 'Your profile information was updated.'
+    sender = 'Postmaster <postmaster@community-lending-library.org>'
+    recipient = [user_info.email]
+    msg_html = '<h1>Your profile information was updated.</h1>'
+    try:
+        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+    except:
+        print('!!! There was an error sending an email! !!!')
+
     return HttpResponseRedirect(reverse('lendingLibrary:my_profile')+'?message=info_saved')
 
 def save_password(request):
@@ -200,14 +223,18 @@ def save_password(request):
         user = User.objects.get(id=request.user.id)
         user.set_password(new_password)
         user.save()
-        send_mail(
-            'Password Changed',
-            'Your password was changed.',
-            'Postmaster <postmaster@community-lending-library.org>',
-            [user.email],
-            fail_silently=False,
-        )
         login(request, user)
+
+        subject = 'Password Changed'
+        msg_plain = 'Your password was changed.'
+        sender = 'Postmaster <postmaster@community-lending-library.org>'
+        recipient = [user.email]
+        msg_html = '<h1>Your password was changed.</h1>'
+        try:
+            send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+        except:
+            print('!!! There was an error sending an email! !!!')
+
         return HttpResponseRedirect(reverse('lendingLibrary:my_profile')+'?message=password_saved')
 
 def check_pwd(request):
@@ -275,6 +302,17 @@ def create_new_item(request):
     owner = request.user
     new_user_item = UserItem(name=name, description=description, image=image, category_id=category_id, condition_id=condition_id, replacement_cost=replacement_cost, item_status_id=item_status_id, owner=owner)
     new_user_item.save()
+
+    subject = 'New Item Added'
+    msg_plain = 'Your item [' + name + '] was added to the catalog.'
+    sender = 'Postmaster <postmaster@community-lending-library.org>'
+    recipient = [owner.email]
+    msg_html = '<h1>Your item <u><i>' + name + '</i></u> was added to the catalog.</h1>'
+    try:
+        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+    except:
+        print('!!! There was an error sending an email! !!!')
+
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
 @login_required
@@ -302,6 +340,17 @@ def save_edited_item(request):
     user_item.replacement_cost = request.POST['replacement_cost']
     user_item.item_status_id = request.POST['item_status']
     user_item.save()
+
+    subject = 'Item Details Updated'
+    msg_plain = 'Your item [' + user_item.name + '] was updated.'
+    sender = 'Postmaster <postmaster@community-lending-library.org>'
+    recipient = [user_item.owner.email]
+    msg_html = '<h1>Your item <u><i>' + user_item.name + '</i></u> was updated.</h1>'
+    try:
+        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+    except:
+        print('!!! There was an error sending an email! !!!')
+
     return HttpResponseRedirect(reverse('lendingLibrary:my_items'))
 
 def delete_item(request):
@@ -310,11 +359,14 @@ def delete_item(request):
     user_item.delete()
 
     subject = 'Item Deleted'
-    plain_text_message = 'Your item [' + user_item.name + '] was deleted.'
+    msg_plain = 'Your item [' + user_item.name + '] was deleted.'
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [user_item.owner.email]
-    html_message = '<h1>Your item <u><i>' + user_item.name + '</i></u> was deleted.</h1>'
-    send_mail(subject, plain_text_message, sender, recipient, fail_silently=False, html_message=html_message)
+    msg_html = '<h1>Your item <u><i>' + user_item.name + '</i></u> was deleted.</h1>'
+    try:
+        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+    except:
+        print('!!! There was an error sending an email! !!!')
 
     return HttpResponseRedirect(reverse('lendingLibrary:manage_items'))
 
@@ -348,13 +400,16 @@ def register_user(request):
 
     user = User.objects.create_user(username, email, password)
     login(request, user)
-    send_mail(
-        'New Registration',
-        'Thank you for registering with the Community Lending Library.',
-        'Postmaster <postmaster@community-lending-library.org>',
-        [email],
-        fail_silently=False,
-    )
+
+    subject = 'New Registration'
+    msg_plain = 'Thank you for registering with the Community Lending Library.'
+    sender = 'Postmaster <postmaster@community-lending-library.org>'
+    recipient = [email]
+    msg_html = '<h1>Thank you for registering with the Community Lending Library.</h1>'
+    try:
+        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+    except:
+        print('!!! There was an error sending an email! !!!')
 
     if next != '':
         return HttpResponseRedirect(next)
@@ -395,11 +450,17 @@ def image_upload(request):
     # items = UserItem.objects.order_by('category__name')
     item = UserItem.objects.get(id='35')
     category = item.category.name
-    # category_map = {
-    #     'Tools': 'tls'
-    # }
-    # cl_cat = category_map.get(category, 'tls')
-    # craigslist_items = craigslist.search('portland', cl_cat, postal=97217, search_distance=1, limit=1)
-    # context = {'item': item, 'craigslist_items': craigslist_items, 'category': category}
+
+    subject = 'Test'
+    msg_plain = render_to_string('lendingLibrary/email.txt', {'category': item.category.name, 'item': item.name, 'owner': item.owner.username, 'page': 'test'})
+    sender = 'Postmaster <postmaster@community-lending-library.org>'
+    recipient = [item.owner.email]
+    msg_html = render_to_string('lendingLibrary/email.html', {'category': item.category.name, 'item': item.name, 'page': 'test'})
+
+    try:
+        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+    except:
+        print('!!! There was an error sending an email! !!!')
+
     context = {'item': item, 'category': category}
     return render(request, 'lendingLibrary/image_upload.html', context)

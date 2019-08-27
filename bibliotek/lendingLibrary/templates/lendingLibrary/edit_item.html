@@ -33,15 +33,13 @@
                 Description
               </div>
               <div>
-                <textarea name="description" rows="7" cols="75">
-                  {{item.description}}
-                </textarea>
+                <textarea name="description" rows="7" cols="75">{{item.description}}</textarea>
               </div>
               <div class="field_label">
                 Image
               </div>
               <div>
-                <input name="image" id="image" type="file" accept="image/*" required>
+                <input name="image" id="image" type="file" accept="image/*">
                 <span>
                   <img src="{{item.image.url}}" id="item_thumbnail" class="edit_form_img_thumb" width="100"/>
                 </span>
