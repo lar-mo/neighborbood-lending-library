@@ -1,7 +1,8 @@
-{% if page == 'test' %}
-  Hello {{owner|title}},
-  Your item, {{item}} , is in {{category}}.
+{% if page == 'new_reg' %}
+  Hello {{username|title}},
+  Thank you for registering with the Community Lending Library.
+{% elif page == 'itm_del' %}
+  Your item {{user_item.name}} was deleted.
 {% else %}
-  Hello {{owner|title}},
-  Your item, {{item}}, is in {{category}}.
+  This is a test TXT message.
 {% endif %}

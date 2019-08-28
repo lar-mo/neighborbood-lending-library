@@ -269,7 +269,7 @@ def my_checkouts(request):
 def my_items(request):
     owner = request.user
     items = owner.items.order_by('-item_status__name', 'category__name')
-    item_requests = UserItemCheckout.objects.filter(user_item__in=items).order_by('-due_date', 'request_date')
+    item_requests = UserItemCheckout.objects.filter(user_item__in=items).order_by('checkout_status__name', '-due_date')
     categories = UserItemCategory.objects.order_by('name')
     context = {'owner': owner, 'items': items, 'item_requests': item_requests, 'categories': categories}
     return render(request, 'lendingLibrary/my_items.html', context)
@@ -359,10 +359,12 @@ def delete_item(request):
     user_item.delete()
 
     subject = 'Item Deleted'
-    msg_plain = 'Your item [' + user_item.name + '] was deleted.'
+    msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'itm_del', 'user_item': user_item})
+    # msg_plain = 'Your item [' + user_item.name + '] was deleted.'
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [user_item.owner.email]
-    msg_html = '<h1>Your item <u><i>' + user_item.name + '</i></u> was deleted.</h1>'
+    msg_html = render_to_string('lendingLibrary/email.html', {'page': 'itm_del', 'user_item': user_item})
+    # msg_html = '<h1>Your item <u><i>' + user_item.name + '</i></u> was deleted.</h1>'
     try:
         send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
     except:
@@ -402,10 +404,10 @@ def register_user(request):
     login(request, user)
 
     subject = 'New Registration'
-    msg_plain = 'Thank you for registering with the Community Lending Library.'
+    msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'new_reg', 'username': username})
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [email]
-    msg_html = '<h1>Thank you for registering with the Community Lending Library.</h1>'
+    msg_html = render_to_string('lendingLibrary/email.html', {'page': 'new_reg', 'username': username})
     try:
         send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
     except:
