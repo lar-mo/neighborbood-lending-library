@@ -360,11 +360,9 @@ def delete_item(request):
 
     subject = 'Item Deleted'
     msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'itm_del', 'user_item': user_item})
-    # msg_plain = 'Your item [' + user_item.name + '] was deleted.'
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [user_item.owner.email]
     msg_html = render_to_string('lendingLibrary/email.html', {'page': 'itm_del', 'user_item': user_item})
-    # msg_html = '<h1>Your item <u><i>' + user_item.name + '</i></u> was deleted.</h1>'
     try:
         send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
     except:
