@@ -180,7 +180,7 @@
     checkedout_count.innerHTML = checkedout.length
     other_count.innerHTML = other.length
 
-    if (my_available.length == 0) {
+    if (my_available.length == 0 && (requested.length == 0 | checkedout.length == 0 | other.length == 0)) {
       cb_my_available.disabled = true
       lnk_my_available.style.cursor = "auto"
     }

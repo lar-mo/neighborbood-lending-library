@@ -730,7 +730,7 @@
 
           window.onload = function() {
             available_count.innerHTML = available.length
-            if (available.length == 0 | not_available.length == 0) {
+            if (available.length == 0 || not_available.length == 0) {
               cb_available.disabled = true
               lnk_available.style.cursor = "auto"
             }

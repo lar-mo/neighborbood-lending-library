@@ -69,7 +69,7 @@ def search_results_keyword(request, search_term):
 @login_required
 def request_item(request):
     open_request_count = UserItemCheckout.objects.filter(borrower=request.user.id, checkout_status__name__in=['Pending', 'Active']).count()
-    if open_request_count > 4: #limits user to 4 Pending items
+    if open_request_count >= 4: #limits user to 4 Pending or Active items
         return HttpResponseRedirect(reverse('lendingLibrary:my_checkouts')+'?message=over_request_limit')
     else:
         user_item_id = request.POST['user_item']
