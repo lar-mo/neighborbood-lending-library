@@ -1,8 +1,38 @@
 {% if page == 'new_reg' %}
   Hello {{username|title}},
   Thank you for registering with the Community Lending Library.
-{% elif page == 'itm_del' %}
+
+{% elif page == 'info_saved' %}
+  Your profile information was updated.
+
+{% elif page == 'pwd_saved' %}
+  Your password was changed.
+
+{% elif page == 'new_item' %}
+  Your item {{name}} was added to the catalog.
+
+{% elif page == 'item_saved' %}
+  Your item {{user_item.name}} was updated.
+
+{% elif page == 'item_deleted' %}
   Your item {{user_item.name}} was deleted.
+
+
+{% elif page == 'item_req_borrower' %}
+  Your request for {{user_item.name}} was sent to {{user_item.owner.username|title}}.
+
+{% elif page == 'item_req_owner' %}
+  Your item {{user_item.name}} was requested by {{borrower.username|title}}.
+
+{% elif page == 'req_denied' %}
+Your request for {{user_item.name}} was declined.\nReason: {{deny_reason}}
+
+{% elif page == 'req_approved' %}
+  Your request for {{user_item.name}} was approved.\nDue date: {{item_request.due_date}}
+
+{% elif page == 'item_checked_in' %}
+  {{user_item.name}} was received by {{user_item.owner.username|title}}.
+
 {% else %}
   This is a test TXT message.
 {% endif %}
