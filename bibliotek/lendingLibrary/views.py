@@ -84,11 +84,9 @@ def request_item(request):
         user_item.save()
 
         subject = 'Item Requested'
-        # msg_plain = 'Your item [' + user_item.name + '] was requested by ' + borrower.username.capitalize() + '.'
         msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'item_req_owner', 'user_item': user_item, 'borrower': borrower})
         sender = 'Postmaster <postmaster@community-lending-library.org>'
         recipient = [user_item.owner.email]
-        # msg_html = '<h1>Your item <u><i>' + user_item.name + '</i></u> was was requested by ' + borrower.username.capitalize() + '.</h1>'
         msg_html = render_to_string('lendingLibrary/email.html', {'page': 'item_req_owner', 'user_item': user_item, 'borrower': borrower})
         try:
             send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
@@ -96,11 +94,9 @@ def request_item(request):
             print('!!! There was an error sending an email! !!!')
 
         subject = 'Item Requested'
-        # msg_plain = 'Your request for [' + user_item.name + '] was sent to ' + user_item.owner.username.capitalize() + '.'
         msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'item_req_borrower', 'user_item': user_item})
         sender = 'Postmaster <postmaster@community-lending-library.org>'
         recipient = [borrower.email]
-        # msg_html = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was sent to ' + user_item.owner.username.capitalize() + '.</h1>'
         msg_html = render_to_string('lendingLibrary/email.html', {'page': 'item_req_borrower', 'user_item': user_item})
         try:
             send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
@@ -124,11 +120,9 @@ def deny_request(request):
     user_item.save()
 
     subject = 'Item Request Declined'
-    # msg_plain = 'Your request for [' + user_item.name + '] was declined.\nReason: ' + deny_reason
     msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'req_denied', 'user_item': user_item, 'deny_reason': deny_reason})
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [item_request.borrower.email]
-    # msg_html = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was declined.</h1><h3>Reason: ' + deny_reason + '</h3>'
     msg_html = render_to_string('lendingLibrary/email.html', {'page': 'req_denied', 'user_item': user_item, 'deny_reason': deny_reason})
     try:
         send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
@@ -153,11 +147,9 @@ def approve_request(request):
     user_item.save()
 
     subject = 'Item Request Approved'
-    # msg_plain = 'Your request for [' + user_item.name + '] was approved.\nThe due date is ' + item_request.due_date + '.'
     msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'req_approved', 'user_item': user_item, 'item_request': item_request})
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [item_request.borrower.email]
-    # msg_html = '<h1>Your request for <u><i>' + user_item.name + '</i></u> was approved.</h1><h3>The due date is ' + item_request.due_date + '.</h3>'
     msg_html = render_to_string('lendingLibrary/email.html', {'page': 'req_approved', 'user_item': user_item, 'item_request': item_request})
     try:
         send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
@@ -180,11 +172,9 @@ def item_check_in(request):
     user_item.save()
 
     subject = 'Item Returned'
-    # msg_plain = '[' + user_item.name + '] was received by ' + user_item.owner.username.capitalize() + '.'
     msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'item_checked_in', 'user_item': user_item})
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [item_request.borrower.email]
-    # msg_html = '<h1><u><i>' + user_item.name + '</i></u> was received by ' + user_item.owner.username.capitalize() + '.</h1>'
     msg_html = render_to_string('lendingLibrary/email.html', {'page': 'item_checked_in', 'user_item': user_item})
     try:
         send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
@@ -209,11 +199,9 @@ def save_info(request):
     user_info.save()
 
     subject = 'Profile Info Updated'
-    # msg_plain = 'Your profile information was updated.'
     msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'info_saved'})
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [user_info.email]
-    # msg_html = '<h1>Your profile information was updated.</h1>'
     msg_html = render_to_string('lendingLibrary/email.html', {'page': 'info_saved'})
     try:
         send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
@@ -238,11 +226,9 @@ def save_password(request):
         login(request, user)
 
         subject = 'Password Changed'
-        # msg_plain = 'Your password was changed.'
         msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'pwd_saved'})
         sender = 'Postmaster <postmaster@community-lending-library.org>'
         recipient = [user.email]
-        # msg_html = '<h1>Your password was changed.</h1>'
         msg_html = render_to_string('lendingLibrary/email.html', {'page': 'pwd_saved'})
         try:
             send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
@@ -318,11 +304,9 @@ def create_new_item(request):
     new_user_item.save()
 
     subject = 'New Item Added'
-    # msg_plain = 'Your item [' + name + '] was added to the catalog.'
     msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'new_item', 'name': name})
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [owner.email]
-    # msg_html = '<h1>Your item <u><i>' + name + '</i></u> was added to the catalog.</h1>'
     msg_html = render_to_string('lendingLibrary/email.html', {'page': 'new_item', 'name': name})
     try:
         send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
@@ -359,11 +343,9 @@ def save_edited_item(request):
     user_item.save()
 
     subject = 'Item Details Updated'
-    # msg_plain = 'Your item [' + user_item.name + '] was updated.'
     msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'item_saved', 'user_item': user_item})
     sender = 'Postmaster <postmaster@community-lending-library.org>'
     recipient = [user_item.owner.email]
-    # msg_html = '<h1>Your item <u><i>' + user_item.name + '</i></u> was updated.</h1>'
     msg_html = render_to_string('lendingLibrary/email.html', {'page': 'item_saved', 'user_item': user_item})
     try:
         send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
@@ -463,23 +445,3 @@ def tos(request):
     categories = UserItemCategory.objects.order_by('name')
     context = {'categories': categories}
     return render(request, 'lendingLibrary/terms_of_service.html', context)
-
-def image_upload(request):
-    # return HttpResponse('ok')
-    # items = UserItem.objects.order_by('category__name')
-    item = UserItem.objects.get(id='35')
-    category = item.category.name
-
-    subject = 'Test'
-    msg_plain = render_to_string('lendingLibrary/email.txt', {'category': item.category.name, 'item': item.name, 'owner': item.owner.username, 'page': 'test'})
-    sender = 'Postmaster <postmaster@community-lending-library.org>'
-    recipient = [item.owner.email]
-    msg_html = render_to_string('lendingLibrary/email.html', {'category': item.category.name, 'item': item.name, 'page': 'test'})
-
-    try:
-        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
-    except:
-        print('!!! There was an error sending an email! !!!')
-
-    context = {'item': item, 'category': category}
-    return render(request, 'lendingLibrary/image_upload.html', context)

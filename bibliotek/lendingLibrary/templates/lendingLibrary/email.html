@@ -1,6 +1,6 @@
 {% if page == 'new_reg' %}
-  <h1>Hello, {{username|title}}</h1>
-  <h2>Thank you for registering with the Community Lending Library.</h2>
+  <h2>Hello, {{username|title}}</h2>
+  <h3>Thank you for registering with the Community Lending Library.</h3>
 
 {% elif page == 'info_saved' %}
   <h2>Your profile information was updated.</h2>
@@ -9,32 +9,31 @@
   <h2>Your password was changed.</h2>
 
 {% elif page == 'new_item' %}
-  <h2>Your item {{name}} was added to the catalog.</h2>
+  <h2>Your item <u>{{name}}</u> was added to the catalog.</h2>
 
 {% elif page == 'item_saved' %}
-  <h2>Your item {{user_item.name}} was updated.</h2>
+  <h2>Your item <u>{{user_item.name}}</u> was updated.</h2>
 
 {% elif page == 'item_deleted' %}
-  <h2>Your item {{user_item.name}} was deleted.</h2>
+  <h2>Your item <u>{{user_item.name}}</u> was deleted.</h2>
 
 {% elif page == 'item_req_borrower' %}
-  <h2>Your request for {{user_item.name}} was sent to {{user_item.owner.username|title}}.</h2>
+  <h2>Your request for <u>{{user_item.name}}</u> was sent to {{user_item.owner.username|title}}.</h2>
 
 {% elif page == 'item_req_owner' %}
-  <h2>Your item {{user_item.name}} was requested by {{borrower.username|title}}.</h2>
+  <h2>Your item <u>{{user_item.name}}</u> was requested by {{borrower.username|title}}.</h2>
 
 {% elif page == 'req_denied' %}
-  <h2>Your request for {{user_item.name}} was declined.</h2>
+  <h2>Your request for <u>{{user_item.name}}</u> was declined.</h2>
   <h3>Reason: {{deny_reason}}</h3>
 
 {% elif page == 'req_approved' %}
-  <h2>Your request for {{user_item.name}} was approved.</h2>
+  <h2>Your request for <u>{{user_item.name}}</u> was approved.</h2>
   <h3>Due date: {{item_request.due_date}}</h3>
 
 {% elif page == 'item_checked_in' %}
-  <h2>{{user_item.name}} was received by {{user_item.owner.username|title}}.</h2>
+  <h2><u>{{user_item.name}}</u> was received by {{user_item.owner.username|title}}.</h2>
 
 {% else %}
-  <h1>Hello, TEST</h1>
-  <h2>This is a test HTML message.</h2>
+  <h2>Uh oh, something went wrong. Notify lmoiola@gmail.com</h2>
 {% endif %}

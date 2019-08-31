@@ -65,7 +65,7 @@ class UserItem(models.Model):
         super(UserItem, self).save(*args, **kwargs)
 
 class UserItemCheckout(models.Model):
-    user_item       = models.ForeignKey(UserItem, on_delete=models.PROTECT, related_name='item_history')
+    user_item       = models.ForeignKey(UserItem, on_delete=models.CASCADE, related_name='item_history')
     checkout_status = models.ForeignKey(CheckoutStatus, on_delete=models.PROTECT)
     reason          = models.CharField(max_length=200, blank=True, null=True)
     request_date    = models.DateTimeField()

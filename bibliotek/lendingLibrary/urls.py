@@ -105,7 +105,4 @@ urlpatterns = [
 
     # /lendingLibrary/tos/ - terms of service pages
     path('tos/', views.tos, name='tos'),
-
-    #/lendingLibrary/image_upload/ - testing image image_upload
-    path('image_upload/', views.image_upload, name='image_upload'),
 ]

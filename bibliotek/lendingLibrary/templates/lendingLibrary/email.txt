@@ -25,10 +25,12 @@
   Your item {{user_item.name}} was requested by {{borrower.username|title}}.
 
 {% elif page == 'req_denied' %}
-Your request for {{user_item.name}} was declined.\nReason: {{deny_reason}}
+  Your request for {{user_item.name}} was declined.
+  Reason: {{deny_reason}}
 
 {% elif page == 'req_approved' %}
-  Your request for {{user_item.name}} was approved.\nDue date: {{item_request.due_date}}
+  Your request for {{user_item.name}} was approved.
+  Due date: {{item_request.due_date}}
 
 {% elif page == 'item_checked_in' %}
   {{user_item.name}} was received by {{user_item.owner.username|title}}.
