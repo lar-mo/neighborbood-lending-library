@@ -8,6 +8,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto,Montserrat,Red+Hat+Text&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
     <style media="screen" type="text/css">
+      html {
+        margin-left: calc(100vw - 100%);
+      }
       html, body, #bg_blur {
         /* background: linear-gradient(0.25turn, #5CDB95, #379683); */
         /* background: linear-gradient(0.25turn, #379683, #5CDB95); */
@@ -600,6 +603,52 @@
         text-shadow: 3px 3px 5px rgba(25,25,25,0.95);
         width: auto;
         padding:0 20px;
+      }
+      /* Medium screens */
+      @media all and (max-width: 800px) {
+        table {
+          width: 542px;
+        }
+        .hero_table {
+          width: 642px;
+        }
+        .item_description {
+          min-width: 257px;
+          max-width: 257px;
+        }
+        .item_details {
+          max-width: 342px;
+          min-width: 342px;
+        }
+        .single_row {
+          display: flex;
+          width: 542px;
+        }
+        #q {
+          width: 400px;
+        }
+      }
+      /* Small screens */
+      @media all and (max-width: 500px) {
+        table {
+          width: 492px;
+        }
+        .item_description {
+          display: inline-block;
+          min-width: 217px;
+          max-width: 217px;
+        }
+        .item_details {
+          max-width: 492px;
+          min-width: 492px;
+        }
+        .single_row {
+          display: flex;
+          width: 492px;
+        }
+        #q {
+          width: 300px;
+        }
       }
     </style>
   </head>
