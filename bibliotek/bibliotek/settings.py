@@ -26,7 +26,8 @@ SECRET_KEY = 'vg-6yj!6xhk#a%iquro$s+#l^!6+2hb2a=azgo2-ypd8yodhg0'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'larmo.pythonanywhere.com'
+    'larmo.pythonanywhere.com',
+    'portland.community-lending-library.org',
 ]
 
 
