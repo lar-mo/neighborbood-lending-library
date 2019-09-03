@@ -103,6 +103,9 @@ urlpatterns = [
     # /lendingLibrary/about/ - about page
     path('about/', views.about, name='about'),
 
-    # /lendingLibrary/tos/ - terms of service pages
+    # /lendingLibrary/tos/ - terms of service page
     path('tos/', views.tos, name='tos'),
+
+    # /lendingLibrary/contact/ - contact page
+    path('contact/', views.contact, name='contact'),
 ]

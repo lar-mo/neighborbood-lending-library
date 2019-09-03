@@ -445,3 +445,8 @@ def tos(request):
     categories = UserItemCategory.objects.order_by('name')
     context = {'categories': categories}
     return render(request, 'lendingLibrary/terms_of_service.html', context)
+
+def contact(request):
+    categories = UserItemCategory.objects.order_by('name')
+    context = {'categories': categories}
+    return render(request, 'lendingLibrary/contact.html', context)
