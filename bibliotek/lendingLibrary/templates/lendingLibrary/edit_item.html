@@ -85,7 +85,16 @@
                 &#36;&nbsp;<input name="replacement_cost" type="number" step="0.01" value="{{item.replacement_cost|floatformat:2}}" required>
               </div>
                 <div class="field_label">
-                  Item Status
+                  <span>Item Status</span>
+                  <span class="tooltip">&#x24D8;
+                    <span class="tooltiptext tooltip_status">
+                      <u>Available</u>: Item can be requested<br>
+                      <u>Checked Out</u>: Item currently borrowed<br>
+                      <u>Hidden</u>: Item not searchable<br>
+                      <u>Lost</u>: Item temporarily missing, not searchable<br>
+                      <u>Requested</u>: Item request pending<br>
+                      <u>Unavailable</u>: Item searchable but cannot be requested</span>
+                  </span>
                 </div>
                 <div>
                   <select name="item_status" required>

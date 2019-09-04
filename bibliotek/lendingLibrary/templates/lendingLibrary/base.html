@@ -555,17 +555,17 @@
       .tooltip {
         position: relative;
         display: inline-block;
-        border-bottom: 1px dotted black;
+        /* border-bottom: 1px dotted black; */
       }
 
       .tooltip .tooltiptext {
         visibility: hidden;
-        width: 120px;
+        width: 125px;
         background-color: #555;
         color: #fff;
         text-align: center;
         border-radius: 6px;
-        padding: 5px 0;
+        padding: 5px 5px;
         position: absolute;
         z-index: 1;
         bottom: 125%;
@@ -588,6 +588,11 @@
       .tooltip:hover .tooltiptext {
         visibility: visible;
         opacity: 0.95;
+      }
+      .tooltip_status {
+        text-align: left !important;
+        width: 400px !important;
+        font-weight: normal !important;
       }
       #block_heading {
         color: #EDF5E1;
