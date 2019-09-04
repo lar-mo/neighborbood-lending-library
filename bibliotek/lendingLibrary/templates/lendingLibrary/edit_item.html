@@ -84,7 +84,6 @@
               <div>
                 &#36;&nbsp;<input name="replacement_cost" type="number" step="0.01" value="{{item.replacement_cost|floatformat:2}}" required>
               </div>
-              {% if item.item_status.name != "Checked Out" %}
                 <div class="field_label">
                   Item Status
                 </div>
@@ -95,6 +94,14 @@
                         <option value="{{item_status.id}}" selected>
                           {{item_status.name}}
                         </option>
+                      {% elif item.item_status.name == 'Requested' or item.item_status.name == 'Checked Out' %}
+                        <option value="{{item_status.id}}" disabled>
+                          {{item_status.name}}
+                        </option>
+                      {% elif item_status.name == 'Requested' or item_status.name == 'Checked Out' %}
+                        <option value="{{item_status.id}}" disabled>
+                          {{item_status.name}}
+                        </option>
                       {% else %}
                         <option value="{{item_status.id}}">
                           {{item_status.name}}
@@ -103,10 +110,6 @@
                     {% endfor %}
                   </select>
                 </div>
-              {% else %}
-                <span></span> <!-- kludge prevents button indent due to CSS odd/even rules :( -->
-                <input type="hidden" name="item_status" value="{{item.item_status.id}}"/>
-              {% endif %}
               <div class="form_submit_div">
                 <input type="submit" value="Save item" class="form_submit_button"/>
               </div>

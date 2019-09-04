@@ -322,7 +322,7 @@ def edit_item(request, item_id):
     items = owner.items.order_by('item_status__name', 'category__name')
     categories = UserItemCategory.objects.order_by('name')
     conditions = UserItemCondition.objects.order_by('id')
-    item_statuses = UserItemStatus.objects.order_by('name').exclude(name__in=['Requested', 'Checked Out'])
+    item_statuses = UserItemStatus.objects.order_by('name')#.exclude(name__in=['Checked Out'])
     context = {'item': item, 'items': items, 'categories': categories, 'conditions': conditions, 'item_statuses': item_statuses}
     return render(request, 'lendingLibrary/edit_item.html', context)
 
