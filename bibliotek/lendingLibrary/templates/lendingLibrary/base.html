@@ -207,7 +207,16 @@
         display: inline-block;
         min-width: 547px;
         max-width: 547px;
-        /* text-align: justify; */
+        text-align: justify;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* max-width: 200px; */
+      }
+      @-moz-document url-prefix() {
+        .item_description {
+          text-overflow: " [...]";
+        }
       }
       .item_title {
         display: block;
@@ -746,13 +755,13 @@
     </footer>
   </div> <!-- end of 'content'-->
     <script type="text/javascript">
-      // item_description = document.querySelectorAll('.item_description')
-      // for (let i=0; i<item_description.length; ++i) {
-      //   item_description[i].onclick = function() {
-      //     item_description[i].style.whiteSpace = "normal"
-      //     item_description[i].style.overflow = "visible"
-      //   }
-      // }
+      item_description = document.querySelectorAll('.item_description')
+      for (let i=0; i<item_description.length; ++i) {
+        item_description[i].onclick = function() {
+          item_description[i].style.whiteSpace = "normal"
+          item_description[i].style.overflow = "visible"
+        }
+      }
       search_btn = document.querySelector('#search_btn')
       q = document.querySelector('#q')
       search_btn.onclick = function() {
