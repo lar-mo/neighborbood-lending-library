@@ -23,9 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SEKRIT_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
+    'community-lending-library.org',
+    'www.community-lending-library.org',
     'portland.community-lending-library.org',
     'localhost',
 ]
@@ -132,5 +134,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'postmaster@community-lending-library.org'
 EMAIL_HOST_PASSWORD = os.environ['DH_EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = 'Librarian <postmaster@community-lending-library.org>'
-
-ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
