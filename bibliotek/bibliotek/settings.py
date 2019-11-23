@@ -132,3 +132,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'postmaster@community-lending-library.org'
 EMAIL_HOST_PASSWORD = os.environ['DH_EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = 'Librarian <postmaster@community-lending-library.org>'
+
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window

@@ -399,22 +399,26 @@ def register_user(request):
     password = request.POST['password']
     next = request.POST['next']
 
-    user = User.objects.create_user(username, email, password)
-    login(request, user)
+    # check if this username already exists in the system
+    if User.objects.filter(username=username).exists():
+        return HttpResponseRedirect(reverse('lendingLibrary:register_login')+'?message=reg_error&next=/#register_section')
+    else:
+        user = User.objects.create_user(username, email, password)
+        login(request, user)
 
-    subject = 'New Registration'
-    msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'new_reg', 'username': username})
-    sender = 'Postmaster <postmaster@community-lending-library.org>'
-    recipient = [email]
-    msg_html = render_to_string('lendingLibrary/email.html', {'page': 'new_reg', 'username': username})
-    try:
-        send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
-    except:
-        print('!!! There was an error sending an email! !!!')
+        subject = 'New Registration'
+        msg_plain = render_to_string('lendingLibrary/email.txt', {'page': 'new_reg', 'username': username})
+        sender = 'Postmaster <postmaster@community-lending-library.org>'
+        recipient = [email]
+        msg_html = render_to_string('lendingLibrary/email.html', {'page': 'new_reg', 'username': username})
+        try:
+            send_mail(subject, msg_plain, sender, recipient, fail_silently=False, html_message=msg_html)
+        except:
+            print('!!! There was an error sending an email! !!!')
 
-    if next != '':
-        return HttpResponseRedirect(next)
-    return HttpResponseRedirect(reverse('lendingLibrary:index'))
+        if next != '':
+            return HttpResponseRedirect(next)
+        return HttpResponseRedirect(reverse('lendingLibrary:index'))
 
 def login_user(request):
     username = request.POST['username']

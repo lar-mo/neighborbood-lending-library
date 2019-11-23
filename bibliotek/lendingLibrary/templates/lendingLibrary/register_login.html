@@ -10,10 +10,10 @@
 
 {% block content %}
   <div id="pending_requests"> <!-- start of 'pending_requests'-->
-    {% if message == 'fail' %}
-    <div style="background-color:red;color:white;">Your username and password did not match</div>
-    {% endif %}
     <div id="container">
+      {% if message == 'fail' %}
+      <div style="background-color:red;color:white;">Your username and password did not match</div>
+      {% endif %}
       <h3>Login</h3>
       <form action="{% url 'lendingLibrary:login_user' %}" method="post">
         {% csrf_token %}
@@ -32,6 +32,9 @@
       <div id="spacer"><p>&nbsp;</p></div>
       <div id="spacer"><p>&nbsp;</p></div>
       <div id="spacer"><p>&nbsp;</p></div>
+      {% if message == 'reg_error' %}
+      <div style="background-color:red;color:white;">That username is already taken.</div>
+      {% endif %}
       <h3><a name="register_section">Register</a></h3>
       <form action="{% url 'lendingLibrary:register_user' %}" method="post">
         {% csrf_token %}

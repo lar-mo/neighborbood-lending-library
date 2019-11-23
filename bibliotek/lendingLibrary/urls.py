@@ -28,7 +28,7 @@ urlpatterns = [
     # /lendingLibrary/search/ - search results
     path('search/', views.search_results, name='search_results'),
 
-    # /lendingLibrary/search/ - search results
+    # /lendingLibrary/search/ - search results # this is an alternate path, not used (lines 48-61 in views.py)
     # path('search/', views.search_results_q, name='search_results_q'),
 
     # /lendingLibrary/search/tent/ - search results
@@ -91,10 +91,10 @@ urlpatterns = [
     # /lendingLibrary/register_login/ - login or register a user
     path('register_login/', views.register_login, name='register_login'),
 
-    # just handles the login process, register_login renders the template
+    # just handles the registration process, register_login renders the template
     path('register_user/', views.register_user, name='register_user'),
 
-    # just handles the registration process, register_login renders the template
+    # just handles the login process, register_login renders the template
     path('login_user/', views.login_user, name='login_user'),
 
     # /lendingLibrary/logout_user/ - logout a user
