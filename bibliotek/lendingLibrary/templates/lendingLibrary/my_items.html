@@ -44,12 +44,8 @@
     <div id="items"> <!-- start of 'items'-->
       <div id="items_inner">
           <div>
-            <a href="{% url 'lendingLibrary:edit_item' item.id %}">
-              {{item.name}}
-            </a>&nbsp;
-            <a href="{% url 'lendingLibrary:edit_item' item.id %}" style="font-size:12px;">
-              (edit)
-            </a>
+            <a href="{% url 'lendingLibrary:edit_item' item.id %}">{{item.name}}</a>&nbsp;
+            <a href="{% url 'lendingLibrary:edit_item' item.id %}" style="font-size:12px;">(edit)</a>
           </div>
           <div>{{item.description}}</div>
           <div class="history_item_details">
