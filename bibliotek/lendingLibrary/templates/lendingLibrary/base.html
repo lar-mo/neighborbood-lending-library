@@ -690,8 +690,8 @@
             <a href="{% url 'lendingLibrary:register_login' %}?next=/">Login</a>
           {% else %}
             <a href="{% url 'lendingLibrary:index' %}">Home</a> |
-            <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}#register_section">Register</a> |
-            <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}">Login</a>
+            <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}?{{request.GET.urlencode}}#register_section">Register</a> |
+            <a href="{% url 'lendingLibrary:register_login' %}?next={{request.path}}?{{request.GET.urlencode}}">Login</a>
           {% endif %}
         </span>
       {% else %}
