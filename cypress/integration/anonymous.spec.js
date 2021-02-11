@@ -17,7 +17,7 @@ describe('Anonymous', () => {
     // Verify all page elements; add check Logout link
     cy.get('section > img')
       .should('have.attr', 'src')
-      .should('contain', 'https://lar-mo.com/images/lendingLib_logo2.png')
+      .should('contain', 'lendingLib_logo2.png')
 
   }) // end of 'Homepage'
 
