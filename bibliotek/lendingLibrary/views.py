@@ -398,7 +398,11 @@ def register_user(request):
     email = request.POST['email']
     password = request.POST['password']
     next = request.POST['next']
+    url = request.POST['url']
 
+    # if URL is populated, reject as bot submission
+    if len(url) > 0:
+        return HttpResponseRedirect(reverse('lendingLibrary:register_login')+'?message=reg_error')
     # check if this username already exists in the system
     if User.objects.filter(username=username).exists():
         return HttpResponseRedirect(reverse('lendingLibrary:register_login')+'?message=reg_error&next=/#register_section')
