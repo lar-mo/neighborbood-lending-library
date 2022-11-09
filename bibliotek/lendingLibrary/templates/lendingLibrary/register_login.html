@@ -54,13 +54,14 @@
 
       bt_register.onclick = function(evt) {
         if (input_password.value != input_password2.value) {
-          alert('those passwords do not match')
-          evt.preventDefault()
+          alert('those passwords do not match');
+          evt.preventDefault();
         }
         let human = prompt("Are you a human? Type yes");
         if (human != "yes") {
-          evt.preventDefault()
+          evt.preventDefault();
         }
+        return false;
       }
     </script>
   </div> <!-- end of 'pending_requests'-->
